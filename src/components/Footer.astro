@@ -1,0 +1,35 @@
+---
+import Logo from './Logo.astro';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-white/[0.04] mt-32">
+  <div class="container-narrow py-14 grid gap-10 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <Logo />
+      <p class="text-ink-300 text-sm mt-4 max-w-sm leading-relaxed">
+        Native macOS link for your Macs. Share input, clipboard, files, and a printer across the same Wi-Fi — no cloud, no account.
+      </p>
+    </div>
+    <div>
+      <div class="text-xs uppercase tracking-wider text-ink-400 mb-3">Product</div>
+      <ul class="space-y-2 text-sm text-ink-200">
+        <li><a href="/#features" class="hover:text-white">Features</a></li>
+        <li><a href="/download" class="hover:text-white">Download</a></li>
+        <li><a href="/changelog" class="hover:text-white">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-xs uppercase tracking-wider text-ink-400 mb-3">Company</div>
+      <ul class="space-y-2 text-sm text-ink-200">
+        <li><a href="/support" class="hover:text-white">Support</a></li>
+        <li><a href="/privacy" class="hover:text-white">Privacy</a></li>
+        <li><a href="mailto:support@entanglo.app" class="hover:text-white">support@entanglo.app</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container-narrow pb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-ink-400">
+    <div>© {year} Paolo Asara. All rights reserved.</div>
+    <div>Built for macOS 13+ — Apple Silicon &amp; Intel.</div>
+  </div>
+</footer>

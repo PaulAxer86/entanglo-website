@@ -1,0 +1,74 @@
+---
+interface Props {
+  version: string;
+}
+const { version } = Astro.props;
+---
+
+<section class="relative overflow-hidden pt-20 pb-32 md:pt-32 md:pb-44">
+  <!-- ambient glow -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute left-1/2 top-10 -translate-x-1/2 w-[860px] h-[860px] rounded-full
+                bg-accent/20 blur-[140px] opacity-60 animate-pulse-slow"></div>
+    <div class="absolute right-[-10%] top-40 w-[460px] h-[460px] rounded-full
+                bg-accent-cyan/10 blur-[120px]"></div>
+  </div>
+
+  <div class="container-narrow text-center">
+    <img
+      src="/img/icon.png"
+      alt=""
+      width="128"
+      height="128"
+      class="mx-auto w-28 h-28 md:w-32 md:h-32 rounded-[22%] mb-7 shadow-2xl shadow-accent/30 animate-float"
+      loading="eager"
+      decoding="async"
+    />
+    <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03]
+                px-3.5 py-1.5 text-xs text-ink-200 mb-8">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      Version {version} — fresh today
+    </div>
+
+    <h1 class="display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.02] gradient-text">
+      One link.<br/>
+      All your Macs.
+    </h1>
+
+    <p class="mt-7 text-lg md:text-xl text-ink-200 max-w-2xl mx-auto leading-relaxed">
+      Entanglo turns every Mac on your Wi-Fi into a single workspace.
+      Mouse, keyboard, clipboard, files, printer — they flow between machines
+      like one machine.
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+      <a href="/download" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 12.5c-.02-2.16 1.77-3.21 1.85-3.26-1.01-1.47-2.58-1.67-3.14-1.7-1.34-.14-2.61.79-3.29.79-.69 0-1.74-.77-2.86-.75-1.47.02-2.83.86-3.59 2.17-1.53 2.66-.39 6.59 1.1 8.74.73 1.05 1.6 2.23 2.74 2.19 1.1-.05 1.52-.71 2.85-.71 1.34 0 1.71.71 2.87.69 1.19-.02 1.94-1.07 2.66-2.13.84-1.22 1.18-2.41 1.2-2.47-.03-.01-2.31-.89-2.33-3.55Z"/><path d="M15.35 6.07c.61-.74 1.02-1.78.91-2.81-.88.04-1.94.59-2.57 1.33-.57.66-1.06 1.71-.93 2.72.98.08 1.98-.5 2.59-1.24Z"/></svg>
+        Download for macOS
+      </a>
+      <a href="/#features" class="btn-ghost">Explore features</a>
+    </div>
+
+    <p class="mt-5 text-xs text-ink-400">
+      Free. macOS 13+. Apple Silicon &amp; Intel. No account.
+    </p>
+  </div>
+
+  <!-- real app screenshot -->
+  <div class="container-narrow mt-20 md:mt-28">
+    <div class="relative mx-auto max-w-5xl">
+      <div aria-hidden="true" class="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-accent/20 via-transparent to-accent-cyan/20 blur-3xl opacity-60"></div>
+      <div class="glass p-1.5 md:p-2 shadow-2xl shadow-black/40 ring-1 ring-white/5">
+        <img
+          src="/img/app-screenshot.png"
+          alt="Entanglo for macOS — Dashboard"
+          width="2280"
+          height="1450"
+          class="w-full h-auto rounded-2xl"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </div>
+</section>

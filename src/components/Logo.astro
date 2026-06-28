@@ -1,0 +1,22 @@
+---
+interface Props {
+  size?: number;
+  withWordmark?: boolean;
+  class?: string;
+}
+const { size = 32, withWordmark = true, class: className = '' } = Astro.props;
+---
+
+<a href="/" class={`inline-flex items-center gap-2.5 group ${className}`}>
+  <img
+    src="/img/icon.png"
+    alt="Entanglo"
+    width={size}
+    height={size}
+    class="rounded-[22%] transition-transform group-hover:scale-105"
+    style={`width:${size}px;height:${size}px;`}
+  />
+  {withWordmark && (
+    <span class="text-lg font-semibold tracking-tight text-white">Entanglo</span>
+  )}
+</a>

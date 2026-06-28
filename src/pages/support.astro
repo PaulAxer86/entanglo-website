@@ -1,0 +1,79 @@
+---
+import Base from '@/layouts/Base.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const faqs = [
+  {
+    q: 'Entanglo doesn\'t find my other Mac',
+    a: 'Both Macs need to be on the same Wi-Fi (or the same Ethernet subnet) with Local Network permission granted. macOS 13+ on both ends. If the other Mac is on a guest network or behind client isolation, Bonjour can\'t reach it.',
+  },
+  {
+    q: 'The mouse moves but doesn\'t click on the remote Mac',
+    a: 'That\'s the classic Sequoia "orphan Accessibility grant" trap. Open System Settings → Privacy & Security → Accessibility, remove Entanglo, re-add it, restart the app. The grant gets stuck to the previous build\'s code-signing identity.',
+  },
+  {
+    q: 'Latency shows nothing in Network Quality',
+    a: 'Update to 0.1.37 or newer on both Macs. Older builds didn\'t echo the heartbeat timestamp the receiver needs to compute RTT.',
+  },
+  {
+    q: 'Peer screenshot stays in "Capturing..." forever',
+    a: 'Update to 0.1.37+ on both Macs and grant Screen Recording on the target one. The new build also surfaces a clear error after 8 seconds if the receiver can\'t capture.',
+  },
+  {
+    q: 'Double-click on the remote Mac just acts like two single clicks',
+    a: 'You\'re on a pre-0.1.36 build. The fix is to ship the click-state field across the link — update both ends to 0.1.36+.',
+  },
+  {
+    q: 'Can I use Entanglo with an iPad or iPhone?',
+    a: 'Not today. Entanglo is macOS-only because the input injection layer uses CGEvent, which exists only on macOS. iPadOS support would need a different transport.',
+  },
+];
+---
+
+<Base title="Support — Entanglo" description="Help, FAQ, and contact for Entanglo on macOS.">
+  <section class="container-narrow pt-20 pb-10 text-center">
+    <div class="text-xs uppercase tracking-widest text-accent-glow mb-3">Support</div>
+    <h1 class="display text-5xl md:text-6xl gradient-text leading-tight">
+      We're here. Just write.
+    </h1>
+    <p class="mt-5 text-ink-300 text-lg max-w-xl mx-auto">
+      Entanglo is built and maintained by one person, on real hardware. You get a real reply.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a href="mailto:support@entanglo.app?subject=Entanglo%20support" class="btn-primary">
+        Email support@entanglo.app
+      </a>
+    </div>
+  </section>
+
+  <section class="container-tight py-16">
+    <div class="text-xs uppercase tracking-widest text-accent-glow mb-3">FAQ</div>
+    <h2 class="display text-3xl md:text-4xl text-white mb-8">Common questions</h2>
+    <div class="space-y-3">
+      {faqs.map(f => (
+        <details class="glass glass-hover p-5 md:p-6 group">
+          <summary class="cursor-pointer list-none flex items-center justify-between gap-4 text-white font-medium">
+            <span>{f.q}</span>
+            <span class="text-accent-glow text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-3 text-ink-300 leading-relaxed">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <AdSlot slot="support-mid" />
+
+  <section class="container-tight py-16">
+    <div class="glass p-8 md:p-12 text-center">
+      <h2 class="display text-3xl text-white mb-3">Still stuck?</h2>
+      <p class="text-ink-300 max-w-xl mx-auto">
+        Send the app version (Help → About), your macOS version, and what you tried.
+        Replies usually within 24 hours.
+      </p>
+      <a href="mailto:support@entanglo.app?subject=Entanglo%20issue" class="btn-primary mt-7">
+        Contact support
+      </a>
+    </div>
+  </section>
+</Base>

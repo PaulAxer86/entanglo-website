@@ -1,0 +1,75 @@
+---
+import Base from '@/layouts/Base.astro';
+const updated = '2026-06-28';
+---
+
+<Base title="Privacy — Entanglo" description="Entanglo runs entirely on your local network. No cloud, no telemetry, no account.">
+  <section class="container-tight pt-20 pb-12">
+    <div class="text-xs uppercase tracking-widest text-accent-glow mb-3">Privacy</div>
+    <h1 class="display text-5xl md:text-6xl gradient-text leading-tight">
+      Your Macs talk to each other. Nobody else.
+    </h1>
+    <p class="mt-5 text-ink-300 text-lg">Last updated {updated}</p>
+  </section>
+
+  <section class="container-tight py-10 space-y-10">
+    <div>
+      <h2 class="display text-2xl text-white mb-3">What stays on your LAN</h2>
+      <p class="text-ink-200 leading-relaxed">
+        Every byte Entanglo moves — mouse events, clipboard text, files, screenshots, print jobs —
+        travels directly between your own Macs over your home Wi-Fi or Ethernet. There is no
+        Entanglo server in the middle. We never see your data, because there is no "we" in the path.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="display text-2xl text-white mb-3">What we collect</h2>
+      <p class="text-ink-200 leading-relaxed">
+        Nothing. Entanglo has no analytics, no crash reporter that phones home, no account system,
+        no email signup. You don't tell us anything because we don't ask.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="display text-2xl text-white mb-3">Permissions Entanglo asks for</h2>
+      <ul class="space-y-3 text-ink-200">
+        <li><strong class="text-white">Accessibility</strong> — required to inject mouse and keyboard events on the target Mac (CGEvent).</li>
+        <li><strong class="text-white">Local Network</strong> — required for Bonjour peer discovery and the TCP link.</li>
+        <li><strong class="text-white">Screen Recording</strong> — only if you use the "screenshot peer" Quick Action.</li>
+        <li><strong class="text-white">Apple Events</strong> — only when you explicitly use AppleScript-driven features.</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="display text-2xl text-white mb-3">Pairing & trust</h2>
+      <p class="text-ink-200 leading-relaxed">
+        Trusted peers are stored in your macOS Keychain. Revoke a peer any time from the Pairing tab.
+        Nothing about your trusted devices leaves your machine.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="display text-2xl text-white mb-3">Updates</h2>
+      <p class="text-ink-200 leading-relaxed">
+        New versions are pushed peer-to-peer over your LAN, or downloaded from this website on demand.
+        The website is hosted on Netlify. Netlify may log your IP and User-Agent for the page request,
+        per their standard service logs. The app itself does not contact this website.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="display text-2xl text-white mb-3">Ads on this website</h2>
+      <p class="text-ink-200 leading-relaxed">
+        This website may show ads (Google AdSense) to help cover hosting costs. Ads run only on the
+        website, never inside the app. AdSense uses cookies — see Google's privacy notice for details.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="display text-2xl text-white mb-3">Questions</h2>
+      <p class="text-ink-200 leading-relaxed">
+        Email <a class="text-accent-glow hover:underline" href="mailto:support@entanglo.app">support@entanglo.app</a> any time.
+      </p>
+    </div>
+  </section>
+</Base>
