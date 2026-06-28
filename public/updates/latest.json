@@ -1,15 +1,15 @@
 {
-  "version": "0.1.38",
+  "version": "0.1.39",
   "date": "2026-06-28",
-  "title": "Forward-compat hardening for cross-platform peers",
+  "title": "Windows peer handshake and discovery reliability",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.38.dmg",
-  "sha256": "33d30557b3c7ab1ce6becc7534067a68aed52749f68bac24a25cc4703a2993f4",
-  "size": 5766742,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-38",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.39.dmg",
+  "sha256": "50e39f78db1d3812ad1165abb43812e230d71cfeb3e5e7c1516cbb11106a24a0",
+  "size": 5773100,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-39",
   "highlights": [
-    "Decoder now skips frames with an unknown messageType instead of treating them as a fatal decode failure. The transport logs 'Skipping unknown messageType \u2026' at network level and keeps the connection alive \u2014 this is the path that lets a future Windows or Linux peer introduce a new message type within protocol v1 without dropping the link to older Mac peers.",
-    "InputEventMessage tolerates unknown mediaKey values (e.g. extra media buttons reported by a non-Mac keyboard). Unknown values decode to nil and isValid rejects the event for the .mediaKey case, instead of throwing the whole InputEvent away.",
-    "HelloPayload gains an optional platform field ('macOS', 'Windows', 'Linux'\u2026) so peers can branch on coarse OS identity at handshake time. Older peers omit it; nothing breaks."
+    "Mac peers now send the v1 hello frame when a TCP link opens, matching the Windows client handshake and exposing device name, roles, app version and platform immediately after connect.",
+    "Incoming hello frames are now used to refresh peer metadata in the saved device list without dropping the existing trust state, so Windows peers show a useful name/version instead of only a transport endpoint.",
+    "Windows Devices now rehydrates peers already discovered before the page was opened, fixing the case where SERVERP advertised correctly but the Windows UI appeared not to see either iMac."
   ]
 }

@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.1.39",
+    "date": "2026-06-28",
+    "title": "Windows peer handshake and discovery reliability",
+    "highlights": [
+      "Mac peers now send the v1 hello frame when a TCP link opens, matching the Windows client handshake and exposing device name, roles, app version and platform immediately after connect.",
+      "Incoming hello frames are now used to refresh peer metadata in the saved device list without dropping the existing trust state, so Windows peers show a useful name/version instead of only a transport endpoint.",
+      "Windows Devices now rehydrates peers already discovered before the page was opened, fixing the case where SERVERP advertised correctly but the Windows UI appeared not to see either iMac."
+    ]
+  },
+  {
     "version": "0.1.38",
     "date": "2026-06-28",
     "title": "Forward-compat hardening for cross-platform peers",

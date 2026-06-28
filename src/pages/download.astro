@@ -7,11 +7,12 @@ import notes from '@/data/release-notes.json';
 const latest = notes[0] as { version: string; date: string; title: string; highlights: string[] };
 const version = latest?.version ?? '0.1.0';
 const dmgUrl = `/downloads/Entanglo-${version}.dmg`;
+const windowsUrl = `/downloads/Entanglo-Windows-${version}.zip`;
 ---
 
 <Base
-  title={`Download Entanglo ${version} — macOS`}
-  description={`Get the latest Entanglo for macOS — version ${version}. Free, native, no account.`}
+  title={`Download Entanglo ${version}`}
+  description={`Get the latest Entanglo for macOS and Windows — version ${version}. Free, native, no account.`}
 >
   <section class="container-narrow pt-24 pb-12 text-center">
     <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs text-ink-200 mb-7">
@@ -25,11 +26,13 @@ const dmgUrl = `/downloads/Entanglo-${version}.dmg`;
 
     <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
       <DownloadButton href={dmgUrl} version={`v${version}`} />
+      <a href={windowsUrl} class="btn-ghost">Windows v{version}</a>
       <a href="/changelog" class="btn-ghost">Full changelog</a>
     </div>
 
-    <p class="mt-4 text-xs text-ink-400">
-      DMG · macOS 13 Ventura or newer · Apple Silicon &amp; Intel
+    <p class="mt-4 text-xs text-ink-400 leading-relaxed">
+      DMG · macOS 13 Ventura or newer · Apple Silicon &amp; Intel<br />
+      ZIP · Windows 11 x64 preview build
     </p>
   </section>
 
@@ -50,7 +53,7 @@ const dmgUrl = `/downloads/Entanglo-${version}.dmg`;
   <section class="container-narrow py-12">
     <div class="grid md:grid-cols-2 gap-5">
       <div class="glass p-7">
-        <div class="text-xs uppercase tracking-widest text-ink-400 mb-3">First-time install</div>
+        <div class="text-xs uppercase tracking-widest text-ink-400 mb-3">macOS install</div>
         <ol class="space-y-2 text-ink-200 text-sm list-decimal pl-5">
           <li>Open the downloaded <code class="font-mono text-accent-glow">.dmg</code>.</li>
           <li>Drag <strong>Entanglo</strong> into the <strong>Applications</strong> folder.</li>
@@ -59,11 +62,11 @@ const dmgUrl = `/downloads/Entanglo-${version}.dmg`;
         </ol>
       </div>
       <div class="glass p-7">
-        <div class="text-xs uppercase tracking-widest text-ink-400 mb-3">Updating from an older build</div>
+        <div class="text-xs uppercase tracking-widest text-ink-400 mb-3">Windows preview</div>
         <p class="text-ink-200 text-sm leading-relaxed">
-          Entanglo updates itself peer-to-peer. If one of your Macs already runs a newer version,
-          the others pick up the DMG over the LAN automatically. You can also drop in this DMG
-          manually any time — your pairing and trusted devices survive the upgrade.
+          Download the Windows ZIP, extract it, then launch
+          <code class="font-mono text-accent-glow">Entanglo.Windows.exe</code>. Keep the extracted
+          folder intact because the preview build ships with its WinUI runtime files.
         </p>
       </div>
     </div>
