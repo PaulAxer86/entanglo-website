@@ -4,4 +4,5 @@ dist/
 .env
 .env.local
 .DS_Store
-public/downloads/*.dmg
+# DMGs are intentionally committed: Netlify serves them from /downloads/.
+# Old releases can be pruned manually when the repo grows too large.
