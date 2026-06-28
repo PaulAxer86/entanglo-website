@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.1.38",
+    "date": "2026-06-28",
+    "title": "Forward-compat hardening for cross-platform peers",
+    "highlights": [
+      "Decoder now skips frames with an unknown messageType instead of treating them as a fatal decode failure. The transport logs 'Skipping unknown messageType …' at network level and keeps the connection alive — this is the path that lets a future Windows or Linux peer introduce a new message type within protocol v1 without dropping the link to older Mac peers.",
+      "InputEventMessage tolerates unknown mediaKey values (e.g. extra media buttons reported by a non-Mac keyboard). Unknown values decode to nil and isValid rejects the event for the .mediaKey case, instead of throwing the whole InputEvent away.",
+      "HelloPayload gains an optional platform field ('macOS', 'Windows', 'Linux'…) so peers can branch on coarse OS identity at handshake time. Older peers omit it; nothing breaks."
+    ]
+  },
+  {
     "version": "0.1.37",
     "date": "2026-06-28",
     "title": "Latency works, peer screenshot doesn't hang",

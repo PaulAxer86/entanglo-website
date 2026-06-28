@@ -1,15 +1,15 @@
 {
-  "version": "0.1.37",
+  "version": "0.1.38",
   "date": "2026-06-28",
-  "title": "Latency works, peer screenshot doesn't hang",
+  "title": "Forward-compat hardening for cross-platform peers",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.37.dmg",
-  "sha256": "4553e6e295843b1f85fdfa2b24ebc60a3b0babb2ce09486167673fba37b2a4ae",
-  "size": 5759034,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-37",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.38.dmg",
+  "sha256": "33d30557b3c7ab1ce6becc7534067a68aed52749f68bac24a25cc4703a2993f4",
+  "size": 5766742,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-38",
   "highlights": [
-    "Dashboard \u2192 Network Quality \u2192 Latency now shows real RTT in ms. Mechanism: every heartbeat carries an opaque sentAtMs timestamp; the peer echoes the last one it saw on its next heartbeat, and the sender computes RTT = now \u2212 echo. No clock sync required \u2014 each side reads its own monotonic clock (CACurrentMediaTime). The coordinator publishes the lowest live RTT to the NetworkQualityMonitor.",
-    "Peer screenshot stops spinning forever when the receiver doesn't reply: 8 s timeout on the controller clears the in-progress state and surfaces a clear error ('No reply from <peer> \u2014 check Screen Recording permission on that Mac.').",
-    "Receiver-side capture moved to SCScreenshotManager (ScreenCaptureKit, macOS 14+). The previous CGDisplayCreateImage path is deprecated and returns nil on Sonoma/Sequoia even with the Screen Recording grant \u2014 that's why captures from the OCLP-patched iMacs were silently failing. CG path stays as fallback on macOS 13."
+    "Decoder now skips frames with an unknown messageType instead of treating them as a fatal decode failure. The transport logs 'Skipping unknown messageType \u2026' at network level and keeps the connection alive \u2014 this is the path that lets a future Windows or Linux peer introduce a new message type within protocol v1 without dropping the link to older Mac peers.",
+    "InputEventMessage tolerates unknown mediaKey values (e.g. extra media buttons reported by a non-Mac keyboard). Unknown values decode to nil and isValid rejects the event for the .mediaKey case, instead of throwing the whole InputEvent away.",
+    "HelloPayload gains an optional platform field ('macOS', 'Windows', 'Linux'\u2026) so peers can branch on coarse OS identity at handshake time. Older peers omit it; nothing breaks."
   ]
 }
