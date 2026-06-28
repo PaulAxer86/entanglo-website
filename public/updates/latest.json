@@ -4,8 +4,8 @@
   "title": "Latency works, peer screenshot doesn't hang",
   "minimumSystemVersion": "13.0",
   "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.37.dmg",
-  "sha256": "5701f3a561296465f8859b9bbc5fd6d56e7eb5ebad1f5402d4d0e9303ec7c3e4",
-  "size": 5758463,
+  "sha256": "4553e6e295843b1f85fdfa2b24ebc60a3b0babb2ce09486167673fba37b2a4ae",
+  "size": 5759034,
   "notesUrl": "https://entanglo.netlify.app/changelog#0-1-37",
   "highlights": [
     "Dashboard \u2192 Network Quality \u2192 Latency now shows real RTT in ms. Mechanism: every heartbeat carries an opaque sentAtMs timestamp; the peer echoes the last one it saw on its next heartbeat, and the sender computes RTT = now \u2212 echo. No clock sync required \u2014 each side reads its own monotonic clock (CACurrentMediaTime). The coordinator publishes the lowest live RTT to the NetworkQualityMonitor.",
