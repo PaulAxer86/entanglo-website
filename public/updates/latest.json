@@ -4,11 +4,12 @@
   "title": "Latency works, peer screenshot doesn't hang",
   "minimumSystemVersion": "13.0",
   "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.37.dmg",
-  "sha256": "REPLACE_WITH_SHA256_AT_PUBLISH",
-  "size": 0,
+  "sha256": "5701f3a561296465f8859b9bbc5fd6d56e7eb5ebad1f5402d4d0e9303ec7c3e4",
+  "size": 5758463,
   "notesUrl": "https://entanglo.netlify.app/changelog#0-1-37",
   "highlights": [
-    "Latency shows real RTT in Dashboard → Network Quality",
-    "Peer screenshot stops spinning forever (8s timeout + macOS 14+ SCScreenshotManager)"
+    "Dashboard \u2192 Network Quality \u2192 Latency now shows real RTT in ms. Mechanism: every heartbeat carries an opaque sentAtMs timestamp; the peer echoes the last one it saw on its next heartbeat, and the sender computes RTT = now \u2212 echo. No clock sync required \u2014 each side reads its own monotonic clock (CACurrentMediaTime). The coordinator publishes the lowest live RTT to the NetworkQualityMonitor.",
+    "Peer screenshot stops spinning forever when the receiver doesn't reply: 8 s timeout on the controller clears the in-progress state and surfaces a clear error ('No reply from <peer> \u2014 check Screen Recording permission on that Mac.').",
+    "Receiver-side capture moved to SCScreenshotManager (ScreenCaptureKit, macOS 14+). The previous CGDisplayCreateImage path is deprecated and returns nil on Sonoma/Sequoia even with the Screen Recording grant \u2014 that's why captures from the OCLP-patched iMacs were silently failing. CG path stays as fallback on macOS 13."
   ]
 }
