@@ -1,16 +1,17 @@
 {
-  "version": "0.1.43",
+  "version": "0.1.44",
   "date": "2026-06-30",
-  "title": "Windows: cleaner pills, solid hero, live latency",
+  "title": "Windows: clipboard sync, background run, system theme & full icon pass",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.43.exe",
-  "sha256": "8b0532f4ffbe1c742792ab1248076b32f8009fa866229be02c22a8258ee40249",
-  "size": 44712152,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-43",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.44.exe",
+  "sha256": "abeeb3e4124a1f9fdcb98039d2d69ab9ca3892bfccc3b3c5f269de332c1eda4d",
+  "size": 21172576,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-44",
   "highlights": [
-    "Windows: app now opens directly on the Dashboard \u2014 the nav was selecting the 'Tools' header instead of the first page, so the content frame stayed blank until you clicked.",
-    "Windows: Dashboard and Network refresh live every 1.5 s, so the LATENCY metric (and per-peer RTT pills) actually update once the first heartbeats are exchanged \u2014 before it would sit on '\u2014' until a reconnect.",
-    "Windows: status badges (Linked / Alive / Trusted) replaced with compact coloured icons \u2014 no more text labels stuck inside oval pills.",
-    "Windows: hero card on the Dashboard is now a solid accent colour instead of a gradient, matching the cleaner Mac look."
+    "Windows: clipboard now syncs both directions \u2014 copy text on the Mac and paste on Windows (and the reverse). Echo-suppression prevents loops.",
+    "Windows: closing the window keeps Entanglo running in the background so input sharing, clipboard and discovery stay alive. Use the new Quit button in Settings for a real exit.",
+    "Windows: live RTT \u2014 the Dashboard latency metric now updates the moment each heartbeat round-trip lands, not on a polling interval.",
+    "Windows: complete icon pass on Dashboard, Devices, Network, Updates, Logs, Input Sharing and Settings \u2014 status, counts, RTT and actions are now Segoe MDL2 glyphs instead of words like 'Connected', 'Linked' or 'RTT'.",
+    "Windows: theme-aware chrome \u2014 Mica BaseAlt with Acrylic fallback, page backgrounds transparent so the system's light/dark choice shows through."
   ]
 }
