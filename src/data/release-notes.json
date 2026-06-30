@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.1.43",
+    "date": "2026-06-30",
+    "title": "Windows: cleaner pills, solid hero, live latency",
+    "highlights": [
+      "Windows: app now opens directly on the Dashboard — the nav was selecting the 'Tools' header instead of the first page, so the content frame stayed blank until you clicked.",
+      "Windows: Dashboard and Network refresh live every 1.5 s, so the LATENCY metric (and per-peer RTT pills) actually update once the first heartbeats are exchanged — before it would sit on '—' until a reconnect.",
+      "Windows: status badges (Linked / Alive / Trusted) replaced with compact coloured icons — no more text labels stuck inside oval pills.",
+      "Windows: hero card on the Dashboard is now a solid accent colour instead of a gradient, matching the cleaner Mac look."
+    ]
+  },
+  {
     "version": "0.1.42",
     "date": "2026-06-30",
     "title": "Windows UI parity and stale-session cleanup",

@@ -1,15 +1,16 @@
 {
-  "version": "0.1.42",
+  "version": "0.1.43",
   "date": "2026-06-30",
-  "title": "Windows UI parity and stale-session cleanup",
+  "title": "Windows: cleaner pills, solid hero, live latency",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.42.exe",
-  "sha256": "feef172ae21f20172afd484963c8daf7cdad3b8b6ebc8121fc0eb5463f45e9df",
-  "size": 44705489,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-42",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.43.exe",
+  "sha256": "8b0532f4ffbe1c742792ab1248076b32f8009fa866229be02c22a8258ee40249",
+  "size": 44712152,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-43",
   "highlights": [
-    "Windows: Devices and Pairing tabs merged into a single Devices view that mirrors the macOS layout, with pending requests, status-aware connect buttons (Discovered / Trusted / Connected) and revoke for trusted peers all on one page.",
-    "Windows: Input Sharing rebuilt around the macOS form \u2014 four edge pickers (left, right, top, bottom) bound to the trusted device list with real persistence in AppSettings.EdgeConfig.",
-    "Windows: News & Updates tab added with the same Mac-style layout, fed by entanglo.netlify.app so every release now ships with proper changelog entries and a one-click installer that quits, updates and relaunches Entanglo for you."
+    "Windows: app now opens directly on the Dashboard \u2014 the nav was selecting the 'Tools' header instead of the first page, so the content frame stayed blank until you clicked.",
+    "Windows: Dashboard and Network refresh live every 1.5 s, so the LATENCY metric (and per-peer RTT pills) actually update once the first heartbeats are exchanged \u2014 before it would sit on '\u2014' until a reconnect.",
+    "Windows: status badges (Linked / Alive / Trusted) replaced with compact coloured icons \u2014 no more text labels stuck inside oval pills.",
+    "Windows: hero card on the Dashboard is now a solid accent colour instead of a gradient, matching the cleaner Mac look."
   ]
 }
