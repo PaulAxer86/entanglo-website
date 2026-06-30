@@ -1,5 +1,27 @@
 [
   {
+    "version": "0.1.45",
+    "date": "2026-06-30",
+    "title": "macOS: TCP_NODELAY — fluid mouse over the bridge",
+    "highlights": [
+      "macOS: outbound mouse-move stream from Mac to Windows is no longer choppy. NetworkTransport and the DiscoveryService listener now set NWProtocolTCP.Options.noDelay = true so Nagle's algorithm doesn't batch the small position frames, which was adding ~200 ms of jitter and producing the visible 'staircase' cursor motion on the receiver.",
+      "Cross-platform: same TCP_NODELAY treatment applied to every NWConnection the Mac opens or accepts — heartbeats, clipboard frames and edge-switch handovers all land with single-RTT latency.",
+      "Note: install this update on every Mac that controls a Windows peer; once shipped, the round-trip feels native in both directions."
+    ]
+  },
+  {
+    "version": "0.1.44",
+    "date": "2026-06-30",
+    "title": "Windows: clipboard sync, background run, system theme & full icon pass",
+    "highlights": [
+      "Windows: clipboard now syncs both directions — copy text on the Mac and paste on Windows (and the reverse). A new ClipboardBridge service watches the system clipboard, broadcasts changes to every active peer, and writes peer text back into the local clipboard with echo-suppression so the change doesn't bounce.",
+      "Windows: closing the window keeps Entanglo running in the background — the X button now hides the window instead of disposing the network services, so input sharing, clipboard sync and discovery stay alive. Use the new Quit button in Settings (red power glyph) for a real exit.",
+      "Windows: live RTT — ConnectionCoordinator now raises PeersChanged the instant a heartbeat round-trip is measured, so the Dashboard LATENCY metric and the per-peer RTT pills update event-driven rather than waiting for the 1.5 s timer.",
+      "Windows: complete icon pass on Dashboard, Devices, Network, Updates, Logs, Input Sharing and Settings — status, counts, RTT and actions are now Segoe MDL2 glyphs (check, shield, network, bell, search, lightning, link, trash, refresh, power) instead of words like 'Connected', 'Linked', 'RTT' or 'Remove'.",
+      "Windows: theme-aware chrome — MicaBackdrop BaseAlt with DesktopAcrylicBackdrop fallback when Mica isn't supported, page backgrounds set to Transparent so the system's light/dark choice (and the desktop wallpaper through Mica) show through every tab."
+    ]
+  },
+  {
     "version": "0.1.43",
     "date": "2026-06-30",
     "title": "Windows: cleaner pills, solid hero, live latency",
