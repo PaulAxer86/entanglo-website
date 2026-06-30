@@ -1,15 +1,15 @@
 {
-  "version": "0.1.39",
-  "date": "2026-06-28",
-  "title": "Windows peer handshake and discovery reliability",
+  "version": "0.1.42",
+  "date": "2026-06-30",
+  "title": "Windows UI parity and stale-session cleanup",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.39.dmg",
-  "sha256": "50e39f78db1d3812ad1165abb43812e230d71cfeb3e5e7c1516cbb11106a24a0",
-  "size": 5773100,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-39",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.42.dmg",
+  "sha256": "6b273da36f868110825fe763ed821dd8c1a6db9c118aa7d4b841912fd1f55c1f",
+  "size": 5564115,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-42",
   "highlights": [
-    "Mac peers now send the v1 hello frame when a TCP link opens, matching the Windows client handshake and exposing device name, roles, app version and platform immediately after connect.",
-    "Incoming hello frames are now used to refresh peer metadata in the saved device list without dropping the existing trust state, so Windows peers show a useful name/version instead of only a transport endpoint.",
-    "Windows Devices now rehydrates peers already discovered before the page was opened, fixing the case where SERVERP advertised correctly but the Windows UI appeared not to see either iMac."
+    "Windows: Devices and Pairing tabs merged into a single Devices view that mirrors the macOS layout, with pending requests, status-aware connect buttons (Discovered / Trusted / Connected) and revoke for trusted peers all on one page.",
+    "Windows: Input Sharing rebuilt around the macOS form \u2014 four edge pickers (left, right, top, bottom) bound to the trusted device list with real persistence in AppSettings.EdgeConfig.",
+    "Windows: Files, Print, Network and Logs pages refreshed with the shared design tokens (cards, pills, hero brushes) so the whole app reads as one product."
   ]
 }

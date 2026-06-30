@@ -1,0 +1,225 @@
+[
+  {
+    "version": "0.1.42",
+    "date": "2026-06-30",
+    "title": "Windows UI parity and stale-session cleanup",
+    "highlights": [
+      "Windows: Devices and Pairing tabs merged into a single Devices view that mirrors the macOS layout, with pending requests, status-aware connect buttons (Discovered / Trusted / Connected) and revoke for trusted peers all on one page.",
+      "Windows: Input Sharing rebuilt around the macOS form — four edge pickers (left, right, top, bottom) bound to the trusted device list with real persistence in AppSettings.EdgeConfig.",
+      "Windows: Files, Print, Network and Logs pages refreshed with the shared design tokens (cards, pills, hero brushes) so the whole app reads as one product.",
+      "Cross-platform: fix the orphan-session bug that prevented iMac1 from re-connecting to Windows after a rekey — Windows now finds the live PeerSession by transport reference in the cleanup path instead of trusting the provisional id.",
+      "macOS: discovery pipeline no longer stacks NWListeners when pollPermissions retries — startAdvertising and startBrowsing cancel the previous instance first, so Bonjour stops registering ' (2)' suffixes after a rebuild."
+    ]
+  },
+  {
+    "version": "0.1.41",
+    "date": "2026-06-28",
+    "title": "Four-edge cursor topology (top & bottom peers)",
+    "highlights": [
+      "Edge switching now supports all four screen edges (left, right, top, bottom) instead of only left/right. You can map a different trusted peer to each side, so a Mac with another Mac on its left, a third Mac on its right, and a Windows PC sitting above can hand the cursor off in the natural geometric direction with no third-party tools.",
+      "InputSharingView gets two new pickers ('Top edge → device', 'Bottom edge → device'). EdgeSwitchConfig stores the new target IDs as optional fields, so settings files written by older versions decode cleanly (missing edges stay nil).",
+      "Virtual-cursor seeding and entry-edge exit logic extended to the Y axis: crossing the local top edge lands the cursor at the bottom of the receiver, and only that same edge can return control to local — the opposite edge becomes an impassable wall, matching the existing anti-loop behaviour for left/right."
+    ]
+  },
+  {
+    "version": "0.1.39",
+    "date": "2026-06-28",
+    "title": "Windows peer handshake and discovery reliability",
+    "highlights": [
+      "Mac peers now send the v1 hello frame when a TCP link opens, matching the Windows client handshake and exposing device name, roles, app version and platform immediately after connect.",
+      "Incoming hello frames are now used to refresh peer metadata in the saved device list without dropping the existing trust state, so Windows peers show a useful name/version instead of only a transport endpoint.",
+      "Windows Devices now rehydrates peers already discovered before the page was opened, fixing the case where SERVERP advertised correctly but the Windows UI appeared not to see either iMac."
+    ]
+  },
+  {
+    "version": "0.1.38",
+    "date": "2026-06-28",
+    "title": "Forward-compat hardening for cross-platform peers",
+    "highlights": [
+      "Decoder now skips frames with an unknown messageType instead of treating them as a fatal decode failure. The transport logs 'Skipping unknown messageType …' at network level and keeps the connection alive — this is the path that lets a future Windows or Linux peer introduce a new message type within protocol v1 without dropping the link to older Mac peers.",
+      "InputEventMessage tolerates unknown mediaKey values (e.g. extra media buttons reported by a non-Mac keyboard). Unknown values decode to nil and isValid rejects the event for the .mediaKey case, instead of throwing the whole InputEvent away.",
+      "HelloPayload gains an optional platform field ('macOS', 'Windows', 'Linux'…) so peers can branch on coarse OS identity at handshake time. Older peers omit it; nothing breaks."
+    ]
+  },
+  {
+    "version": "0.1.37",
+    "date": "2026-06-28",
+    "title": "Latency works, peer screenshot doesn't hang",
+    "highlights": [
+      "Dashboard → Network Quality → Latency now shows real RTT in ms. Mechanism: every heartbeat carries an opaque sentAtMs timestamp; the peer echoes the last one it saw on its next heartbeat, and the sender computes RTT = now − echo. No clock sync required — each side reads its own monotonic clock (CACurrentMediaTime). The coordinator publishes the lowest live RTT to the NetworkQualityMonitor.",
+      "Peer screenshot stops spinning forever when the receiver doesn't reply: 8 s timeout on the controller clears the in-progress state and surfaces a clear error ('No reply from <peer> — check Screen Recording permission on that Mac.').",
+      "Receiver-side capture moved to SCScreenshotManager (ScreenCaptureKit, macOS 14+). The previous CGDisplayCreateImage path is deprecated and returns nil on Sonoma/Sequoia even with the Screen Recording grant — that's why captures from the OCLP-patched iMacs were silently failing. CG path stays as fallback on macOS 13.",
+      "Wire change is backwards compatible: HeartbeatMessage gains optional sentAtMs / echoSentAtMs fields; older peers omit them and the only loss is the Latency readout staying '—' until both sides are on 0.1.37."
+    ]
+  },
+  {
+    "version": "0.1.36",
+    "date": "2026-06-28",
+    "title": "Double-click works across the link",
+    "highlights": [
+      "Mouse click state (single / double / triple) now travels with every mouseDown and mouseUp over the LAN. The controller reads the real kCGMouseEventClickState that macOS already computed from its own click cadence, ships it in InputEventMessage, and the receiver applies it to the synthesized CGEvent before posting. Without this field, AppKit/WindowServer always saw clickState=1 on injected events, so two quick clicks were treated as two singles instead of a double-click — Finder wouldn't open files, text fields wouldn't select words, etc. Now Finder double-click-to-open and word/paragraph triple-click work the same way they do locally.",
+      "Backwards-compatible wire change: clickState is an optional Codable field. Older peers omit it and the receiver falls back to 1."
+    ]
+  },
+  {
+    "version": "0.1.35",
+    "date": "2026-06-28",
+    "title": "Dashboard cleanup + global Emergency Stop",
+    "highlights": [
+      "LAN Speed Test removed end-to-end: the card is gone from the Dashboard and the speedTestPing/Pong messages no longer travel on the wire. The feature never produced useful numbers on the OCLP'd Wi-Fi setup.",
+      "Pairing card now lists only currently-connected peers (state == .connected) instead of every device ever paired. Offline trusted devices stay in the Devices tab where they belong.",
+      "Emergency Stop moved from the Dashboard link banner to the global window toolbar (next to Refresh). It's now visible from every tab — stop.circle.fill in red when armed, play.circle.fill in orange when sharing is currently halted."
+    ]
+  },
+  {
+    "version": "0.1.34",
+    "date": "2026-06-28",
+    "title": "Devices cleanup + gentle notification sounds",
+    "highlights": [
+      "Devices tab: new trash button on every row to Forget a saved device (removes the entry from devices.json, not just demoting its trust state). Useful for clearing ghost rows left over from Bonjour name collisions (e.g. an old 'iMac Pro (3)' that was really the same Mac under a different LocalHostName).",
+      "Devices tab: new 'Reset' button in the header — wipes all saved devices behind a confirmation alert. Active discovery will repopulate any device still on the LAN.",
+      "DiscoveryService now drops self-discovery via loopback (lo0). The app no longer lists itself as a peer when its own Bonjour advertisement is observed under a stale LocalHostName.",
+      "Notification sounds for peer events (Settings → App Behavior → toggle on/off, default ON): Tink when a file is received, Funk when the peer link drops, Glass when it comes back. Uses only macOS bundled system sounds — nothing shipped in the bundle. DMG auto-update pushes stay silent so they don't double up with the install countdown sheet."
+    ]
+  },
+  {
+    "version": "0.1.32",
+    "date": "2026-06-27",
+    "title": "Printer Bridge — print via a peer that owns the printer's Wi-Fi",
+    "highlights": [
+      "New 'Print' tab in the sidebar: pick a PDF, pick a paired Mac, hit 'Send to print'. The file ships over the trusted-peer link (kind=printJob).",
+      "Receiver side: in Settings → 'Printer Bridge', enable the toggle, type the printer's Wi-Fi SSID + password (open networks: leave password empty) and pick the local CUPS queue. The bridge Mac then auto-handles the network swap.",
+      "How the swap works: save current SSID, networksetup -setairportnetwork to the printer's SoftAP, wait for association, lpr -P <queue> file.pdf, wait for the queue to drain, then networksetup -setairportpower off/on so macOS auto-rejoins your preferred network. Your home Wi-Fi password is never stored — only the printer's.",
+      "Bounded blast radius: the bridge Mac loses internet for ~30 s per print job. Timeouts at 15 s (network join), 60 s (job completion) and 20 s (restoring network) prevent the Mac from being stuck off-Wi-Fi.",
+      "Designed for the common HP / Wi-Fi-Direct-only printer case: the other Mac on Ethernet or normal Wi-Fi keeps internet, the bridge Mac sacrifices its Wi-Fi just for the print.",
+      "Backwards-compatible wire protocol: FileOfferPayload gains an optional 'kind' field; older peers see PDFs as regular file transfers and just save them to ~/Downloads/Entanglo."
+    ]
+  },
+  {
+    "version": "0.1.31",
+    "date": "2026-06-27",
+    "title": "Close button works, permissions refresh automatically",
+    "highlights": [
+      "Screenshot preview Close button now actually dismisses the sheet. The screenshot state is mirrored at the AppState level so the sheet binding sees the change and clears.",
+      "No more 'Refresh permissions' dance on the receiver after an auto-update: Entanglo re-checks Accessibility, Input Monitoring and Screen Recording every 2.5 seconds and on every app focus, and restarts Bonjour advertise/browse if they got torn down by the relaunch — incoming URL pushes and screenshot requests start working again as soon as macOS grants the new build.",
+      "Receiver: if Bonjour advertise or browse is found stopped during the auto-poll, it's restarted in the background so peers can discover the freshly-installed build without a manual refresh."
+    ]
+  },
+  {
+    "version": "0.1.30",
+    "date": "2026-06-27",
+    "title": "Reset TCC grants on auto-replace",
+    "highlights": [
+      "After replacing the app bundle, the helper runs 'tccutil reset All com.paoloasara.entanglo' so the new code-signed binary is prompted again for Accessibility, Screen Recording and Local Network. Fixes the 'silently denied' state that happened after every rebuild (the orphan grant tied to the old CDHash stayed visible but didn't apply to the new app).",
+      "On relaunch, macOS will show the standard permission prompts — accept them once and the new build is fully working again."
+    ]
+  },
+  {
+    "version": "0.1.29",
+    "date": "2026-06-27",
+    "title": "Fully automatic peer update — countdown, replace, relaunch",
+    "highlights": [
+      "Receiver auto-install: when a peer pushes a newer DMG, a 5 second cancellable countdown appears on the other Mac. Cancel keeps the file for manual install; otherwise it auto-replaces and relaunches.",
+      "Self-replace + auto-relaunch: instead of opening the DMG and asking you to drag, Entanglo now mounts the DMG, swaps its own bundle in /Applications, unmounts, deletes the DMG, and relaunches the new build. Works for both manual Install and the peer-side countdown.",
+      "Old DMG cleanup: on every startup, Entanglo removes Entanglo-X.Y.Z.dmg files older than the running version from ~/Downloads/Entanglo and the dev dist/ folder."
+    ]
+  },
+  {
+    "version": "0.1.28",
+    "date": "2026-06-27",
+    "title": "One-click peer install",
+    "highlights": [
+      "Press 'Install…' on the local Mac: the DMG is pushed over the existing trusted-peer link to every connected Mac, the local installer opens, and the app quits — one click does the whole chain.",
+      "On the receiving Mac the file lands in ~/Downloads/Entanglo/ and the Update banner lights up automatically: clicking 'Install…' there opens the same DMG and quits its app the same way.",
+      "Progress sheet shows how many peers got the push; 'Skip — install here only' lets you bail out and just open the local DMG without waiting."
+    ]
+  },
+  {
+    "version": "0.1.27",
+    "date": "2026-06-27",
+    "title": "Dashboard Quick Actions are now clickable",
+    "highlights": [
+      "Quick Actions card has real buttons: 'Push URL to peer' and 'Screenshot peer's screen' — no more dependence on the global hotkey, which on some macOS setups conflicts with system shortcuts (⌘⇧S is a common one).",
+      "Speed Test no longer hides until the link reports '.connected': as soon as an outbound transport exists, the Run button is enabled. Clear inline status when no peer is paired vs. paired-but-offline.",
+      "Global shortcuts (⌘⇧U / ⌘⇧S) still work in parallel for power users."
+    ]
+  },
+  {
+    "version": "0.1.26",
+    "date": "2026-06-27",
+    "title": "Quick wins: shortcuts, speed test, live Dashboard",
+    "highlights": [
+      "Push URL to peer with ⌘⇧U: sends the clipboard URL (or the active browser tab) to every connected trusted peer, which opens it in their default browser.",
+      "Screenshot a peer's screen with ⌘⇧S: asks the first connected peer for a full-screen capture, then shows a preview with Save / Copy to clipboard.",
+      "LAN Speed Test: measures real throughput between this Mac and a peer over the existing transport — Mbps, bytes, elapsed time, all live on the Dashboard.",
+      "Real Dashboard: linked banner with Emergency Stop, This Device + Network Quality + Pairing cards, Recent Transfers (last 3) and Quick Actions with shortcut hints.",
+      "Settings reorganized into 7 clear sections (Pairing, Roles, Input Sharing, Clipboard, App Behavior, Network, Permissions, About) with version + build info.",
+      "Network tab moved to the 'utilities' group in the sidebar — same features, less prominent for everyday workflow."
+    ]
+  },
+  {
+    "version": "0.1.25",
+    "date": "2026-06-27",
+    "title": "Port scout + better device identification",
+    "highlights": [
+      "SSDP/UPnP probe at app start: TVs, routers, IoT now show their real friendlyName + modelName (e.g. 'Samsung TV UE55', 'Fritz!Box 7590', 'Philips Hue Bridge').",
+      "Reverse DNS on demand: when you Identify a device, Entanglo asks the router for its hostname — often the user-set name like 'Paolo-iPhone'.",
+      "Click a row in the Network tab to expand → 'Identify (scan ports)' fires a fast parallel TCP probe over ~20 common ports (SSH, HTTP, SMB, AirPlay, Plex, RDP, VNC, …).",
+      "Banner grab for HTTP and SSH: shows 'Server: nginx/1.24', 'SSH-2.0-OpenSSH_for_Windows_8.6' — instant OS/service hint."
+    ]
+  },
+  {
+    "version": "0.1.24",
+    "date": "2026-06-27",
+    "title": "Network tab: who's on your LAN",
+    "highlights": [
+      "New 'Network' tab lists every device on your home network — Macs, phones, TVs, IoT — with hostname, IP, MAC and vendor inferred from the OUI prefix.",
+      "Bonjour-enriched: known devices show their advertised services (AirPlay, SMB, printers, SSH).",
+      "New-device alert: when a never-seen MAC joins your LAN, a system notification fires once. Useful catch for 'who's that thing online at 3am?'",
+      "Local Network permission row: replaced the orange warning with a neutral info pill — macOS doesn't expose this state, so the alarm was misleading."
+    ]
+  },
+  {
+    "version": "0.1.23",
+    "date": "2026-06-27",
+    "title": "Sidebar split: tools on top, utilities on bottom",
+    "highlights": [
+      "Sidebar is now split: Dashboard, Devices, Input Sharing and Files stay at the top; News & Updates, Settings and Logs are pinned at the bottom, separated by a divider.",
+      "Reduces visual clutter and keeps maintenance items out of the main workflow.",
+      "Selection works seamlessly across both groups — same keyboard navigation, same badges."
+    ]
+  },
+  {
+    "version": "0.1.22",
+    "date": "2026-06-27",
+    "title": "News & Updates tab",
+    "highlights": [
+      "New 'News & Updates' tab in the sidebar with embedded changelog and a 'What's new in X' card for the running version.",
+      "Local update detection: whenever a newer `Entanglo-X.Y.Z.dmg` lands in the project's `dist/` folder, a blue badge appears in the sidebar and an 'Install…' button opens the DMG.",
+      "Extensible to remote updates: same `UpdateSource` protocol will accept a future HTTP manifest source without view changes.",
+      "Release notes ship embedded in the bundle — works fully offline."
+    ]
+  },
+  {
+    "version": "0.1.21",
+    "date": "2026-06-27",
+    "title": "Keep this Mac awake while paired",
+    "highlights": [
+      "New 'Keep this Mac awake while a peer is connected' toggle in Settings → App Behavior. Default ON.",
+      "Holds IOPMAssertion (display + system idle sleep) only while a trusted peer is reachable and the heartbeat is alive — released automatically on disconnect or emergency stop.",
+      "Same mechanism as `caffeinate`; no third-party dependency, manual Apple-menu → Sleep still works.",
+      "News & Updates tab: see what changed in each release and get notified when a new DMG appears in `dist/`."
+    ]
+  },
+  {
+    "version": "0.1.20",
+    "date": "2026-06-24",
+    "title": "Input sharing reliability pass",
+    "highlights": [
+      "CGEventTap re-enables itself after kernel timeout — prevents silent input freezes.",
+      "Drag-to-select across the link: mouse moves while a button is held now ship as proper dragged events.",
+      "Modifier keys (Cmd/Shift/Opt/Ctrl) injected via flagsChanged so Cmd+C, Cmd+V, Shift-click etc. fire on the receiver.",
+      "Local cursor parked via CGAssociateMouseAndMouseCursorPosition + throttled warp — no more WindowServer races on Sequoia."
+    ]
+  }
+]

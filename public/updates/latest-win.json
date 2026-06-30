@@ -1,0 +1,15 @@
+{
+  "version": "0.1.42",
+  "date": "2026-06-30",
+  "title": "Windows UI parity and stale-session cleanup",
+  "minimumSystemVersion": "10.0.19041",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.42.exe",
+  "sha256": "feef172ae21f20172afd484963c8daf7cdad3b8b6ebc8121fc0eb5463f45e9df",
+  "size": 44705489,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-42",
+  "highlights": [
+    "Windows: Devices and Pairing tabs merged into a single Devices view that mirrors the macOS layout, with pending requests, status-aware connect buttons (Discovered / Trusted / Connected) and revoke for trusted peers all on one page.",
+    "Windows: Input Sharing rebuilt around the macOS form \u2014 four edge pickers (left, right, top, bottom) bound to the trusted device list with real persistence in AppSettings.EdgeConfig.",
+    "Windows: News & Updates tab added with the same Mac-style layout, fed by entanglo.netlify.app so every release now ships with proper changelog entries and a one-click installer that quits, updates and relaunches Entanglo for you."
+  ]
+}

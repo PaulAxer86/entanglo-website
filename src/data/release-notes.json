@@ -1,5 +1,27 @@
 [
   {
+    "version": "0.1.42",
+    "date": "2026-06-30",
+    "title": "Windows UI parity and stale-session cleanup",
+    "highlights": [
+      "Windows: Devices and Pairing tabs merged into a single Devices view that mirrors the macOS layout, with pending requests, status-aware connect buttons (Discovered / Trusted / Connected) and revoke for trusted peers all on one page.",
+      "Windows: Input Sharing rebuilt around the macOS form — four edge pickers (left, right, top, bottom) bound to the trusted device list with real persistence in AppSettings.EdgeConfig.",
+      "Windows: Files, Print, Network and Logs pages refreshed with the shared design tokens (cards, pills, hero brushes) so the whole app reads as one product.",
+      "Cross-platform: fix the orphan-session bug that prevented iMac1 from re-connecting to Windows after a rekey — Windows now finds the live PeerSession by transport reference in the cleanup path instead of trusting the provisional id.",
+      "macOS: discovery pipeline no longer stacks NWListeners when pollPermissions retries — startAdvertising and startBrowsing cancel the previous instance first, so Bonjour stops registering ' (2)' suffixes after a rebuild."
+    ]
+  },
+  {
+    "version": "0.1.41",
+    "date": "2026-06-28",
+    "title": "Four-edge cursor topology (top & bottom peers)",
+    "highlights": [
+      "Edge switching now supports all four screen edges (left, right, top, bottom) instead of only left/right. You can map a different trusted peer to each side, so a Mac with another Mac on its left, a third Mac on its right, and a Windows PC sitting above can hand the cursor off in the natural geometric direction with no third-party tools.",
+      "InputSharingView gets two new pickers ('Top edge → device', 'Bottom edge → device'). EdgeSwitchConfig stores the new target IDs as optional fields, so settings files written by older versions decode cleanly (missing edges stay nil).",
+      "Virtual-cursor seeding and entry-edge exit logic extended to the Y axis: crossing the local top edge lands the cursor at the bottom of the receiver, and only that same edge can return control to local — the opposite edge becomes an impassable wall, matching the existing anti-loop behaviour for left/right."
+    ]
+  },
+  {
     "version": "0.1.39",
     "date": "2026-06-28",
     "title": "Windows peer handshake and discovery reliability",
