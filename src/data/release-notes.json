@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.1.46",
+    "date": "2026-06-30",
+    "title": "Windows: system-tray icon, single-instance and NoDelay sockets",
+    "highlights": [
+      "Windows: Entanglo now sits in the system tray (notification area) while running in the background. The icon uses H.NotifyIcon under the hood; left-click brings the window back, right-click opens a Show / Quit menu — no more relaunching the .exe to reach the UI after closing.",
+      "Windows: single-instance lock — Program.cs now goes through Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey before booting the XAML host, and any second launch (installer 'Launch' checkbox, double-click on the .exe, autostart, anything) is redirected to the running primary, which surfaces its hidden window via the new ShowMainWindow helper. No more zombie process that fails to bind the listen port.",
+      "Windows: matching TCP_NODELAY pass — ConnectionCoordinator.HandleConnectionAsync sets TcpClient.NoDelay = true on every accepted and dialled socket, so heartbeats, clipboard frames and any controller traffic flowing Windows → Mac round-trip with single-RTT latency, matching the Mac 0.1.45 fix.",
+      "Windows: Settings Quit button (introduced in 0.1.44) now also dismisses the tray icon and exits cleanly via the renamed App.QuitEntanglo path."
+    ]
+  },
+  {
     "version": "0.1.45",
     "date": "2026-06-30",
     "title": "macOS: TCP_NODELAY — fluid mouse over the bridge",
