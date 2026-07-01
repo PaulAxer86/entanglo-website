@@ -1,15 +1,16 @@
 {
-  "version": "0.1.45",
-  "date": "2026-06-30",
-  "title": "macOS: TCP_NODELAY \u2014 fluid mouse over the bridge",
+  "version": "0.1.48",
+  "date": "2026-07-01",
+  "title": "macOS + Windows: peer-to-peer update propagation",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.45.dmg",
-  "sha256": "e78e5c87cb6a0885965256a5db0ce91de1cb136f283ea62ad49692c2c8028818",
-  "size": 5569418,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-45",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.48.dmg",
+  "sha256": "",
+  "size": 0,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-48",
   "highlights": [
-    "macOS: outbound mouse-move stream from Mac to Windows is no longer choppy. NetworkTransport and the DiscoveryService listener now set NWProtocolTCP.Options.noDelay = true so Nagle's algorithm doesn't batch the small position frames, which was adding ~200 ms of jitter and producing the visible 'staircase' cursor motion on the receiver.",
-    "Cross-platform: same TCP_NODELAY treatment applied to every NWConnection the Mac opens or accepts \u2014 heartbeats, clipboard frames and edge-switch handovers all land with single-RTT latency.",
-    "Note: install this update on every Mac that controls a Windows peer; once shipped, the round-trip feels native in both directions."
+    "macOS + Windows: a shared update outbox at ~/Library/Application Support/Entanglo/Updates/ (macOS) and %LocalAppData%\\Entanglo\\Updates\\ (Windows). Any installer dropped there is picked up as an available update, no Netlify round-trip required.",
+    "P2P propagation: when the primary peer clicks Install, the installer is streamed to every connected trusted peer over the existing TCP channel before the local install runs. Receivers see a 10-second countdown dialog and can cancel.",
+    "Windows: brand-new Files tab \u2014 pick a peer, choose a file, watch chunked transfer progress. Backed by the same FileOffer/FileChunk/FileAck protocol the Mac has used since 0.1.30.",
+    "Cleanup: on every launch, obsolete Entanglo-<version> installers (older than the running build) are wiped from the outbox and downloads folders to stop storage pile-up across releases."
   ]
 }

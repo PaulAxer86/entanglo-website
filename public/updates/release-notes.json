@@ -1,5 +1,20 @@
 [
   {
+    "version": "0.1.48",
+    "date": "2026-07-01",
+    "title": "Cross-platform: peer-to-peer update propagation + Windows Files tab",
+    "highlights": [
+      "Windows: brand-new Files tab (Entanglo.Windows/Pages/FilesPage.xaml). Pick a connected peer from the dropdown, click 'Choose file', and watch chunked transfer progress row-by-row. Backed by a new FileTransferService.cs in Entanglo.Core that mirrors the Mac semantics — 2 MB raw chunks (~2.7 MB base64, comfortably under the codec 4 MB cap), Offered/Active/Completed/Failed status, sequential-write to %LocalAppData%\\Entanglo\\Downloads\\.",
+      "Windows: ConnectionCoordinator now dispatches FileOffer/FileChunk/FileAck through the new FileTransferService (previously the enum entries were declared but no handler existed). AttachFileTransfers wires the SendToPeer callback so the service reuses the existing NetworkTransport frames.",
+      "Cross-platform: peer-to-peer update propagation. Drop the freshly built installer into ~/Library/Application Support/Entanglo/Updates/ (Mac) or %LocalAppData%\\Entanglo\\Updates\\ (Win) and every connected peer receives it over TCP. The Windows UpdateService gains PushUpdateToPeers / EvaluateIncomingFile / BeginInstallAsync — same shape as the Mac API — so 'Install' pushes to peers before the local install runs.",
+      "Windows: receiver-side auto-install countdown. When a peer pushes an installer newer than the running build, a 10-second ContentDialog opens with 'Install now' / 'Not now', matching the Mac autoInstallCountdown UX. RunInstallerAndQuit runs the .exe silently, relaunches, and the helper .cmd deletes the installer after use.",
+      "Cross-platform: cleanup at launch. UpdateService.CleanupOldInstallers (Win) and cleanupOldDMGs (Mac, extended) delete every Entanglo-<version> installer older than the running build from outbox + downloads, so old dist artifacts don't pile up.",
+      "Windows: MessageCodec.EncodeRaw — new zero-copy path that wraps an already-JSON-serialized payload in an envelope. FileTransferService uses it so the ~2 MB base64 chunk isn't re-serialized twice per frame.",
+      "macOS: LocalDistFolderSource now watches ~/Library/Application Support/Entanglo/Updates/ in addition to the dev-only ~/entanglo/Entanglo/dist/ folder — installed copies get the same outbox-as-release-channel behaviour as Windows.",
+      "Note: this is the first release where the primary Mac + Win peer becomes the update source for the whole fleet. Netlify remains the fallback channel (latest.json, latest-win.json), but with the outbox path Paolo can ship a new build without going through the website at all."
+    ]
+  },
+  {
     "version": "0.1.47",
     "date": "2026-07-01",
     "title": "Windows: self-contained build — no external .NET runtime required",

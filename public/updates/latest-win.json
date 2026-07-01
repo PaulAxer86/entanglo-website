@@ -1,15 +1,16 @@
 {
-  "version": "0.1.47",
+  "version": "0.1.48",
   "date": "2026-07-01",
-  "title": "Windows: self-contained build \u2014 no external .NET runtime required",
+  "title": "Windows: Files tab + peer-to-peer update propagation",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.47.exe",
-  "sha256": "6726ff8f88149808bae0f75f4d4376d7b2ec8366dd00c890822108551cbb0273",
-  "size": 45277016,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-47",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.48.exe",
+  "sha256": "d4412dd759ed8144c0bd1f3c6b48e82a567b9f1516440c60d08e0fbfbaf103f6",
+  "size": 45306757,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-48",
   "highlights": [
-    "Windows: the installer no longer prompts to install .NET. The apphost was previously framework-dependent with a WinAppSDK self-contained bundle, which made the loader search .NET inside 'C:\\Program Files\\Entanglo\\' instead of the global 'C:\\Program Files\\dotnet\\' \u2014 so even a correctly installed Desktop Runtime 8 wouldn't satisfy it.",
-    "Windows: switched to a fully self-contained publish (SelfContained=true, PublishSelfContained=true) so the .NET 8 runtime, Windows App SDK 1.6 runtime, WinUI 3 XAML islands and H.NotifyIcon are all bundled inside the app folder. Zero external dependencies at install time.",
-    "Windows: installer size grows from ~21 MB to ~45 MB as a result \u2014 that's the price of bundling .NET, but it means Entanglo now installs cleanly on a fresh Win11 with no runtime preflight and can be redistributed as a single .exe."
+    "Windows: brand-new Files tab. Pick a connected device, choose a file, and watch chunked transfer progress in real time. Backed by the FileOffer / FileChunk / FileAck protocol Mac has used since 0.1.30, so Mac \u2194 Windows transfers work out of the box.",
+    "Windows: peer-to-peer update propagation. Drop Entanglo-Setup-<version>.exe into %LocalAppData%\\Entanglo\\Updates\\ (or click Install on a peer) and every connected Entanglo peer receives the installer over TCP with a 10-second countdown dialog.",
+    "Windows: cleanup at launch \u2014 obsolete Entanglo-Setup-<version>.exe files older than the running build are deleted from the outbox and downloads folders so old installers don't pile up.",
+    "Windows: Install button now pushes to all connected peers before running the local installer, mirroring the Mac beginInstall flow."
   ]
 }
