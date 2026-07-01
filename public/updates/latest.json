@@ -4,8 +4,8 @@
   "title": "macOS + Windows: peer-to-peer update propagation",
   "minimumSystemVersion": "13.0",
   "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.48.dmg",
-  "sha256": "",
-  "size": 0,
+  "sha256": "3777f257b2dee24ff48b7b9a7f5071341cd7f479d95e6472f1029d562a94f54b",
+  "size": 5570428,
   "notesUrl": "https://entanglo.netlify.app/changelog#0-1-48",
   "highlights": [
     "macOS + Windows: a shared update outbox at ~/Library/Application Support/Entanglo/Updates/ (macOS) and %LocalAppData%\\Entanglo\\Updates\\ (Windows). Any installer dropped there is picked up as an available update, no Netlify round-trip required.",
