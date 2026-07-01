@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.1.47",
+    "date": "2026-07-01",
+    "title": "Windows: self-contained build — no external .NET runtime required",
+    "highlights": [
+      "Windows: the installer no longer prompts to install .NET. The apphost was previously framework-dependent with a WinAppSDK self-contained bundle, which made the loader search .NET inside 'C:\\Program Files\\Entanglo\\' instead of the global 'C:\\Program Files\\dotnet\\' — so even a correctly installed Desktop Runtime 8 wouldn't satisfy it.",
+      "Windows: switched to a fully self-contained publish (SelfContained=true, PublishSelfContained=true) so the .NET 8 runtime, Windows App SDK 1.6 runtime, WinUI 3 XAML islands and H.NotifyIcon are all bundled inside the app folder. Zero external dependencies at install time.",
+      "Windows: installer size grows from ~21 MB to ~45 MB as a result — that's the price of bundling .NET, but it means Entanglo now installs cleanly on a fresh Win11 with no runtime preflight and can be redistributed as a single .exe."
+    ]
+  },
+  {
     "version": "0.1.46",
     "date": "2026-06-30",
     "title": "Windows: system-tray icon, single-instance and NoDelay sockets",

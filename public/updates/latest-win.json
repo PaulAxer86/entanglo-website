@@ -1,15 +1,15 @@
 {
-  "version": "0.1.46",
-  "date": "2026-06-30",
-  "title": "Windows: system-tray icon, single-instance and NoDelay sockets",
+  "version": "0.1.47",
+  "date": "2026-07-01",
+  "title": "Windows: self-contained build \u2014 no external .NET runtime required",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.46.exe",
-  "sha256": "e55ebf303df07ff630ae2c01749b0daacd9457e1c8646ec191b64ac2077c3981",
-  "size": 21784065,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-46",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.47.exe",
+  "sha256": "6726ff8f88149808bae0f75f4d4376d7b2ec8366dd00c890822108551cbb0273",
+  "size": 45277016,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-47",
   "highlights": [
-    "Windows: Entanglo now sits in the system tray (notification area) while running in the background. Left-click brings the window back, right-click opens a Show / Quit menu \u2014 no more relaunching the .exe to get to the UI after closing.",
-    "Windows: single-instance lock \u2014 launching the .exe (or the installer's 'Launch' checkbox) while Entanglo is already running just restores the existing window via AppInstance redirection, instead of starting a second process that fails to bind the listen port.",
-    "Windows: matching TCP_NODELAY pass \u2014 the .NET TcpClient is now set to NoDelay = true on accept and dial, so heartbeats, clipboard frames and any future controller traffic flowing Windows \u2192 Mac round-trip with single-RTT latency, matching the Mac 0.1.45 fix."
+    "Windows: the installer no longer prompts to install .NET. The apphost was previously framework-dependent with a WinAppSDK self-contained bundle, which made the loader search .NET inside 'C:\\Program Files\\Entanglo\\' instead of the global 'C:\\Program Files\\dotnet\\' \u2014 so even a correctly installed Desktop Runtime 8 wouldn't satisfy it.",
+    "Windows: switched to a fully self-contained publish (SelfContained=true, PublishSelfContained=true) so the .NET 8 runtime, Windows App SDK 1.6 runtime, WinUI 3 XAML islands and H.NotifyIcon are all bundled inside the app folder. Zero external dependencies at install time.",
+    "Windows: installer size grows from ~21 MB to ~45 MB as a result \u2014 that's the price of bundling .NET, but it means Entanglo now installs cleanly on a fresh Win11 with no runtime preflight and can be redistributed as a single .exe."
   ]
 }
