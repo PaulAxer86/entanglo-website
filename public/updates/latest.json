@@ -1,16 +1,16 @@
 {
-  "version": "0.1.48",
-  "date": "2026-07-01",
-  "title": "macOS + Windows: peer-to-peer update propagation",
+  "version": "0.1.49",
+  "date": "2026-07-03",
+  "title": "Shared version bump \u2014 Windows fixes; Mac unchanged",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.48.dmg",
-  "sha256": "3777f257b2dee24ff48b7b9a7f5071341cd7f479d95e6472f1029d562a94f54b",
-  "size": 5570428,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-48",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.49.dmg",
+  "sha256": "9f5945d046cc09bd111ba98ce54a7dfdcfad2ada31aeea60d0f85543f2b24a2a",
+  "size": 5570422,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-49",
   "highlights": [
-    "macOS + Windows: a shared update outbox at ~/Library/Application Support/Entanglo/Updates/ (macOS) and %LocalAppData%\\Entanglo\\Updates\\ (Windows). Any installer dropped there is picked up as an available update, no Netlify round-trip required.",
-    "P2P propagation: when the primary peer clicks Install, the installer is streamed to every connected trusted peer over the existing TCP channel before the local install runs. Receivers see a 10-second countdown dialog and can cancel.",
-    "Windows: brand-new Files tab \u2014 pick a peer, choose a file, watch chunked transfer progress. Backed by the same FileOffer/FileChunk/FileAck protocol the Mac has used since 0.1.30.",
-    "Cleanup: on every launch, obsolete Entanglo-<version> installers (older than the running build) are wiped from the outbox and downloads folders to stop storage pile-up across releases."
+    "Version-only bump so Mac and Windows stay on the same release number \u2014 no behavioral change on the Mac side.",
+    "Windows: clipboard sync survives the app going to tray (Win32 sequence-number polling replaces the foreground-only UWP event).",
+    "Windows: Dashboard latency shows a real value again \u2014 fixed a PeerSession rekey bug that was silently dropping every RTT update.",
+    "Windows: hero card link-state border + tighter card padding, closer to the Mac visual language."
   ]
 }

@@ -1,16 +1,16 @@
 {
-  "version": "0.1.48",
-  "date": "2026-07-01",
-  "title": "Windows: Files tab + peer-to-peer update propagation",
+  "version": "0.1.49",
+  "date": "2026-07-03",
+  "title": "Windows: background-safe clipboard, RTT dashboard fix, UI polish",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.48.exe",
-  "sha256": "d4412dd759ed8144c0bd1f3c6b48e82a567b9f1516440c60d08e0fbfbaf103f6",
-  "size": 45306757,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-48",
+  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.49.exe",
+  "sha256": "3a226fc15e4d0346d7a809fcee5ae3fa0833449dd47223a5f5a4b1537b566612",
+  "size": 45299327,
+  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-49",
   "highlights": [
-    "Windows: brand-new Files tab. Pick a connected device, choose a file, and watch chunked transfer progress in real time. Backed by the FileOffer / FileChunk / FileAck protocol Mac has used since 0.1.30, so Mac \u2194 Windows transfers work out of the box.",
-    "Windows: peer-to-peer update propagation. Drop Entanglo-Setup-<version>.exe into %LocalAppData%\\Entanglo\\Updates\\ (or click Install on a peer) and every connected Entanglo peer receives the installer over TCP with a 10-second countdown dialog.",
-    "Windows: cleanup at launch \u2014 obsolete Entanglo-Setup-<version>.exe files older than the running build are deleted from the outbox and downloads folders so old installers don't pile up.",
-    "Windows: Install button now pushes to all connected peers before running the local installer, mirroring the Mac beginInstall flow."
+    "Windows: clipboard sync now keeps working when the app is minimized or closed to the tray. The UWP Clipboard.ContentChanged event only fires while the app is foreground, so the bridge now polls Win32 GetClipboardSequenceNumber every 500 ms and reads via OpenClipboard/GetClipboardData, which is background-safe.",
+    "Windows: Dashboard latency finally shows a real value instead of a permanent '\u2014'. Root cause: PeerSession was a positional record and the Hello rekey path created a fresh clone in the peer map while the read/heartbeat loops kept mutating the stale one, so LastRttMs never surfaced through ActivePeers. PeerSession is now a mutable class and RekeySession mutates in place.",
+    "Windows: peer row RTT pill now formats as '42 ms' / '\u2014' via a computed RttDisplay property on ActivePeer instead of a raw double.",
+    "Windows: Hero card gains a link-state border (green when linked, subtle white when waiting) mirroring the Mac StatusPill tone system. Card padding tightened from 18 to 16 px for a less bulky feel."
   ]
 }

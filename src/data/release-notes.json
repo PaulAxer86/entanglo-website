@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.1.49",
+    "date": "2026-07-03",
+    "title": "Windows: background-safe clipboard, RTT dashboard fix, UI polish",
+    "highlights": [
+      "Windows: clipboard sync no longer dies the moment the app is minimized or closed to tray. UWP Clipboard.ContentChanged only fires while the app is foreground, so ClipboardBridge now polls Win32 GetClipboardSequenceNumber every 500 ms and reads via OpenClipboard/GetClipboardData — background-safe and lock-tolerant with a small retry loop. Writes still go through the UWP DataPackage API since SetContent is safe from any context.",
+      "Windows: Dashboard latency finally shows a real value. Root cause was subtle: PeerSession was a positional record, and after the Hello handshake the rekey path did `session with { DeviceId = ... }` and put the fresh clone in the peer map, while ReadLoop / Heartbeat handler kept mutating the stale original. LastRttMs was written to the wrong object and ActivePeers pulled the untouched clone. PeerSession is now a mutable sealed class; RekeySession mutates DeviceId/DeviceName in place and only re-keys the dictionary.",
+      "Windows: peer row RTT pill now formats as '42 ms' / '—' via a computed RttDisplay property on ActivePeer, replacing the raw double bind that was showing 43.7-shaped numbers with no unit when it did populate.",
+      "Windows: Hero card gains a link-state border — green when linked, subtle white when waiting — mirroring the Mac StatusPill tone system. Card padding tightened from 18 to 16 px, and Entanglo.PInvoke gets Clipboard/GlobalLock bindings alongside the existing SendInput / hook set.",
+      "Cross-platform: version bumped in lockstep — the Mac DMG is a version-only 0.1.49 with no behavioural change so the fleet stays on a single release number."
+    ]
+  },
+  {
     "version": "0.1.48",
     "date": "2026-07-01",
     "title": "Cross-platform: peer-to-peer update propagation + Windows Files tab",
