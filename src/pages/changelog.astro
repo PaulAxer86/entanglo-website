@@ -9,30 +9,30 @@ const latest = entries[0];
 
 <Base title="Changelog — Entanglo" description="Every release of Entanglo. What changed, when.">
   <section class="container-narrow pt-20 pb-10">
-    <div class="text-xs uppercase tracking-widest text-accent-glow mb-3">Changelog</div>
+    <div class="text-xs uppercase tracking-widest text-accent mb-3">Changelog</div>
     <h1 class="display text-5xl md:text-6xl gradient-text leading-tight">
       Every build, every change.
     </h1>
-    <p class="mt-5 text-ink-300 text-lg max-w-2xl">
+    <p class="mt-5 text-ink-700 text-lg max-w-2xl">
       Entanglo ships often and small. Currently on {latest?.version}.
     </p>
   </section>
 
   <section class="container-narrow py-12">
-    <div class="space-y-12 border-l border-white/10 pl-8 md:pl-12 relative">
+    <div class="space-y-12 border-l border-ink-950/15 pl-8 md:pl-12 relative">
       {entries.map((e, i) => (
         <article class="relative">
-          <span class={`absolute -left-[36px] md:-left-[51px] top-2 w-3 h-3 rounded-full ${i === 0 ? 'bg-accent-glow shadow-[0_0_18px_rgba(124,92,255,0.9)]' : 'bg-ink-500'}`}></span>
+          <span class={`absolute -left-[36px] md:-left-[51px] top-2 w-3 h-3 rounded-full ${i === 0 ? 'bg-accent shadow-[0_0_18px_rgba(91,63,224,0.55)]' : 'bg-ink-300'}`}></span>
           <div class="flex flex-wrap items-baseline gap-3 mb-3">
-            <h2 class="display text-2xl md:text-3xl text-white">{e.version}</h2>
-            <span class="text-sm text-ink-400">{e.date}</span>
-            {i === 0 && <span class="text-xs uppercase tracking-widest text-accent-glow border border-accent/40 rounded-full px-2.5 py-0.5">Latest</span>}
+            <h2 class="display text-2xl md:text-3xl text-ink-950">{e.version}</h2>
+            <span class="text-sm text-ink-500">{e.date}</span>
+            {i === 0 && <span class="text-xs uppercase tracking-widest text-accent border border-accent/40 rounded-full px-2.5 py-0.5">Latest</span>}
           </div>
-          <p class="text-lg text-ink-100 mb-4">{e.title}</p>
+          <p class="text-lg text-ink-800 mb-4">{e.title}</p>
           <ul class="space-y-2.5">
             {e.highlights.map(h => (
-              <li class="flex gap-3 text-ink-300 leading-relaxed">
-                <span class="text-accent-glow shrink-0 mt-1.5">•</span>
+              <li class="flex gap-3 text-ink-700 leading-relaxed">
+                <span class="text-accent shrink-0 mt-1.5">•</span>
                 <span>{h}</span>
               </li>
             ))}

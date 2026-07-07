@@ -9,15 +9,15 @@ const nav = [
 ];
 ---
 
-<header class="sticky top-0 z-50 backdrop-blur-xl bg-ink-950/70 border-b border-white/[0.04]">
+<header class="sticky top-0 z-50 backdrop-blur-xl bg-cream-50/75 border-b border-ink-950/[0.08]">
   <div class="container-narrow flex items-center justify-between h-14">
     <Logo />
-    <nav class="hidden md:flex items-center gap-7 text-sm text-ink-200">
+    <nav class="hidden md:flex items-center gap-7 text-sm text-ink-700">
       {nav.map(item => (
-        <a href={item.href} class="hover:text-white transition-colors">{item.label}</a>
+        <a href={item.href} class="hover:text-ink-950 transition-colors">{item.label}</a>
       ))}
     </nav>
-    <a href="/download" class="text-sm rounded-full bg-white text-ink-950 px-4 py-1.5 font-medium hover:bg-ink-100 transition-colors">
+    <a href="/download" class="text-sm rounded-full bg-ink-950 text-cream-50 px-4 py-1.5 font-medium hover:bg-ink-900 transition-colors">
       Get Entanglo
     </a>
   </div>

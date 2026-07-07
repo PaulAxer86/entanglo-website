@@ -9,9 +9,9 @@ const { version } = Astro.props;
   <!-- ambient glow -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
     <div class="absolute left-1/2 top-10 -translate-x-1/2 w-[860px] h-[860px] rounded-full
-                bg-accent/20 blur-[140px] opacity-60 animate-pulse-slow"></div>
+                bg-accent/10 blur-[140px] opacity-70 animate-pulse-slow"></div>
     <div class="absolute right-[-10%] top-40 w-[460px] h-[460px] rounded-full
-                bg-accent-cyan/10 blur-[120px]"></div>
+                bg-accent-cyan/8 blur-[120px]"></div>
   </div>
 
   <div class="container-narrow text-center">
@@ -20,13 +20,13 @@ const { version } = Astro.props;
       alt=""
       width="128"
       height="128"
-      class="mx-auto w-28 h-28 md:w-32 md:h-32 rounded-[22%] mb-7 shadow-2xl shadow-accent/30 animate-float"
+      class="mx-auto w-28 h-28 md:w-32 md:h-32 rounded-[22%] mb-7 shadow-2xl shadow-ink-950/15 animate-float"
       loading="eager"
       decoding="async"
     />
-    <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03]
-                px-3.5 py-1.5 text-xs text-ink-200 mb-8">
-      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+    <div class="inline-flex items-center gap-2 rounded-full border border-ink-950/10 bg-white/60
+                px-3.5 py-1.5 text-xs text-ink-700 mb-8">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
       Version {version} — fresh today
     </div>
 
@@ -35,7 +35,7 @@ const { version } = Astro.props;
       All your Macs.
     </h1>
 
-    <p class="mt-7 text-lg md:text-xl text-ink-200 max-w-2xl mx-auto leading-relaxed">
+    <p class="mt-7 text-lg md:text-xl text-ink-700 max-w-2xl mx-auto leading-relaxed">
       Entanglo turns every Mac on your Wi-Fi into a single workspace.
       Mouse, keyboard, clipboard, files, printer — they flow between machines
       like one machine.
@@ -49,7 +49,7 @@ const { version } = Astro.props;
       <a href="/#features" class="btn-ghost">Explore features</a>
     </div>
 
-    <p class="mt-5 text-xs text-ink-400">
+    <p class="mt-5 text-xs text-ink-500">
       Free. macOS 13+. Apple Silicon &amp; Intel. No account.
     </p>
   </div>
@@ -57,8 +57,8 @@ const { version } = Astro.props;
   <!-- real app screenshot -->
   <div class="container-narrow mt-20 md:mt-28">
     <div class="relative mx-auto max-w-5xl">
-      <div aria-hidden="true" class="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-accent/20 via-transparent to-accent-cyan/20 blur-3xl opacity-60"></div>
-      <div class="glass p-1.5 md:p-2 shadow-2xl shadow-black/40 ring-1 ring-white/5">
+      <div aria-hidden="true" class="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-accent/12 via-transparent to-accent-cyan/12 blur-3xl opacity-70"></div>
+      <div class="glass p-1.5 md:p-2 shadow-2xl shadow-ink-950/15 ring-1 ring-ink-950/[0.06]">
         <img
           src="/img/app-screenshot.png"
           alt="Entanglo for macOS — Dashboard"

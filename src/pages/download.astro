@@ -6,8 +6,10 @@ import notes from '@/data/release-notes.json';
 
 const latest = notes[0] as { version: string; date: string; title: string; highlights: string[] };
 const version = latest?.version ?? '0.1.0';
+const winRelease = 'v0.1.50';
+const winVersion = '0.1.49';
 const dmgUrl = `/downloads/Entanglo-${version}.dmg`;
-const windowsUrl = `/downloads/Entanglo-Windows-${version}.zip`;
+const windowsUrl = `https://github.com/PaulAxer86/entanglo-website/releases/download/${winRelease}/Entanglo-Setup-${winVersion}.exe`;
 ---
 
 <Base
@@ -15,34 +17,34 @@ const windowsUrl = `/downloads/Entanglo-Windows-${version}.zip`;
   description={`Get the latest Entanglo for macOS and Windows — version ${version}. Free, native, no account.`}
 >
   <section class="container-narrow pt-24 pb-12 text-center">
-    <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs text-ink-200 mb-7">
-      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+    <div class="inline-flex items-center gap-2 rounded-full border border-ink-950/10 bg-white/60 px-3.5 py-1.5 text-xs text-ink-700 mb-7">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
       Latest — {latest?.date}
     </div>
     <h1 class="display text-5xl md:text-7xl gradient-text leading-[1.05]">
       Entanglo {version}
     </h1>
-    <p class="mt-6 text-ink-200 text-xl max-w-2xl mx-auto">{latest?.title}</p>
+    <p class="mt-6 text-ink-700 text-xl max-w-2xl mx-auto">{latest?.title}</p>
 
     <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
       <DownloadButton href={dmgUrl} version={`v${version}`} />
-      <a href={windowsUrl} class="btn-ghost">Windows v{version}</a>
+      <a href={windowsUrl} class="btn-ghost">Windows v{winVersion}</a>
       <a href="/changelog" class="btn-ghost">Full changelog</a>
     </div>
 
-    <p class="mt-4 text-xs text-ink-400 leading-relaxed">
+    <p class="mt-4 text-xs text-ink-500 leading-relaxed">
       DMG · macOS 13 Ventura or newer · Apple Silicon &amp; Intel<br />
-      ZIP · Windows 11 x64 preview build
+      EXE · Windows 10 20H1 (build 19041) or newer · x64
     </p>
   </section>
 
   <section class="container-narrow py-12">
     <div class="glass p-8 md:p-10 max-w-3xl mx-auto">
-      <div class="text-xs uppercase tracking-widest text-accent-glow mb-4">What's in this build</div>
-      <ul class="space-y-3 text-ink-200">
+      <div class="text-xs uppercase tracking-widest text-accent mb-4">What's in this build</div>
+      <ul class="space-y-3 text-ink-800">
         {latest?.highlights?.map(h => (
           <li class="flex gap-3">
-            <span class="text-accent-glow shrink-0 mt-1">✦</span>
+            <span class="text-accent shrink-0 mt-1">✦</span>
             <span class="leading-relaxed">{h}</span>
           </li>
         ))}
@@ -53,19 +55,19 @@ const windowsUrl = `/downloads/Entanglo-Windows-${version}.zip`;
   <section class="container-narrow py-12">
     <div class="grid md:grid-cols-2 gap-5">
       <div class="glass p-7">
-        <div class="text-xs uppercase tracking-widest text-ink-400 mb-3">macOS install</div>
-        <ol class="space-y-2 text-ink-200 text-sm list-decimal pl-5">
-          <li>Open the downloaded <code class="font-mono text-accent-glow">.dmg</code>.</li>
+        <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">macOS install</div>
+        <ol class="space-y-2 text-ink-800 text-sm list-decimal pl-5">
+          <li>Open the downloaded <code class="font-mono text-accent">.dmg</code>.</li>
           <li>Drag <strong>Entanglo</strong> into the <strong>Applications</strong> folder.</li>
           <li>Launch it from Applications. macOS may ask once — confirm.</li>
           <li>Grant <strong>Accessibility</strong> and <strong>Local Network</strong> when prompted.</li>
         </ol>
       </div>
       <div class="glass p-7">
-        <div class="text-xs uppercase tracking-widest text-ink-400 mb-3">Windows preview</div>
-        <p class="text-ink-200 text-sm leading-relaxed">
+        <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">Windows preview</div>
+        <p class="text-ink-800 text-sm leading-relaxed">
           Download the Windows ZIP, extract it, then launch
-          <code class="font-mono text-accent-glow">Entanglo.Windows.exe</code>. Keep the extracted
+          <code class="font-mono text-accent">Entanglo.Windows.exe</code>. Keep the extracted
           folder intact because the preview build ships with its WinUI runtime files.
         </p>
       </div>
@@ -74,7 +76,7 @@ const windowsUrl = `/downloads/Entanglo-Windows-${version}.zip`;
 
   <AdSlot slot="download-bottom" />
 
-  <section class="container-narrow py-12 text-center text-ink-400 text-sm">
+  <section class="container-narrow py-12 text-center text-ink-500 text-sm">
     Signature (ad-hoc) means the app is identified to macOS without an Apple Developer account.
     The first launch may require a right-click → Open.
   </section>
