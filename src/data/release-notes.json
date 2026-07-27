@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.1.57",
+    "date": "2026-07-27",
+    "title": "Windows: Quit from tray exits reliably + installer kill",
+    "highlights": [
+      "Windows: 'Quit Entanglo' from the system tray now exits the process reliably. The 0.1.56 watchdog used Task.Delay().ContinueWith(), whose continuation is scheduled on the WinUI DispatcherQueue. The DispatcherQueue does not pump when the app window is hidden and only the tray icon is active, so the watchdog never fired. Replaced with a raw OS Thread (no DispatcherQueue dependency) that calls Environment.Exit(0) after 2 s unconditionally — the process now exits within 2 s of clicking Quit regardless of what the cleanup does.",
+      "Windows: installer no longer stalls when upgrading over a running build. A new PrepareToInstall step force-kills Entanglo.Windows.exe via taskkill /F before copying any files, so the old process is always gone by the time file replacement starts.",
+      "Includes all 0.1.56 changes: connection stability on minimize/background (EcoQoS fix), real LAN latency display, controller mode (edge switching), fast auto-reconnect."
+    ]
+  },
+  {
     "version": "0.1.56",
     "date": "2026-07-27",
     "title": "Windows: connection stability, real latency, Quit fix + controller mode",

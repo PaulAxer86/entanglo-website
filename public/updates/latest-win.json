@@ -1,18 +1,15 @@
 {
-  "version": "0.1.56",
+  "version": "0.1.57",
   "date": "2026-07-27",
-  "title": "Windows: connection stability + controller mode (edge switching)",
+  "title": "Windows: Quit from tray now exits reliably",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.56/Entanglo-Setup-0.1.56.exe",
-  "sha256": "5c3fa15ed756e0b8e33469a6480fd2de481b8691d635b751876cc966de871ca4",
-  "size": 44904885,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-56",
+  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.57/Entanglo-Setup-0.1.57.exe",
+  "sha256": "554655ca9cf3434ab3b07655665bf12d014fba6ee7028e81201407e4ad4dfb8f",
+  "size": 44936326,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-57",
   "highlights": [
-    "Windows: connection no longer drops when the window is minimized or the app runs in the background. Root cause was Windows 11 EcoQoS power-throttling stalling .NET thread-pool threads by several seconds — the heartbeat timeout was 4 s, so any backgrounded dwell triggered a false disconnect. Timeout raised to 15 s and process priority set to AboveNormal so the background heartbeat and read loops are never starved.",
-    "Windows: latency display now shows real LAN round-trip instead of the ~903 ms phase artefact. Heartbeat interval reduced from 1 s to 250 ms — the maximum RTT display error is now the heartbeat interval, so a 1 ms LAN link reads as 1–250 ms instead of the previous 900+ ms.",
-    "Windows: 'Quit Entanglo' from the system tray now reliably exits the app. InputCaptureService.Dispose() was calling PostQuitMessage(0), which posts WM_QUIT to the calling thread (the UI thread), not the hook thread — so the hook thread kept running and blocked clean shutdown. Fix: the hook thread stores its own Win32 thread ID at startup and Dispose() posts WM_QUIT directly to that thread via PostThreadMessageW.",
-    "Windows: controller mode — the PC can now push mouse and keyboard events to a Mac. Moving the cursor to a configured screen edge automatically activates input capture and forwards all events to the assigned Mac peer. Press Escape or Scroll Lock to release control back to the local desktop. Configure edge-to-peer mappings in the Input Sharing tab.",
-    "Windows: auto-reconnect is now near-instant after a drop. DiscoveryService.Refresh() fires 2 s after a peer disconnects (was waiting up to 30 s for the next mDNS cycle) with an 8 s periodic safety-net loop as backup.",
-    "No Mac changes — this is a Windows-only release. The Mac train stays on 0.1.54."
+    "Windows: 'Quit Entanglo' from the system tray now exits the process reliably. The 0.1.56 fix used Task.Delay().ContinueWith() as a watchdog, but ContinueWith continuations are scheduled on the WinUI DispatcherQueue — which does not pump messages when the app window is hidden and the tray icon is the only UI. The watchdog therefore never fired. Replaced with a raw OS Thread (no DispatcherQueue dependency) that calls Environment.Exit(0) after 2 s unconditionally.",
+    "Windows: installer no longer gets stuck when upgrading over a running build. A PrepareToInstall step now runs taskkill /F before copying any files, so the old process is gone before the new one is installed regardless of whether Quit is responsive.",
+    "All fixes from 0.1.56 are included: connection stability on minimize/background, real LAN latency display (~1 ms instead of ~903 ms artefact), controller mode (edge switching to Mac), and fast auto-reconnect."
   ]
 }
