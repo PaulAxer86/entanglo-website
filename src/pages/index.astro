@@ -93,6 +93,45 @@ const principles = [
     </div>
   </section>
 
+  <!-- Screens gallery -->
+  <section class="container-narrow py-24 md:py-32">
+    <div class="max-w-2xl mb-14">
+      <div class="text-xs uppercase tracking-widest text-accent mb-3">Take a look inside</div>
+      <h2 class="display text-4xl md:text-5xl gradient-text leading-tight">
+        Every tab, one job.
+      </h2>
+      <p class="mt-4 text-ink-700 text-lg">
+        Native macOS UI — no web view, no chrome. Each surface stays out of the way
+        until you need it.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 md:gap-10">
+      {[
+        { src: '/img/screens/mac-devices.png',   title: 'Devices',   caption: 'Every Mac and PC on your LAN, live pairing state, one-click reset.' },
+        { src: '/img/screens/mac-files.png',     title: 'Files',     caption: 'Drop a file, pick a peer, done. Chunked, verified, no cloud in between.' },
+      ].map(s => (
+        <figure>
+          <div class="glass p-1.5 md:p-2 shadow-2xl shadow-ink-950/15 ring-1 ring-ink-950/[0.06]">
+            <img
+              src={s.src}
+              alt={`Entanglo for macOS — ${s.title}`}
+              width="1012"
+              height="684"
+              class="w-full h-auto rounded-2xl"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <figcaption class="mt-4 px-1">
+            <div class="text-sm font-semibold text-ink-950">{s.title}</div>
+            <div class="text-sm text-ink-700 mt-1 leading-relaxed">{s.caption}</div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
   <AdSlot slot="home-mid" />
 
   <!-- How it works -->
