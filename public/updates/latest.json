@@ -1,16 +1,15 @@
 {
-  "version": "0.1.49",
-  "date": "2026-07-03",
-  "title": "Shared version bump \u2014 Windows fixes; Mac unchanged",
+  "version": "0.1.56",
+  "date": "2026-07-27",
+  "title": "Mac: live connection badge + edge-switch guard for offline peers",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-0.1.49.dmg",
-  "sha256": "9f5945d046cc09bd111ba98ce54a7dfdcfad2ada31aeea60d0f85543f2b24a2a",
-  "size": 5570422,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-49",
+  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.56.dmg",
+  "sha256": "427732b7f69b1bcba276a85563b1cb69020747eee5e4cb1f5ce609e7ac398f2b",
+  "size": 2247283,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-56",
   "highlights": [
-    "Version-only bump so Mac and Windows stay on the same release number \u2014 no behavioral change on the Mac side.",
-    "Windows: clipboard sync survives the app going to tray (Win32 sequence-number polling replaces the foreground-only UWP event).",
-    "Windows: Dashboard latency shows a real value again \u2014 fixed a PeerSession rekey bug that was silently dropping every RTT update.",
-    "Windows: hero card link-state border + tighter card padding, closer to the Mac visual language."
+    "Mac: the Devices tab connection pill (Discovered / Connecting / Connected / Errored) now reflects the live transport state from ConnectionCoordinator.connectionStates[deviceId] instead of the persisted Device.connection field. That field was only written when a hello arrived on the outbound transport \u2014 if the peer dialed us first (Mac\u2194Mac, symmetric dial race) the hello landed on the inbound with a different id and the trusted record stayed stuck on 'Discovered' forever, even though input sharing worked. Now the badge tracks the real socket state end-to-end.",
+    "Mac: PairingService.loadDevices sanitizes the persisted connection field back to .discovered on launch. Previously a stale 'connected' from a prior session would linger in the UI until the reconciler dialed and hello'd again \u2014 misleading right after startup.",
+    "Mac: edge switching now refuses to hand the cursor to a peer whose transport heartbeat isn't alive. Before, if an iMac or PC was off and you brushed the assigned edge, the cursor would 'tunnel' out of the screen \u2014 captured locally, virtual cursor spawned on a dead receiver, no way back until you triple-Esc'd. Now the switch is blocked at the delegate and the edge behaves like a wall while the peer is offline. A single throttled log line per 5 s per device tells you why in the Logs tab. Recovers automatically the moment the peer comes back."
   ]
 }

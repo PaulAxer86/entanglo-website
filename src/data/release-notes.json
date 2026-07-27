@@ -1,5 +1,79 @@
 [
   {
+    "version": "0.1.56",
+    "date": "2026-07-27",
+    "title": "Mac: live connection badge + edge-switch guard for offline peers",
+    "highlights": [
+      "Mac: the Devices tab connection pill (Discovered / Connecting / Connected / Errored) now reflects the live transport state from ConnectionCoordinator.connectionStates[deviceId] instead of the persisted Device.connection field. That field was only written when a hello arrived on the outbound transport — if the peer dialed us first (Mac↔Mac, symmetric dial race) the hello landed on the inbound with a different id and the trusted record stayed stuck on 'Discovered' forever, even though input sharing worked. Now the badge tracks the real socket state end-to-end.",
+      "Mac: PairingService.loadDevices sanitizes the persisted connection field back to .discovered on launch. Previously a stale 'connected' from a prior session would linger in the UI until the reconciler dialed and hello'd again — misleading right after startup.",
+      "Mac: edge switching now refuses to hand the cursor to a peer whose transport heartbeat isn't alive. Before, if an iMac or PC was off and you brushed the assigned edge, the cursor would 'tunnel' out of the screen — captured locally, virtual cursor spawned on a dead receiver, no way back until you triple-Esc'd. Now the switch is blocked at the delegate and the edge behaves like a wall while the peer is offline. A single throttled log line per 5 s per device tells you why in the Logs tab. Recovers automatically the moment the peer comes back.",
+      "No behavioural or protocol changes on Windows — the Win release train stays on 0.1.55."
+    ]
+  },
+  {
+    "version": "0.1.55",
+    "date": "2026-07-09",
+    "title": "Windows: Settings version label, minimize button, tray icon — three focused fixes",
+    "highlights": [
+      "Windows: Settings page version label. Was hardcoded to 'Version 0.1.47' in SettingsPage.xaml.cs:26 since the 0.1.47 build and never bumped through the 0.1.48–0.1.54 cycle, so every installer between 0.1.48 and 0.1.54 shipped with a mislabelled Settings tab. The label is now populated at runtime from `typeof(App).Assembly.GetName().Version.ToString(3)`, so every future build will report itself correctly without a manual edit — the class of bug where a hardcoded constant silently drifts across versions is now gone from this call site.",
+      "Windows: minimize button. Pressing '_' on the title bar appeared to be a no-op — the window would flicker minimized for a frame and then reappear. Root cause was the min-window-size enforcer added to MainWindow.xaml.cs:18: when the OverlappedPresenter transitioned to Minimized, `AppWindow.Size` dropped to 0×0 and the handler triggered `AppWindow.Resize(new WinSize(800, 560))`, which restored the window state. The handler now bails out early when the presenter is in the Minimized state, so minimize behaves normally and the min-size guard still fires on manual resize under 800×560.",
+      "Windows: system tray icon. TrayIconHost.cs:26 was loading `Assets/Entanglo.png` as the tray IconSource. H.NotifyIcon.WinUI 2.1.4 converts the ImageSource into a Win32 HICON via Shell_NotifyIcon, and PNG-with-alpha conversion on Win11 26100 produced an empty HICON on most systems — the tray slot was present, tooltip and left-click behaviour worked, but the visible glyph was blank. Switched to `Assets/Entanglo.ico` (multi-size 16/24/32/48/64/128/256 already shipped with the rabbit icon in 0.1.53). The rabbit now shows correctly in the taskbar overflow and system tray.",
+      "No Mac changes — the Mac release train stays on 0.1.54. This is a Windows-only patch release; the manifest bump only affects Win peers auto-updating via latest-win.json / GitHub Releases."
+    ]
+  },
+  {
+    "version": "0.1.54",
+    "date": "2026-07-03",
+    "title": "Mac: auto-install no longer wipes Accessibility / Screen Recording grants + Windows version sync",
+    "highlights": [
+      "Mac: the auto-install helper (Install button in News & Updates) used to run `tccutil reset All com.paoloasara.entanglo` after replacing /Applications/Entanglo.app. That call was legacy from the 0.1.30 ad-hoc-signing era, when every new build shipped a different CDHash and macOS had to be nudged to re-prompt. Since 0.1.50 the app is signed with the stable 'Entanglo Local Signing' cert and the Designated Requirement is cert-leaf-based, so TCC keeps its grants across upgrades — the reset is unnecessary AND actively wipes the user's Accessibility, Screen Recording and Local Network approvals every time an update lands.",
+      "Removed the tccutil reset from the install helper. From 0.1.54 forward, upgrading via the Install button preserves all previously-granted permissions; input sharing, screen sharing and peer discovery keep working with no extra clicks after each update. First-time installs still surface the standard system prompts the first time each feature is used, as before.",
+      "Windows: version bumped 0.1.49 → 0.1.54 to re-align the Mac and Windows release trains after the 0.1.50–0.1.53 Mac-only cycle (signing hardening, website-driven updates, rabbit icon). The rabbit icon shipped to the Windows Assets folder in 0.1.53 (Entanglo.png + multi-size Entanglo.ico) — the next Windows build picks up the matching 0.1.54 version stamp in csproj and Inno Setup script. Windows still has no equivalent of the Mac tccutil bug, so no permissions behaviour changes on Win11."
+    ]
+  },
+  {
+    "version": "0.1.53",
+    "date": "2026-07-03",
+    "title": "Mac: website-driven auto-updates + new rabbit icon",
+    "highlights": [
+      "Mac: new update source — RemoteHTTPSource. On launch and every 60 minutes the app fetches entanglo.pages.dev/updates/latest.json, parses the manifest, and if the announced version is newer than the running build it downloads the DMG into ~/Library/Application Support/Entanglo/Updates/, verifies the SHA256 against the manifest, and hands it to the existing update pipeline. From that point the News & Updates tab lights up with the badge and the Install button opens the DMG — same UX as a peer-pushed update, minus the countdown, so the update lands quietly and waits until you're ready.",
+      "Mac: distribution model changes accordingly. Publishing a release is now a single act: update latest.json on the website (Cloudflare Pages) and every installed copy in the fleet will pick it up on its next poll — no manual DMG copy, no peer push required. Local dist/ and outbox sources remain for dev builds and manual pushes; the three sources coexist and the highest-versioned wins.",
+      "Cross-platform: brand-new rabbit-head app icon. Cream squircle with a minimalist black line-art rabbit head — the app that 'digs tunnels' between your Macs to reach where it wants. Regenerated at all 10 macOS sizes plus Windows Entanglo.png/.ico and the website favicon set.",
+      "Windows: same rabbit icon shipped to the WinUI project (Entanglo.png + multi-size Entanglo.ico) so the taskbar, tray and installer match the Mac fleet. The Windows update service still reads latest-win.json (GitHub Releases fallback for installers >25 MiB) — an equivalent RemoteHTTPSource-style poller will land in a follow-up Win release."
+    ]
+  },
+  {
+    "version": "0.1.52",
+    "date": "2026-07-03",
+    "title": "Cross-platform: brand-new app icon (topology mark)",
+    "highlights": [
+      "New app icon across Mac, Windows and the website: black squircle with a topology mark — a central monitor with cursor, connected to three peer devices (top, left, right) by nodes and a rounded frame. Replaces the previous circles-and-line placeholder from 0.1.22 that never really said 'this app links your devices'.",
+      "Mac: AppIcon.appiconset regenerated at all 10 sizes (16 → 1024) with transparent squircle corners, matching the 0.1.50 background-fix line.",
+      "Windows: Entanglo.png (256) and Entanglo.ico (16/24/32/48/64/128/256) rebuilt from the same source so the tray icon, taskbar and installer all pick up the new mark.",
+      "Website (entanglo.pages.dev): /img/icon.png (used by favicon, apple-touch-icon, Hero card and top-left Logo) plus a full favicon.ico + apple-touch-icon.png set for older browsers and iOS home-screen adds."
+    ]
+  },
+  {
+    "version": "0.1.51",
+    "date": "2026-07-03",
+    "title": "Mac: Quick Actions now speak up when there's nothing to send",
+    "highlights": [
+      "Mac: Quick Actions (Dashboard) now surface a transient status line under the buttons instead of failing silently. Clicking 'Push URL to peer' when the clipboard has no URL and no browser tab is active now shows 'No link to send — copy a URL or focus a browser tab first.' The same channel confirms successful pushes ('URL sent to 2 peers.') and the screenshot flow ('No peer online — nothing to capture.'). Auto-clears after 4 seconds.",
+      "Mac: distribution moved off Netlify — release channel is now Cloudflare Pages (entanglo.pages.dev, unlimited free bandwidth). Windows installers migrated to GitHub Releases (Pages 25 MiB per-file limit); `latest-win.json` URL updated accordingly."
+    ]
+  },
+  {
+    "version": "0.1.50",
+    "date": "2026-07-03",
+    "title": "Mac: transparent icon + stable code signing (TCC permission persistence)",
+    "highlights": [
+      "Mac: app icon no longer ships with a black rectangular background. The 10 PNGs in AppIcon.appiconset now have a fully transparent squircle — the Dock, Launchpad, Command-Tab switcher and menubar all show a clean shape instead of the black frame that read as 'pugno in un occhio' at every zoom level.",
+      "Mac: from 0.1.50 the DMG is signed with a stable self-signed certificate ('Entanglo Local Signing', RSA-2048, valid to 2036) instead of ad-hoc. Designated requirement is now identifier + certificate-leaf hash, so TCC recognises the app as 'same app' across releases — Accessibility, Input Monitoring and Local Network permissions persist through every future update. First install of the signed line (0.1.49) required re-granting permissions one last time; from now on it's silent.",
+      "Mac: scripts/make-dmg.sh switched to hardened runtime (--options=runtime) with the stable identity, matching what a productionised Developer ID build would look like.",
+      "Housekeeping: the bundled release-notes.json inside Entanglo.app was frozen at 0.1.39 — it now ships with the full history up to 0.1.50, so the News & Updates tab is correct even before the remote refresh completes."
+    ]
+  },
+  {
     "version": "0.1.49",
     "date": "2026-07-03",
     "title": "Windows: background-safe clipboard, RTT dashboard fix, UI polish",
