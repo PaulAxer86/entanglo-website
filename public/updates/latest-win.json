@@ -4,8 +4,8 @@
   "title": "Windows: connection stability + controller mode (edge switching)",
   "minimumSystemVersion": "10.0.19041",
   "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.56/Entanglo-Setup-0.1.56.exe",
-  "sha256": "9926c345c95035916a644045ef2f47bda0360fa0fc455c44ca7f7dbcb9692bda",
-  "size": 44926663,
+  "sha256": "5c3fa15ed756e0b8e33469a6480fd2de481b8691d635b751876cc966de871ca4",
+  "size": 44904885,
   "notesUrl": "https://entanglo.pages.dev/changelog#0-1-56",
   "highlights": [
     "Windows: connection no longer drops when the window is minimized or the app runs in the background. Root cause was Windows 11 EcoQoS power-throttling stalling .NET thread-pool threads by several seconds — the heartbeat timeout was 4 s, so any backgrounded dwell triggered a false disconnect. Timeout raised to 15 s and process priority set to AboveNormal so the background heartbeat and read loops are never starved.",
