@@ -1,5 +1,14 @@
 [
   {
+    "version": "0.1.58",
+    "date": "2026-07-27",
+    "title": "Windows: Quit from tray — three-layer exit guarantee",
+    "highlights": [
+      "Windows: Quit from tray now exits reliably. Three layers: (1) a 500 ms kill thread starts directly inside the click handler, with no dependency on Application.Current or WinUI dispatch state; (2) App.RequestQuit() uses a static App._instance reference — Application.Current as App silently returned null when the window was hidden, so none of the earlier QuitEntanglo() calls were ever reached; (3) QuitEntanglo() itself still starts a 2 s raw-Thread watchdog as a last resort.",
+      "Windows: installer no longer stalls on upgrade — PrepareToInstall force-kills the running process before copying files."
+    ]
+  },
+  {
     "version": "0.1.57",
     "date": "2026-07-27",
     "title": "Windows: Quit from tray exits reliably + installer kill",

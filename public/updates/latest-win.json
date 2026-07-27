@@ -1,15 +1,14 @@
 {
-  "version": "0.1.57",
+  "version": "0.1.58",
   "date": "2026-07-27",
-  "title": "Windows: Quit from tray now exits reliably",
+  "title": "Windows: Quit from tray — three-layer exit guarantee",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.57/Entanglo-Setup-0.1.57.exe",
-  "sha256": "554655ca9cf3434ab3b07655665bf12d014fba6ee7028e81201407e4ad4dfb8f",
-  "size": 44936326,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-57",
+  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.58/Entanglo-Setup-0.1.58.exe",
+  "sha256": "0adfda4cedf6be591647a426c82a33361d1933bce47b8fbe73c65dfc1bb30b1c",
+  "size": 44917895,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-58",
   "highlights": [
-    "Windows: 'Quit Entanglo' from the system tray now exits the process reliably. The 0.1.56 fix used Task.Delay().ContinueWith() as a watchdog, but ContinueWith continuations are scheduled on the WinUI DispatcherQueue — which does not pump messages when the app window is hidden and the tray icon is the only UI. The watchdog therefore never fired. Replaced with a raw OS Thread (no DispatcherQueue dependency) that calls Environment.Exit(0) after 2 s unconditionally.",
-    "Windows: installer no longer gets stuck when upgrading over a running build. A PrepareToInstall step now runs taskkill /F before copying any files, so the old process is gone before the new one is installed regardless of whether Quit is responsive.",
-    "All fixes from 0.1.56 are included: connection stability on minimize/background, real LAN latency display (~1 ms instead of ~903 ms artefact), controller mode (edge switching to Mac), and fast auto-reconnect."
+    "Windows: Quit from tray now exits reliably — three layers of guarantee. Layer 1: a 500 ms kill thread starts directly inside the MenuFlyoutItem click handler, independent of Application.Current or any WinUI state. Layer 2: App.RequestQuit() now uses a static App._instance reference instead of Application.Current as App, which silently returned null when the window was hidden. Layer 3: QuitEntanglo() starts a 2 s raw-Thread watchdog before touching any service — even if cleanup blocks, the process exits.",
+    "Windows: installer no longer gets stuck when upgrading over a running build. PrepareToInstall runs taskkill /F before any file is copied."
   ]
 }
