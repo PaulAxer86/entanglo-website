@@ -35,7 +35,7 @@ cp "$DMG" "$DOWNLOADS/$BASENAME"
 
 SHA="$(shasum -a 256 "$DOWNLOADS/$BASENAME" | awk '{print $1}')"
 SIZE="$(stat -f%z "$DOWNLOADS/$BASENAME")"
-URL="https://entanglo.netlify.app/downloads/$BASENAME"
+URL="https://entanglo.pages.dev/downloads/$BASENAME"
 
 # Build latest.json from the top release-notes entry, overriding url/sha256/size.
 python3 - "$VERSION" "$URL" "$SHA" "$SIZE" "$NOTES" "$UPDATES" <<'PY'
@@ -51,7 +51,7 @@ out = {
     "url": url,
     "sha256": sha,
     "size": int(size),
-    "notesUrl": f"https://entanglo.netlify.app/changelog#{version.replace('.', '-')}",
+    "notesUrl": f"https://entanglo.pages.dev/changelog#{version.replace('.', '-')}",
     "highlights": top.get("highlights", [])[:3],
 }
 json.dump(out, open(updates_path, "w"), indent=2)

@@ -2,12 +2,14 @@
   {
     "version": "0.1.56",
     "date": "2026-07-27",
-    "title": "Mac: live connection badge + edge-switch guard for offline peers",
+    "title": "Windows: connection stability, real latency, Quit fix + controller mode",
     "highlights": [
-      "Mac: the Devices tab connection pill (Discovered / Connecting / Connected / Errored) now reflects the live transport state from ConnectionCoordinator.connectionStates[deviceId] instead of the persisted Device.connection field. That field was only written when a hello arrived on the outbound transport — if the peer dialed us first (Mac↔Mac, symmetric dial race) the hello landed on the inbound with a different id and the trusted record stayed stuck on 'Discovered' forever, even though input sharing worked. Now the badge tracks the real socket state end-to-end.",
-      "Mac: PairingService.loadDevices sanitizes the persisted connection field back to .discovered on launch. Previously a stale 'connected' from a prior session would linger in the UI until the reconciler dialed and hello'd again — misleading right after startup.",
-      "Mac: edge switching now refuses to hand the cursor to a peer whose transport heartbeat isn't alive. Before, if an iMac or PC was off and you brushed the assigned edge, the cursor would 'tunnel' out of the screen — captured locally, virtual cursor spawned on a dead receiver, no way back until you triple-Esc'd. Now the switch is blocked at the delegate and the edge behaves like a wall while the peer is offline. A single throttled log line per 5 s per device tells you why in the Logs tab. Recovers automatically the moment the peer comes back.",
-      "No behavioural or protocol changes on Windows — the Win release train stays on 0.1.55."
+      "Windows: connection no longer drops on minimize or background. Windows 11 EcoQoS was stalling .NET thread-pool threads by several seconds; the 4 s heartbeat timeout treated this as a dead peer. Timeout raised to 15 s and process priority set to AboveNormal so background async loops are never starved.",
+      "Windows: latency display now shows true LAN round-trip instead of the ~903 ms phase artefact. Heartbeat interval reduced from 1 s to 250 ms — on a normal LAN the readout is now in single-digit milliseconds.",
+      "Windows: 'Quit Entanglo' from the system tray now exits reliably. InputCaptureService.Dispose() was posting WM_QUIT to the UI thread instead of the hook thread, keeping the process alive. Fix: the hook thread captures its own Win32 thread ID at startup; Dispose() posts WM_QUIT directly to it via PostThreadMessageW.",
+      "Windows: controller mode. Moving the cursor to a configured screen edge now activates input capture and forwards all mouse and keyboard events to the assigned Mac peer. Press Escape or Scroll Lock to release. Configure edge-to-peer mappings in the Input Sharing tab.",
+      "Windows: auto-reconnect fires 2 s after a drop (was waiting up to 30 s for the next mDNS poll cycle), with an 8 s periodic safety net as backup.",
+      "No Mac changes — the Mac train stays on 0.1.54."
     ]
   },
   {

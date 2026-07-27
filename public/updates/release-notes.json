@@ -1,16 +1,5 @@
 [
   {
-    "version": "0.1.56",
-    "date": "2026-07-27",
-    "title": "Mac: live connection badge + edge-switch guard for offline peers",
-    "highlights": [
-      "Mac: the Devices tab connection pill (Discovered / Connecting / Connected / Errored) now reflects the live transport state from ConnectionCoordinator.connectionStates[deviceId] instead of the persisted Device.connection field. That field was only written when a hello arrived on the outbound transport — if the peer dialed us first (Mac↔Mac, symmetric dial race) the hello landed on the inbound with a different id and the trusted record stayed stuck on 'Discovered' forever, even though input sharing worked. Now the badge tracks the real socket state end-to-end.",
-      "Mac: PairingService.loadDevices sanitizes the persisted connection field back to .discovered on launch. Previously a stale 'connected' from a prior session would linger in the UI until the reconciler dialed and hello'd again — misleading right after startup.",
-      "Mac: edge switching now refuses to hand the cursor to a peer whose transport heartbeat isn't alive. Before, if an iMac or PC was off and you brushed the assigned edge, the cursor would 'tunnel' out of the screen — captured locally, virtual cursor spawned on a dead receiver, no way back until you triple-Esc'd. Now the switch is blocked at the delegate and the edge behaves like a wall while the peer is offline. A single throttled log line per 5 s per device tells you why in the Logs tab. Recovers automatically the moment the peer comes back.",
-      "No behavioural or protocol changes on Windows — the Win release train stays on 0.1.55."
-    ]
-  },
-  {
     "version": "0.1.55",
     "date": "2026-07-09",
     "title": "Windows: Settings version label, minimize button, tray icon — three focused fixes",

@@ -1,6 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
-const updated = '2026-07-27';
+const updated = '2026-06-28';
 ---
 
 <Base title="Privacy — Entanglo" description="Entanglo runs entirely on your local network. No cloud, no telemetry, no account.">
@@ -25,12 +25,8 @@ const updated = '2026-07-27';
     <div>
       <h2 class="display text-2xl text-ink-950 mb-3">What we collect</h2>
       <p class="text-ink-800 leading-relaxed">
-        The <strong>app</strong> collects nothing. No analytics, no crash reporter that phones home,
-        no account system, no email signup. You don't tell us anything because we don't ask.
-      </p>
-      <p class="text-ink-800 leading-relaxed mt-4">
-        The <strong>website</strong> uses Cloudflare Web Analytics — see the "Updates" section
-        below for what that means (aggregated, no cookies, no per-visitor profile).
+        Nothing. Entanglo has no analytics, no crash reporter that phones home, no account system,
+        no email signup. You don't tell us anything because we don't ask.
       </p>
     </div>
 
@@ -56,14 +52,8 @@ const updated = '2026-07-27';
       <h2 class="display text-2xl text-ink-950 mb-3">Updates</h2>
       <p class="text-ink-800 leading-relaxed">
         New versions are pushed peer-to-peer over your LAN, or downloaded from this website on demand.
-        The website is hosted on Cloudflare Pages. Cloudflare may log your IP and User-Agent for
-        the page request, per their standard service logs. The app itself does not contact this website.
-      </p>
-
-      <p class="text-ink-800 leading-relaxed mt-4">
-        This website uses <strong>Cloudflare Web Analytics</strong> to count page views. It runs
-        entirely on Cloudflare's edge, uses no cookies, does not fingerprint the browser, and stores
-        only aggregated counts (page, referrer, country) — never a per-visitor profile.
+        The website is hosted on Netlify. Netlify may log your IP and User-Agent for the page request,
+        per their standard service logs. The app itself does not contact this website.
       </p>
     </div>
 

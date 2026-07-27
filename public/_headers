@@ -1,0 +1,6 @@
+/updates/*
+  Cache-Control: public, max-age=300
+  Access-Control-Allow-Origin: *
+
+/downloads/*
+  Cache-Control: public, max-age=86400, immutable

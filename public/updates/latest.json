@@ -1,15 +1,14 @@
 {
-  "version": "0.1.56",
-  "date": "2026-07-27",
-  "title": "Mac: live connection badge + edge-switch guard for offline peers",
+  "version": "0.1.54",
+  "date": "2026-07-03",
+  "title": "Mac: auto-install no longer wipes Accessibility / Screen Recording grants",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.56.dmg",
-  "sha256": "427732b7f69b1bcba276a85563b1cb69020747eee5e4cb1f5ce609e7ac398f2b",
-  "size": 2247283,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-56",
+  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.54.dmg",
+  "sha256": "26f7c17356bc7e6532bd900172e3b8e9cd53681713bca3f2618197c6402815ec",
+  "size": 2242103,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-54",
   "highlights": [
-    "Mac: the Devices tab connection pill (Discovered / Connecting / Connected / Errored) now reflects the live transport state from ConnectionCoordinator.connectionStates[deviceId] instead of the persisted Device.connection field. That field was only written when a hello arrived on the outbound transport \u2014 if the peer dialed us first (Mac\u2194Mac, symmetric dial race) the hello landed on the inbound with a different id and the trusted record stayed stuck on 'Discovered' forever, even though input sharing worked. Now the badge tracks the real socket state end-to-end.",
-    "Mac: PairingService.loadDevices sanitizes the persisted connection field back to .discovered on launch. Previously a stale 'connected' from a prior session would linger in the UI until the reconciler dialed and hello'd again \u2014 misleading right after startup.",
-    "Mac: edge switching now refuses to hand the cursor to a peer whose transport heartbeat isn't alive. Before, if an iMac or PC was off and you brushed the assigned edge, the cursor would 'tunnel' out of the screen \u2014 captured locally, virtual cursor spawned on a dead receiver, no way back until you triple-Esc'd. Now the switch is blocked at the delegate and the edge behaves like a wall while the peer is offline. A single throttled log line per 5 s per device tells you why in the Logs tab. Recovers automatically the moment the peer comes back."
+    "Mac: the auto-install helper (Install button in News & Updates) used to run tccutil reset on every upgrade — legacy from the 0.1.30 ad-hoc-signing era when each build shipped a new CDHash. Since 0.1.50 the app is signed with a stable cert and the Designated Requirement is cert-leaf-based, so TCC keeps its grants across upgrades. The reset was actively wiping Accessibility, Screen Recording and Local Network grants every time.",
+    "Removed the tccutil reset from the install helper. From 0.1.54 forward, upgrading via the Install button preserves all previously-granted permissions."
   ]
 }

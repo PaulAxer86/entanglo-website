@@ -1,16 +1,18 @@
 {
-  "version": "0.1.49",
-  "date": "2026-07-03",
-  "title": "Windows: background-safe clipboard, RTT dashboard fix, UI polish",
+  "version": "0.1.56",
+  "date": "2026-07-27",
+  "title": "Windows: connection stability + controller mode (edge switching)",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://entanglo.netlify.app/downloads/Entanglo-Setup-0.1.49.exe",
-  "sha256": "3a226fc15e4d0346d7a809fcee5ae3fa0833449dd47223a5f5a4b1537b566612",
-  "size": 45299327,
-  "notesUrl": "https://entanglo.netlify.app/changelog#0-1-49",
+  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.56/Entanglo-Setup-0.1.56.exe",
+  "sha256": "5aef5992e57291268078a1f1a9001bc3a526e5a6934df33075cd24ac57792b34",
+  "size": 44930455,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-56",
   "highlights": [
-    "Windows: clipboard sync now keeps working when the app is minimized or closed to the tray. The UWP Clipboard.ContentChanged event only fires while the app is foreground, so the bridge now polls Win32 GetClipboardSequenceNumber every 500 ms and reads via OpenClipboard/GetClipboardData, which is background-safe.",
-    "Windows: Dashboard latency finally shows a real value instead of a permanent '\u2014'. Root cause: PeerSession was a positional record and the Hello rekey path created a fresh clone in the peer map while the read/heartbeat loops kept mutating the stale one, so LastRttMs never surfaced through ActivePeers. PeerSession is now a mutable class and RekeySession mutates in place.",
-    "Windows: peer row RTT pill now formats as '42 ms' / '\u2014' via a computed RttDisplay property on ActivePeer instead of a raw double.",
-    "Windows: Hero card gains a link-state border (green when linked, subtle white when waiting) mirroring the Mac StatusPill tone system. Card padding tightened from 18 to 16 px for a less bulky feel."
+    "Windows: connection no longer drops when the window is minimized or the app runs in the background. Root cause was Windows 11 EcoQoS power-throttling stalling .NET thread-pool threads by several seconds — the heartbeat timeout was 4 s, so any backgrounded dwell triggered a false disconnect. Timeout raised to 15 s and process priority set to AboveNormal so the background heartbeat and read loops are never starved.",
+    "Windows: latency display now shows real LAN round-trip instead of the ~903 ms phase artefact. Heartbeat interval reduced from 1 s to 250 ms — the maximum RTT display error is now the heartbeat interval, so a 1 ms LAN link reads as 1–250 ms instead of the previous 900+ ms.",
+    "Windows: 'Quit Entanglo' from the system tray now reliably exits the app. InputCaptureService.Dispose() was calling PostQuitMessage(0), which posts WM_QUIT to the calling thread (the UI thread), not the hook thread — so the hook thread kept running and blocked clean shutdown. Fix: the hook thread stores its own Win32 thread ID at startup and Dispose() posts WM_QUIT directly to that thread via PostThreadMessageW.",
+    "Windows: controller mode — the PC can now push mouse and keyboard events to a Mac. Moving the cursor to a configured screen edge automatically activates input capture and forwards all events to the assigned Mac peer. Press Escape or Scroll Lock to release control back to the local desktop. Configure edge-to-peer mappings in the Input Sharing tab.",
+    "Windows: auto-reconnect is now near-instant after a drop. DiscoveryService.Refresh() fires 2 s after a peer disconnects (was waiting up to 30 s for the next mDNS cycle) with an 8 s periodic safety-net loop as backup.",
+    "No Mac changes — this is a Windows-only release. The Mac train stays on 0.1.54."
   ]
 }

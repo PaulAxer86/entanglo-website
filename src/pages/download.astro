@@ -2,17 +2,14 @@
 import Base from '@/layouts/Base.astro';
 import DownloadButton from '@/components/DownloadButton.astro';
 import AdSlot from '@/components/AdSlot.astro';
-import macManifest from '../../public/updates/latest.json';
-import winManifest from '../../public/updates/latest-win.json';
+import notes from '@/data/release-notes.json';
 
-// Source of truth is the release manifest, NOT release-notes[0]:
-// notes[0] can be a Windows-only entry (e.g. 0.1.55 was Win-only) and
-// deriving the Mac DMG URL from it produces a 404.
-const latest = macManifest as { version: string; date: string; title: string; highlights: string[] };
-const version = latest.version;
-const winVersion = winManifest.version;
+const latest = notes[0] as { version: string; date: string; title: string; highlights: string[] };
+const version = latest?.version ?? '0.1.0';
+const winRelease = 'v0.1.56';
+const winVersion = '0.1.56';
 const dmgUrl = `/downloads/Entanglo-${version}.dmg`;
-const windowsUrl = winManifest.url;
+const windowsUrl = `https://github.com/PaulAxer86/entanglo-website/releases/download/${winRelease}/Entanglo-Setup-${winVersion}.exe`;
 ---
 
 <Base
