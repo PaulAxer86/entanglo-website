@@ -1,14 +1,15 @@
 {
-  "version": "0.1.54",
-  "date": "2026-07-03",
-  "title": "Mac: auto-install no longer wipes Accessibility / Screen Recording grants",
+  "version": "0.1.58",
+  "date": "2026-08-08",
+  "title": "Mac: multi-peer screenshot picker + wired-path upgrade timing fix",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.54.dmg",
-  "sha256": "26f7c17356bc7e6532bd900172e3b8e9cd53681713bca3f2618197c6402815ec",
-  "size": 2242103,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-54",
+  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.58.dmg",
+  "sha256": "8642caee2c91688c20134b2176246ec9d609b7d57995973e7215f7a782827c4b",
+  "size": 2290636,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-58",
   "highlights": [
-    "Mac: the auto-install helper (Install button in News & Updates) used to run tccutil reset on every upgrade — legacy from the 0.1.30 ad-hoc-signing era when each build shipped a new CDHash. Since 0.1.50 the app is signed with a stable cert and the Designated Requirement is cert-leaf-based, so TCC keeps its grants across upgrades. The reset was actively wiping Accessibility, Screen Recording and Local Network grants every time.",
-    "Removed the tccutil reset from the install helper. From 0.1.54 forward, upgrading via the Install button preserves all previously-granted permissions."
+    "Mac: Screenshot Quick Action now shows a picker menu when more than one peer is connected. Previously the button targeted `coordinator.outbound.keys.first` \u2014 an arbitrary peer whose identity depended on dictionary hash ordering, so on a multi-Mac setup you had no way of telling which machine you were about to shoot and the \u2318\u21e7S global shortcut felt random. With one peer online the button stays a single-click (labelled 'Screenshot <PeerName>'); with two or more it becomes a Menu with one entry per connected peer, sorted alphabetically so the list doesn't jitter as the outbound map rehashes. The \u2318\u21e7S global shortcut retains its 'first peer' behaviour as a fallback for the common case.",
+    "Mac: screenshot preview now overlays a 'from <PeerName> \u00b7 HH:mm:ss' badge in the top-left corner of the captured image itself, on top of the existing header. The header alone was fine for one-off captures, but when the user zoomed / scrolled inside the ScrollView the header scrolled out of frame; the overlay travels with the pixels, so back-to-back captures from different Macs in a multi-peer setup can be told apart at a glance (and the badge survives Copy-to-clipboard-then-paste-into-doc round-trips).",
+    "Mac: fixed wired-preference timing race. In 0.1.57 we started passing `NWParameters.requiredInterfaceType = .wiredEthernet` at dial time when the peer's Bonjour advert was seen on cable. Problem: Bonjour resolves each browser result's interface list incrementally \u2014 on a dual-homed peer the first callback almost always carried only `.wifi`, and the wiredEthernet interface arrived a few hundred ms later. Because `reconcile()` fired on the first `discoveredDevices` change and only dialed when `outbound[deviceId] == nil`, the session settled on Wi-Fi and stayed there for its whole lifetime even with both Macs wired to the same switch (Dashboard reported 25 ms instead of the ~0.7 ms cable RTT). `reconcile()` now also inspects existing outbound transports: if the peer's interface set gains `.wiredEthernet` and we're currently on Wi-Fi, the transport is torn down and immediately redialed pinned to Ethernet. Guarded by a per-device `wiredUpgradeAttempted` flag so a repeatedly-failing Ethernet dial doesn't loop."
   ]
 }

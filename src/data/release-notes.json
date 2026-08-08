@@ -1,34 +1,37 @@
 [
   {
     "version": "0.1.58",
-    "date": "2026-07-27",
-    "title": "Windows: Quit from tray — three-layer exit guarantee",
+    "date": "2026-08-08",
+    "title": "Mac: multi-peer screenshot picker + wired-path upgrade timing fix • Windows: Quit tray fix + installer kill",
     "highlights": [
-      "Windows: Quit from tray now exits reliably. Three layers: (1) a 500 ms kill thread starts directly inside the click handler, with no dependency on Application.Current or WinUI dispatch state; (2) App.RequestQuit() uses a static App._instance reference — Application.Current as App silently returned null when the window was hidden, so none of the earlier QuitEntanglo() calls were ever reached; (3) QuitEntanglo() itself still starts a 2 s raw-Thread watchdog as a last resort.",
-      "Windows: installer no longer stalls on upgrade — PrepareToInstall force-kills the running process before copying files."
+      "Mac: Screenshot Quick Action now shows a picker menu when more than one peer is connected. Previously the button targeted `coordinator.outbound.keys.first` — an arbitrary peer whose identity depended on dictionary hash ordering, so on a multi-Mac setup you had no way of telling which machine you were about to shoot and the ⌘⇧S global shortcut felt random. With one peer online the button stays a single-click (labelled 'Screenshot <PeerName>'); with two or more it becomes a Menu with one entry per connected peer, sorted alphabetically so the list doesn't jitter as the outbound map rehashes. The ⌘⇧S global shortcut retains its 'first peer' behaviour as a fallback for the common case.",
+      "Mac: screenshot preview now overlays a 'from <PeerName> · HH:mm:ss' badge in the top-left corner of the captured image itself, on top of the existing header. The header alone was fine for one-off captures, but when the user zoomed / scrolled inside the ScrollView the header scrolled out of frame; the overlay travels with the pixels, so back-to-back captures from different Macs in a multi-peer setup can be told apart at a glance (and the badge survives Copy-to-clipboard-then-paste-into-doc round-trips).",
+      "Mac: fixed wired-preference timing race. In 0.1.57 we started passing `NWParameters.requiredInterfaceType = .wiredEthernet` at dial time when the peer's Bonjour advert was seen on cable. Problem: Bonjour resolves each browser result's interface list incrementally — on a dual-homed peer the first callback almost always carried only `.wifi`, and the wiredEthernet interface arrived a few hundred ms later. Because `reconcile()` fired on the first `discoveredDevices` change and only dialed when `outbound[deviceId] == nil`, the session settled on Wi-Fi and stayed there for its whole lifetime even with both Macs wired to the same switch (Dashboard reported 25 ms instead of the ~0.7 ms cable RTT). `reconcile()` now also inspects existing outbound transports: if the peer's interface set gains `.wiredEthernet` and we're currently on Wi-Fi, the transport is torn down and immediately redialed pinned to Ethernet. Guarded by a per-device `wiredUpgradeAttempted` flag so a repeatedly-failing Ethernet dial doesn't loop.",
+      "Mac: `handleStateChange` in ConnectionCoordinator now only nils out `outbound[deviceId]` when the callback is for the transport we currently consider live (`outbound[deviceId] === transport`). Without this, the async `.cancelled` callback of the old Wi-Fi transport during a wired upgrade would stomp the freshly-dialed Ethernet transport back to nil and roll the state pill straight to 'Connecting…'. The change is idempotent for every other codepath — normal disconnects still clear the map, they just don't clobber a replacement transport that happens to have already replaced them.",
+      "Windows: Quit from tray now exits reliably — three layers of guarantee. Layer 1: a 500 ms kill thread starts directly inside the MenuFlyoutItem click handler, independent of Application.Current or any WinUI state. Layer 2: App.RequestQuit() now uses a static App._instance reference instead of Application.Current as App, which silently returned null when the window was hidden. Layer 3: QuitEntanglo() starts a 2 s raw-Thread watchdog before touching any service — even if cleanup blocks, the process exits.",
+      "Windows: installer no longer gets stuck when upgrading over a running build. PrepareToInstall runs taskkill /F before any file is copied."
     ]
   },
   {
     "version": "0.1.57",
-    "date": "2026-07-27",
-    "title": "Windows: Quit from tray exits reliably + installer kill",
+    "date": "2026-08-08",
+    "title": "Mac: no more mid-transfer drops + always prefer wired transport",
     "highlights": [
-      "Windows: 'Quit Entanglo' from the system tray now exits the process reliably. The 0.1.56 watchdog used Task.Delay().ContinueWith(), whose continuation is scheduled on the WinUI DispatcherQueue. The DispatcherQueue does not pump when the app window is hidden and only the tray icon is active, so the watchdog never fired. Replaced with a raw OS Thread (no DispatcherQueue dependency) that calls Environment.Exit(0) after 2 s unconditionally — the process now exits within 2 s of clicking Quit regardless of what the cleanup does.",
-      "Windows: installer no longer stalls when upgrading over a running build. A new PrepareToInstall step force-kills Entanglo.Windows.exe via taskkill /F before copying any files, so the old process is always gone by the time file replacement starts.",
-      "Includes all 0.1.56 changes: connection stability on minimize/background (EcoQoS fix), real LAN latency display, controller mode (edge switching), fast auto-reconnect."
+      "Mac: NetworkTransport now treats every inbound frame as proof-of-life, not just heartbeats. Root cause of the 'sends a file → link drops' complaint: FileTransferService streamed 2 MB fileChunks that on Wi-Fi could occupy the receive pipeline for 3+ seconds. During that window no heartbeat could land, and the 3 s 'link presumed dead' timer fired mid-transfer, killing a perfectly healthy connection. Now any frame (fileChunk, urlPush, clipboardText, screenshotResult, …) refreshes lastHeartbeatAt — the timeout is only tripped when the socket is actually silent.",
+      "Mac: dial-out is pinned to Ethernet / Thunderbolt whenever the peer's Bonjour advert is seen on a wired interface. Previously Network.framework auto-picked the path and sometimes settled on Wi-Fi even when both machines shared a wired subnet, hiding 100× the latency (75 ms Wi-Fi vs ~0.7 ms Ethernet on the same pair of iMacs). Now `NWParameters.requiredInterfaceType = .wiredEthernet` is set at connect time when applicable, so the socket also refuses to silently downgrade to Wi-Fi mid-session. If the peer is Wi-Fi-only, behaviour is unchanged.",
+      "Mac: DiscoveryService prefers `.wiredEthernet` over `.wifi` when both are advertised for the same peer, so the Dashboard 'Interface' pill reflects what's actually being used.",
+      "Mac: file transfer chunk size reduced from 2 MB → 512 KB. Combined with the heartbeat fix above this means each on-wire frame flushes inside ~1 s worst-case even on a congested Wi-Fi link, well under the 3 s heartbeat window. Total transfer throughput is unchanged; only the per-frame occupancy of the socket is smaller."
     ]
   },
   {
     "version": "0.1.56",
     "date": "2026-07-27",
-    "title": "Windows: connection stability, real latency, Quit fix + controller mode",
+    "title": "Mac: live connection badge + edge-switch guard for offline peers",
     "highlights": [
-      "Windows: connection no longer drops on minimize or background. Windows 11 EcoQoS was stalling .NET thread-pool threads by several seconds; the 4 s heartbeat timeout treated this as a dead peer. Timeout raised to 15 s and process priority set to AboveNormal so background async loops are never starved.",
-      "Windows: latency display now shows true LAN round-trip instead of the ~903 ms phase artefact. Heartbeat interval reduced from 1 s to 250 ms — on a normal LAN the readout is now in single-digit milliseconds.",
-      "Windows: 'Quit Entanglo' from the system tray now exits reliably. InputCaptureService.Dispose() was posting WM_QUIT to the UI thread instead of the hook thread, keeping the process alive. Fix: the hook thread captures its own Win32 thread ID at startup; Dispose() posts WM_QUIT directly to it via PostThreadMessageW.",
-      "Windows: controller mode. Moving the cursor to a configured screen edge now activates input capture and forwards all mouse and keyboard events to the assigned Mac peer. Press Escape or Scroll Lock to release. Configure edge-to-peer mappings in the Input Sharing tab.",
-      "Windows: auto-reconnect fires 2 s after a drop (was waiting up to 30 s for the next mDNS poll cycle), with an 8 s periodic safety net as backup.",
-      "No Mac changes — the Mac train stays on 0.1.54."
+      "Mac: the Devices tab connection pill (Discovered / Connecting / Connected / Errored) now reflects the live transport state from ConnectionCoordinator.connectionStates[deviceId] instead of the persisted Device.connection field. That field was only written when a hello arrived on the outbound transport — if the peer dialed us first (Mac↔Mac, symmetric dial race) the hello landed on the inbound with a different id and the trusted record stayed stuck on 'Discovered' forever, even though input sharing worked. Now the badge tracks the real socket state end-to-end.",
+      "Mac: PairingService.loadDevices sanitizes the persisted connection field back to .discovered on launch. Previously a stale 'connected' from a prior session would linger in the UI until the reconciler dialed and hello'd again — misleading right after startup.",
+      "Mac: edge switching now refuses to hand the cursor to a peer whose transport heartbeat isn't alive. Before, if an iMac or PC was off and you brushed the assigned edge, the cursor would 'tunnel' out of the screen — captured locally, virtual cursor spawned on a dead receiver, no way back until you triple-Esc'd. Now the switch is blocked at the delegate and the edge behaves like a wall while the peer is offline. A single throttled log line per 5 s per device tells you why in the Logs tab. Recovers automatically the moment the peer comes back.",
+      "No behavioural or protocol changes on Windows — the Win release train stays on 0.1.55."
     ]
   },
   {

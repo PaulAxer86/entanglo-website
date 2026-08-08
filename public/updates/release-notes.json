@@ -1,5 +1,40 @@
 [
   {
+    "version": "0.1.58",
+    "date": "2026-08-08",
+    "title": "Mac: multi-peer screenshot picker + wired-path upgrade timing fix • Windows: Quit tray fix + installer kill",
+    "highlights": [
+      "Mac: Screenshot Quick Action now shows a picker menu when more than one peer is connected. Previously the button targeted `coordinator.outbound.keys.first` — an arbitrary peer whose identity depended on dictionary hash ordering, so on a multi-Mac setup you had no way of telling which machine you were about to shoot and the ⌘⇧S global shortcut felt random. With one peer online the button stays a single-click (labelled 'Screenshot <PeerName>'); with two or more it becomes a Menu with one entry per connected peer, sorted alphabetically so the list doesn't jitter as the outbound map rehashes. The ⌘⇧S global shortcut retains its 'first peer' behaviour as a fallback for the common case.",
+      "Mac: screenshot preview now overlays a 'from <PeerName> · HH:mm:ss' badge in the top-left corner of the captured image itself, on top of the existing header. The header alone was fine for one-off captures, but when the user zoomed / scrolled inside the ScrollView the header scrolled out of frame; the overlay travels with the pixels, so back-to-back captures from different Macs in a multi-peer setup can be told apart at a glance (and the badge survives Copy-to-clipboard-then-paste-into-doc round-trips).",
+      "Mac: fixed wired-preference timing race. In 0.1.57 we started passing `NWParameters.requiredInterfaceType = .wiredEthernet` at dial time when the peer's Bonjour advert was seen on cable. Problem: Bonjour resolves each browser result's interface list incrementally — on a dual-homed peer the first callback almost always carried only `.wifi`, and the wiredEthernet interface arrived a few hundred ms later. Because `reconcile()` fired on the first `discoveredDevices` change and only dialed when `outbound[deviceId] == nil`, the session settled on Wi-Fi and stayed there for its whole lifetime even with both Macs wired to the same switch (Dashboard reported 25 ms instead of the ~0.7 ms cable RTT). `reconcile()` now also inspects existing outbound transports: if the peer's interface set gains `.wiredEthernet` and we're currently on Wi-Fi, the transport is torn down and immediately redialed pinned to Ethernet. Guarded by a per-device `wiredUpgradeAttempted` flag so a repeatedly-failing Ethernet dial doesn't loop.",
+      "Mac: `handleStateChange` in ConnectionCoordinator now only nils out `outbound[deviceId]` when the callback is for the transport we currently consider live (`outbound[deviceId] === transport`). Without this, the async `.cancelled` callback of the old Wi-Fi transport during a wired upgrade would stomp the freshly-dialed Ethernet transport back to nil and roll the state pill straight to 'Connecting…'. The change is idempotent for every other codepath — normal disconnects still clear the map, they just don't clobber a replacement transport that happens to have already replaced them.",
+      "Windows: Quit from tray now exits reliably — three layers of guarantee. Layer 1: a 500 ms kill thread starts directly inside the MenuFlyoutItem click handler, independent of Application.Current or any WinUI state. Layer 2: App.RequestQuit() now uses a static App._instance reference instead of Application.Current as App, which silently returned null when the window was hidden. Layer 3: QuitEntanglo() starts a 2 s raw-Thread watchdog before touching any service — even if cleanup blocks, the process exits.",
+      "Windows: installer no longer gets stuck when upgrading over a running build. PrepareToInstall runs taskkill /F before any file is copied."
+    ]
+  },
+  {
+    "version": "0.1.57",
+    "date": "2026-08-08",
+    "title": "Mac: no more mid-transfer drops + always prefer wired transport",
+    "highlights": [
+      "Mac: NetworkTransport now treats every inbound frame as proof-of-life, not just heartbeats. Root cause of the 'sends a file → link drops' complaint: FileTransferService streamed 2 MB fileChunks that on Wi-Fi could occupy the receive pipeline for 3+ seconds. During that window no heartbeat could land, and the 3 s 'link presumed dead' timer fired mid-transfer, killing a perfectly healthy connection. Now any frame (fileChunk, urlPush, clipboardText, screenshotResult, …) refreshes lastHeartbeatAt — the timeout is only tripped when the socket is actually silent.",
+      "Mac: dial-out is pinned to Ethernet / Thunderbolt whenever the peer's Bonjour advert is seen on a wired interface. Previously Network.framework auto-picked the path and sometimes settled on Wi-Fi even when both machines shared a wired subnet, hiding 100× the latency (75 ms Wi-Fi vs ~0.7 ms Ethernet on the same pair of iMacs). Now `NWParameters.requiredInterfaceType = .wiredEthernet` is set at connect time when applicable, so the socket also refuses to silently downgrade to Wi-Fi mid-session. If the peer is Wi-Fi-only, behaviour is unchanged.",
+      "Mac: DiscoveryService prefers `.wiredEthernet` over `.wifi` when both are advertised for the same peer, so the Dashboard 'Interface' pill reflects what's actually being used.",
+      "Mac: file transfer chunk size reduced from 2 MB → 512 KB. Combined with the heartbeat fix above this means each on-wire frame flushes inside ~1 s worst-case even on a congested Wi-Fi link, well under the 3 s heartbeat window. Total transfer throughput is unchanged; only the per-frame occupancy of the socket is smaller."
+    ]
+  },
+  {
+    "version": "0.1.56",
+    "date": "2026-07-27",
+    "title": "Mac: live connection badge + edge-switch guard for offline peers",
+    "highlights": [
+      "Mac: the Devices tab connection pill (Discovered / Connecting / Connected / Errored) now reflects the live transport state from ConnectionCoordinator.connectionStates[deviceId] instead of the persisted Device.connection field. That field was only written when a hello arrived on the outbound transport — if the peer dialed us first (Mac↔Mac, symmetric dial race) the hello landed on the inbound with a different id and the trusted record stayed stuck on 'Discovered' forever, even though input sharing worked. Now the badge tracks the real socket state end-to-end.",
+      "Mac: PairingService.loadDevices sanitizes the persisted connection field back to .discovered on launch. Previously a stale 'connected' from a prior session would linger in the UI until the reconciler dialed and hello'd again — misleading right after startup.",
+      "Mac: edge switching now refuses to hand the cursor to a peer whose transport heartbeat isn't alive. Before, if an iMac or PC was off and you brushed the assigned edge, the cursor would 'tunnel' out of the screen — captured locally, virtual cursor spawned on a dead receiver, no way back until you triple-Esc'd. Now the switch is blocked at the delegate and the edge behaves like a wall while the peer is offline. A single throttled log line per 5 s per device tells you why in the Logs tab. Recovers automatically the moment the peer comes back.",
+      "No behavioural or protocol changes on Windows — the Win release train stays on 0.1.55."
+    ]
+  },
+  {
     "version": "0.1.55",
     "date": "2026-07-09",
     "title": "Windows: Settings version label, minimize button, tray icon — three focused fixes",
