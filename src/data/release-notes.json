@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.1.59",
+    "date": "2026-08-21",
+    "title": "Third target: Entanglo for Android TV — plus every source tree now on GitHub",
+    "highlights": [
+      "New target: Entanglo for Android (v0.1, receiver-only) on the DQ08 Android TV box (Rockchip RK3528, Android 13, rooted). A Mac drives the TV cursor and keyboard end-to-end over Bonjour + TCP, the same wire protocol as the Mac↔Windows link. Mouse move, all three buttons, scroll and keys are live; input travels via a small root helper (libentanglo_helper.so, spawned via `su -c`) that holds the /dev/uinput fds for the app's lifetime.",
+      "Android: sub-pixel accumulator on the absolute→relative mouse conversion, so slow trackpad motion (< 0.5 px per frame) no longer stalls between pixel boundaries — the cursor moves smoothly instead of jumping. REL_X, REL_Y and SYN_REPORT are batched into a single uinput write(), halving the per-move syscall count.",
+      "Android: TV launcher banner (drawable-*/tv_banner.png at five densities) shows the black rabbit centred on a cream background, matching the sideloadable-app identity on the Android TV Apps row.",
+      "All three targets are now public on GitHub: the reference Swift/AppKit source at PaulAxer86/entanglo-macos, the C# / .NET 8 / WinUI 3 handoff package at PaulAxer86/entanglo-windows (source tree still on the winpc build machine — publish TBD), and the native Kotlin APK at PaulAxer86/entanglo-android. The website repo has been open since June.",
+      "Mac / Windows: no behavioural change — Mac stays on 0.1.58, Windows on 0.1.55. This release note carries the version bump to align the trains and mark the Android debut."
+    ]
+  },
+  {
     "version": "0.1.58",
     "date": "2026-08-08",
     "title": "Mac: multi-peer screenshot picker + wired-path upgrade timing fix • Windows: Quit tray fix + installer kill",

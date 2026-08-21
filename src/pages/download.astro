@@ -5,37 +5,56 @@ import AdSlot from '@/components/AdSlot.astro';
 import notes from '@/data/release-notes.json';
 
 const latest = notes[0] as { version: string; date: string; title: string; highlights: string[] };
-const version = latest?.version ?? '0.1.0';
+const macVersion = '0.1.58';
 const winRelease = 'v0.1.58';
 const winVersion = '0.1.58';
-const dmgUrl = `/downloads/Entanglo-${version}.dmg`;
+const androidVersion = '0.1.0';
+const dmgUrl = `/downloads/Entanglo-${macVersion}.dmg`;
 const windowsUrl = `https://github.com/PaulAxer86/entanglo-website/releases/download/${winRelease}/Entanglo-Setup-${winVersion}.exe`;
+const androidRepoUrl = 'https://github.com/PaulAxer86/entanglo-android';
 ---
 
 <Base
-  title={`Download Entanglo ${version}`}
-  description={`Get the latest Entanglo for macOS and Windows — version ${version}. Free, native, no account.`}
+  title={`Download Entanglo`}
+  description={`Get Entanglo for macOS, Windows and Android TV. Free, native, no account.`}
 >
   <section class="container-narrow pt-24 pb-12 text-center">
     <div class="inline-flex items-center gap-2 rounded-full border border-ink-950/10 bg-white/60 px-3.5 py-1.5 text-xs text-ink-700 mb-7">
       <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-      Latest — {latest?.date}
+      Latest release notes — {latest?.date}
     </div>
     <h1 class="display text-5xl md:text-7xl gradient-text leading-[1.05]">
-      Entanglo {version}
+      Get Entanglo
     </h1>
     <p class="mt-6 text-ink-700 text-xl max-w-2xl mx-auto">{latest?.title}</p>
+  </section>
 
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-      <DownloadButton href={dmgUrl} version={`v${version}`} />
-      <a href={windowsUrl} class="btn-ghost">Windows v{winVersion}</a>
-      <a href="/changelog" class="btn-ghost">Full changelog</a>
+  <section class="container-narrow py-8">
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="glass p-7 flex flex-col">
+        <div class="text-xs uppercase tracking-widest text-accent mb-2">macOS</div>
+        <div class="display text-2xl text-ink-950 mb-1">Entanglo {macVersion}</div>
+        <div class="text-sm text-ink-600 mb-5">macOS 13 Ventura or newer · Apple Silicon &amp; Intel</div>
+        <DownloadButton href={dmgUrl} version={`v${macVersion}`} />
+        <a href="https://github.com/PaulAxer86/entanglo-macos" class="mt-3 text-xs text-ink-500 hover:text-ink-950">Source · github.com/PaulAxer86/entanglo-macos</a>
+      </div>
+
+      <div class="glass p-7 flex flex-col">
+        <div class="text-xs uppercase tracking-widest text-accent mb-2">Windows</div>
+        <div class="display text-2xl text-ink-950 mb-1">Entanglo {winVersion}</div>
+        <div class="text-sm text-ink-600 mb-5">Windows 10 20H1 (build 19041) or newer · x64</div>
+        <a href={windowsUrl} class="btn-primary self-start">Download Setup · v{winVersion}</a>
+        <a href="https://github.com/PaulAxer86/entanglo-windows" class="mt-3 text-xs text-ink-500 hover:text-ink-950">Handoff docs · github.com/PaulAxer86/entanglo-windows</a>
+      </div>
+
+      <div class="glass p-7 flex flex-col">
+        <div class="text-xs uppercase tracking-widest text-accent mb-2">Android TV · new</div>
+        <div class="display text-2xl text-ink-950 mb-1">Entanglo {androidVersion}</div>
+        <div class="text-sm text-ink-600 mb-5">Sideloadable APK · Android TV, receiver-only in v0.1</div>
+        <a href={androidRepoUrl} class="btn-primary self-start">Source &amp; build · GitHub</a>
+        <p class="mt-3 text-xs text-ink-500 leading-relaxed">Requires root on the box (for <code class="font-mono text-accent">/dev/uinput</code>). Built and installed via <code class="font-mono text-accent">./gradlew assembleDebug</code> + <code class="font-mono text-accent">pm install</code>.</p>
+      </div>
     </div>
-
-    <p class="mt-4 text-xs text-ink-500 leading-relaxed">
-      DMG · macOS 13 Ventura or newer · Apple Silicon &amp; Intel<br />
-      EXE · Windows 10 20H1 (build 19041) or newer · x64
-    </p>
   </section>
 
   <section class="container-narrow py-12">
@@ -53,7 +72,7 @@ const windowsUrl = `https://github.com/PaulAxer86/entanglo-website/releases/down
   </section>
 
   <section class="container-narrow py-12">
-    <div class="grid md:grid-cols-2 gap-5">
+    <div class="grid md:grid-cols-3 gap-5">
       <div class="glass p-7">
         <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">macOS install</div>
         <ol class="space-y-2 text-ink-800 text-sm list-decimal pl-5">
@@ -64,12 +83,22 @@ const windowsUrl = `https://github.com/PaulAxer86/entanglo-website/releases/down
         </ol>
       </div>
       <div class="glass p-7">
-        <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">Windows preview</div>
-        <p class="text-ink-800 text-sm leading-relaxed">
-          Download the Windows ZIP, extract it, then launch
-          <code class="font-mono text-accent">Entanglo.Windows.exe</code>. Keep the extracted
-          folder intact because the preview build ships with its WinUI runtime files.
-        </p>
+        <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">Windows install</div>
+        <ol class="space-y-2 text-ink-800 text-sm list-decimal pl-5">
+          <li>Download the <code class="font-mono text-accent">.exe</code> installer.</li>
+          <li>Run it — SmartScreen may ask once, click <strong>Run anyway</strong>.</li>
+          <li>Launch from Start; the rabbit lands in the system tray.</li>
+          <li>Allow it through the Windows Firewall on the private network.</li>
+        </ol>
+      </div>
+      <div class="glass p-7">
+        <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">Android TV install</div>
+        <ol class="space-y-2 text-ink-800 text-sm list-decimal pl-5">
+          <li>Clone <a class="text-accent hover:underline" href={androidRepoUrl}>entanglo-android</a>.</li>
+          <li><code class="font-mono text-accent">./gradlew assembleDebug</code> (JDK 17, Android NDK).</li>
+          <li>Sideload the APK: <code class="font-mono text-accent">adb install -r app-debug.apk</code>.</li>
+          <li>Approve the Magisk root grant on first launch. Pair from the Mac.</li>
+        </ol>
       </div>
     </div>
   </section>
