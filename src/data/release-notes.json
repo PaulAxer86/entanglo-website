@@ -1,7 +1,16 @@
 [
   {
+    "version": "0.1.61",
+    "date": "2026-11-08",
+    "title": "Mac: one row per device in Devices, and file-receive acks that actually route back to Linux senders",
+    "highlights": [
+      "Mac: Devices now shows a single, canonical row per physical peer no matter how many identifiers it has been seen under. The identity model is explicit — canonical `id` is the peer's UUID when known (TXT `id` or first Hello), Bonjour name as a fallback — and each `Device` carries an `aliases` set, so the old name-keyed row and the new UUID-keyed row of the same peer collapse the moment the first Hello arrives. Pre-0.1.60 trust records (which only had a Bonjour name) decode cleanly and survive the upgrade without re-pairing. Two distinct devices that happen to share a Bonjour hostname stay as two rows.",
+      "Mac: `FileTransferService` ack routing is fixed for Linux senders. Previously the Mac routed `fileAck` back by `envelope.senderDeviceId` (the sender's UUID), but the Mac's outbound map was keyed by the dialed Bonjour name — the lookup missed and the ack was silently dropped, so the Linux sender timed out waiting for chunk 0. Acks now go out on the exact transport that delivered the chunk (threaded through as a `replyToken`), with the peer-id path kept as a fallback. Transfers originating from Linux peers that the Mac never dialed itself now complete.",
+      "Mac: the Devices row got a tighter layout. Name is bold on top; subtitle is `<platform> · Trusted/Not trusted · <version>`. Four capability icons line up on the right — Trust, Keyboard+Mouse, Files, Connection — each with a specific tooltip explaining exactly *why* it is dimmed (no accessibility permission, controller role off, emergency stop active, peer offline, etc.). Sort is stable: connected+trusted first, then connected+untrusted, then discovered; alphabetical by name, UUID as a tiebreaker."
+    ]
+  },
+  {
     "version": "0.1.60",
-    "platform": "mac",
     "date": "2026-11-08",
     "title": "Mac: advertise main-display size in Hello — lets Linux 0.1.5+ controllers seed and clamp the cursor on the Mac canvas",
     "highlights": [
@@ -9,142 +18,7 @@
     ]
   },
   {
-    "version": "0.1.13",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: delivered files no longer show as failed",
-    "highlights": [
-      "Linux: a file fully sent to a device that does not confirm it now shows as Sent instead of Failed, with a note that receipt was not confirmed."
-    ]
-  },
-  {
-    "version": "0.1.12",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: working file chooser and a compact Files page",
-    "highlights": [
-      "Linux: the Choose files button now opens the file chooser.",
-      "Linux: file rows are compact, with the name and status on one line and size, date and device on a smaller line.",
-      "Linux: refreshed Send a file card with a clearer drop zone."
-    ]
-  },
-  {
-    "version": "0.1.11",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: send files to trusted devices",
-    "highlights": [
-      "Linux: the Files page can now send files to trusted devices, by file picker or drag and drop, with a device selector and progress.",
-      "Linux: sent and received files have their own icons and sounds, and sent files name the recipient.",
-      "Linux: slow disk writes no longer drop the connection while receiving a file."
-    ]
-  },
-  {
-    "version": "0.1.10",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: keypad Enter fix",
-    "highlights": [
-      "Linux: the keypad Enter key now works as Enter when received from another device, including on Mac keyboard layouts."
-    ]
-  },
-  {
-    "version": "0.1.9",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: numeric keypad support",
-    "highlights": [
-      "Linux: the numeric keypad, including its Enter key, now works between devices.",
-      "Linux: received keypad digits always type digits, whatever the NumLock state."
-    ]
-  },
-  {
-    "version": "0.1.8",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: Debian 12 support and digit key fix",
-    "highlights": [
-      "Linux: one package now installs on Debian 12 and Debian 13.",
-      "Linux: the 5, 6 and 7 keys no longer arrive swapped between devices."
-    ]
-  },
-  {
-    "version": "0.1.7",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: system tray and start at login",
-    "highlights": [
-      "Linux: a system tray icon opens the window or quits Entanglo. Where a tray is available, closing the window keeps Entanglo running there.",
-      "Linux: Settings can start Entanglo at login, directly in the tray."
-    ]
-  },
-  {
-    "version": "0.1.6",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: edge switching on all four sides",
-    "highlights": [
-      "Linux: Edge Switching now covers the top and bottom screen edges as well as left and right.",
-      "Linux: the clipboard sync setting is now saved across restarts and updates."
-    ]
-  },
-  {
-    "version": "0.1.5",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: opt-in controller mode",
-    "highlights": [
-      "Linux: enable Share my keyboard & mouse in Input Sharing to control other trusted devices. The local keyboard and pointer are held while a remote device is being controlled.",
-      "Linux: Edge Switching assigns devices to the left and right screen edges, and the choice now survives reconnects and restarts. Requires an X11 session.",
-      "Linux: trusted devices reconnect automatically in controller mode after a dropped link."
-    ]
-  },
-  {
-    "version": "0.1.4",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: clearer Input Sharing, simpler pairing, richer file list",
-    "highlights": [
-      "Linux: Input Sharing is laid out in sections like the Mac app, with live status for reception, heartbeat, emergency stop and connected devices.",
-      "Linux: the Pairing tab is gone. Pairing requests are accepted or rejected directly on the device row in Devices.",
-      "Linux: each file transfer now shows its date and time, size and a direction icon."
-    ]
-  },
-  {
-    "version": "0.1.3",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: notification sounds and visible version",
-    "highlights": [
-      "Linux: notification sounds when a trusted device connects or disconnects, when a file fails or is interrupted, and when a file is received.",
-      "Linux: the installed version is now shown at the bottom of the sidebar."
-    ]
-  },
-  {
-    "version": "0.1.2",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: accept files from Windows peers",
-    "highlights": [
-      "Linux: file reception now accepts the 2 MiB chunks sent by Windows peers. Previously every file from a Windows device was rejected because the receiver capped chunks at 1 MiB.",
-      "Linux: rejected file offers are now logged with their real reason."
-    ]
-  },
-  {
-    "version": "0.1.1",
-    "platform": "linux",
-    "date": "2026-11-08",
-    "title": "Linux: first public release — GTK4 receiver with verified in-app updates",
-    "highlights": [
-      "Linux: native GTK4/libadwaita receiver app for Debian 13 amd64. Mouse, keyboard and plain-text clipboard reception from trusted Entanglo peers on the same LAN. Streaming file reception into `Downloads/Entanglo` with progress, collision handling, partial-file cleanup and completion acknowledgements. One row per device in **Devices**, with capability icons and the same authorization states the Mac client uses.",
-      "Linux: stable device identity via a persisted UUID, port 55555, and Bonjour reconnect announcements when a controller does not return after an update. Receiving is the default; local input capture is opt-in via `ENTANGLO_ENABLE_CONTROLLER=1` and Linux-to-Linux control still needs separate validation. Wayland input reception, file sending and printing are not yet implemented — use an X11 desktop for Mac absolute pointer input.",
-      "Linux: hourly update checks against `https://entanglo.pages.dev/updates/latest-linux.json`. **News & Updates** downloads the `.deb`, verifies SHA-256 and size (hosts restricted to `entanglo.pages.dev/downloads/` and the signed GitHub release), and installs via the standard administrator authentication dialog for system installs; user installs stay in the user account.",
-      "Linux: install with `sudo apt install ./entanglo-linux_0.1.1_amd64.deb`, then `sudo usermod -aG input \"$USER\"`. Existing group membership is activated for the app without a desktop logout. The **Reconnect** Dashboard action refreshes Bonjour without changing device identity; closing the window stops input, withdraws the advertisement and quits."
-    ]
-  },
-  {
     "version": "0.1.59",
-    "platform": "mac",
     "date": "2026-11-08",
     "title": "Mac: stable device identity via Bonjour TXT — fixes duplicate rows in Devices",
     "highlights": [

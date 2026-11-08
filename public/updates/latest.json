@@ -1,13 +1,15 @@
 {
-  "version": "0.1.60",
+  "version": "0.1.61",
   "date": "2026-11-08",
-  "title": "Mac: advertise main-display size in Hello \u2014 lets Linux 0.1.5+ controllers seed and clamp the cursor on the Mac canvas",
+  "title": "Mac: one row per device in Devices, and file-receive acks that actually route back to Linux senders",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.60.dmg",
-  "sha256": "08bfe0483975789ba18c13d4d13d26d3bcda4d8c5b6272da34223181721eedfd",
-  "size": 2301637,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-60",
+  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.61.dmg",
+  "sha256": "7d7f723c6e2912bb260ca59030069ad6cc06f03f742443ca999abc249a639f9b",
+  "size": 2349098,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-61",
   "highlights": [
-    "Mac: `HelloPayload` now carries optional `screenWidth` and `screenHeight` integers (logical points of `NSScreen.main`), populated by `ConnectionCoordinator.sendLocalHello` at every connect. Satisfies PROTOCOL.md \u00a75.1, which marks the fields optional and tells controllers to fall back to a legacy heuristic when absent. Concrete payoff: Linux 0.1.5 full-controller builds (the `Make Linux a full controller` release that scales edge coordinates to the receiver's canvas) will now seed the cursor at the correct position on the Mac receiver and clamp absolute moves to the real Mac display bounds instead of the controller's own screen. Windows and Android peers ignore the new fields today; nothing regresses for them."
+    "Mac: Devices now shows a single, canonical row per physical peer no matter how many identifiers it has been seen under. The identity model is explicit \u2014 canonical `id` is the peer's UUID when known (TXT `id` or first Hello), Bonjour name as a fallback \u2014 and each `Device` carries an `aliases` set, so the old name-keyed row and the new UUID-keyed row of the same peer collapse the moment the first Hello arrives. Pre-0.1.60 trust records (which only had a Bonjour name) decode cleanly and survive the upgrade without re-pairing. Two distinct devices that happen to share a Bonjour hostname stay as two rows.",
+    "Mac: `FileTransferService` ack routing is fixed for Linux senders. Previously the Mac routed `fileAck` back by `envelope.senderDeviceId` (the sender's UUID), but the Mac's outbound map was keyed by the dialed Bonjour name \u2014 the lookup missed and the ack was silently dropped, so the Linux sender timed out waiting for chunk 0. Acks now go out on the exact transport that delivered the chunk (threaded through as a `replyToken`), with the peer-id path kept as a fallback. Transfers originating from Linux peers that the Mac never dialed itself now complete.",
+    "Mac: the Devices row got a tighter layout. Name is bold on top; subtitle is `<platform> \u00b7 Trusted/Not trusted \u00b7 <version>`. Four capability icons line up on the right \u2014 Trust, Keyboard+Mouse, Files, Connection \u2014 each with a specific tooltip explaining exactly *why* it is dimmed (no accessibility permission, controller role off, emergency stop active, peer offline, etc.). Sort is stable: connected+trusted first, then connected+untrusted, then discovered; alphabetical by name, UUID as a tiebreaker."
   ]
 }
