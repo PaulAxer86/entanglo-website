@@ -1,14 +1,14 @@
 {
-  "version": "0.1.58",
-  "date": "2026-07-27",
-  "title": "Windows: Quit from tray — three-layer exit guarantee",
+  "version": "0.1.59",
+  "date": "2026-11-08",
+  "title": "Windows: Open Downloads button + UI corner radius polish",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.58/Entanglo-Setup-0.1.58.exe",
-  "sha256": "0adfda4cedf6be591647a426c82a33361d1933bce47b8fbe73c65dfc1bb30b1c",
-  "size": 44917895,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-58",
+  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.59/Entanglo-Setup-0.1.59.exe",
+  "sha256": "648eaf7f4c3cabbb477e4fb3f6ba5b6abe29157705efae92d6c55f575a4a58f3",
+  "size": 44913243,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-59",
   "highlights": [
-    "Windows: Quit from tray now exits reliably — three layers of guarantee. Layer 1: a 500 ms kill thread starts directly inside the MenuFlyoutItem click handler, independent of Application.Current or any WinUI state. Layer 2: App.RequestQuit() now uses a static App._instance reference instead of Application.Current as App, which silently returned null when the window was hidden. Layer 3: QuitEntanglo() starts a 2 s raw-Thread watchdog before touching any service — even if cleanup blocks, the process exits.",
-    "Windows: installer no longer gets stuck when upgrading over a running build. PrepareToInstall runs taskkill /F before any file is copied."
+    "Windows: Files page now shows an 'Open Downloads' button in the Transfers card whenever the %LocalAppData%\\Entanglo\\Downloads\\ folder contains at least one received file. Click it to open the folder directly in Explorer — no more hunting for where received files land.",
+    "Windows: UI corner radius reduced from large pill/circle values (12–999 px) to a consistent 6 px across all cards, pills, buttons and icon badges. The app no longer uses oval or circular shapes — every surface has a clean squared-off look that feels more native on Windows 11."
   ]
 }
