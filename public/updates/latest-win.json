@@ -1,14 +1,13 @@
 {
-  "version": "0.1.59",
+  "version": "0.1.60",
   "date": "2026-11-08",
-  "title": "Windows: Open Downloads button + UI corner radius polish",
+  "title": "Windows: file transfer to Mac now completes correctly",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.59/Entanglo-Setup-0.1.59.exe",
-  "sha256": "648eaf7f4c3cabbb477e4fb3f6ba5b6abe29157705efae92d6c55f575a4a58f3",
-  "size": 44913243,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-59",
+  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.60/Entanglo-Setup-0.1.60.exe",
+  "sha256": "2f364b320b3bc94f996b19313f6cca6fcbc5ff8b523b55abd2ac8be273232b99",
+  "size": 44952700,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-60",
   "highlights": [
-    "Windows: Files page now shows an 'Open Downloads' button in the Transfers card whenever the %LocalAppData%\\Entanglo\\Downloads\\ folder contains at least one received file. Click it to open the folder directly in Explorer — no more hunting for where received files land.",
-    "Windows: UI corner radius reduced from large pill/circle values (12–999 px) to a consistent 6 px across all cards, pills, buttons and icon badges. The app no longer uses oval or circular shapes — every surface has a clean squared-off look that feels more native on Windows 11."
+    "Windows: file transfer from Windows to Mac no longer incorrectly shows 'Failed' before completing. The Mac sends a preliminary acknowledgment when it receives a file offer; Windows was treating this as a final rejection and marking the transfer red. The transfer still landed on the Mac correctly, but the Windows UI showed a confusing flash of failure. Fixed by ignoring early nacks while streaming is still in progress."
   ]
 }
