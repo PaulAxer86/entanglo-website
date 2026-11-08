@@ -1,15 +1,14 @@
 {
-  "version": "0.1.58",
-  "date": "2026-08-08",
-  "title": "Mac: multi-peer screenshot picker + wired-path upgrade timing fix",
+  "version": "0.1.59",
+  "date": "2026-11-08",
+  "title": "Mac: stable device identity via Bonjour TXT — fixes duplicate rows in Devices",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.58.dmg",
-  "sha256": "8642caee2c91688c20134b2176246ec9d609b7d57995973e7215f7a782827c4b",
-  "size": 2290636,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-58",
+  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.59.dmg",
+  "sha256": "48bc24ec2ed83cf9101b7a107a5f57a096b67b613083a87eac41ff1f3f2e6055",
+  "size": 2298671,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-59",
   "highlights": [
-    "Mac: Screenshot Quick Action now shows a picker menu when more than one peer is connected. Previously the button targeted `coordinator.outbound.keys.first` \u2014 an arbitrary peer whose identity depended on dictionary hash ordering, so on a multi-Mac setup you had no way of telling which machine you were about to shoot and the \u2318\u21e7S global shortcut felt random. With one peer online the button stays a single-click (labelled 'Screenshot <PeerName>'); with two or more it becomes a Menu with one entry per connected peer, sorted alphabetically so the list doesn't jitter as the outbound map rehashes. The \u2318\u21e7S global shortcut retains its 'first peer' behaviour as a fallback for the common case.",
-    "Mac: screenshot preview now overlays a 'from <PeerName> \u00b7 HH:mm:ss' badge in the top-left corner of the captured image itself, on top of the existing header. The header alone was fine for one-off captures, but when the user zoomed / scrolled inside the ScrollView the header scrolled out of frame; the overlay travels with the pixels, so back-to-back captures from different Macs in a multi-peer setup can be told apart at a glance (and the badge survives Copy-to-clipboard-then-paste-into-doc round-trips).",
-    "Mac: fixed wired-preference timing race. In 0.1.57 we started passing `NWParameters.requiredInterfaceType = .wiredEthernet` at dial time when the peer's Bonjour advert was seen on cable. Problem: Bonjour resolves each browser result's interface list incrementally \u2014 on a dual-homed peer the first callback almost always carried only `.wifi`, and the wiredEthernet interface arrived a few hundred ms later. Because `reconcile()` fired on the first `discoveredDevices` change and only dialed when `outbound[deviceId] == nil`, the session settled on Wi-Fi and stayed there for its whole lifetime even with both Macs wired to the same switch (Dashboard reported 25 ms instead of the ~0.7 ms cable RTT). `reconcile()` now also inspects existing outbound transports: if the peer's interface set gains `.wiredEthernet` and we're currently on Wi-Fi, the transport is torn down and immediately redialed pinned to Ethernet. Guarded by a per-device `wiredUpgradeAttempted` flag so a repeatedly-failing Ethernet dial doesn't loop."
+    "Mac: `DiscoveryService` now publishes the local stable UUID (`localDeviceId`) in the Bonjour TXT record under the key `id`, and the browser keys each `Device` by the peer's advertised UUID instead of its Bonjour service name. Root cause of the long-standing 'same Mac appears twice in Devices' complaint: `Device.id` was documented as a stable UUID but the discovery path assigned it the Bonjour service name, while the Hello handshake later assigned the real UUID \u2014 same peer, two ids, no dedupe in `DevicesView.combinedDevices`. Users who had already trusted a peer on the name-keyed row kept seeing the UUID-keyed row re-trust on every handshake, producing one 'Disconnected \u00b7 Trusted' ghost per renamed or Bonjour-collided peer. The TXT-first lookup keys the Device correctly from the first browse callback. Legacy peers (Mac <0.1.59, Windows 0.1.55, Android) still fall back to the Bonjour name until their first Hello.",
+    "Mac: `ConnectionCoordinator` Hello handler now performs one-shot deduplication. When a Hello arrives under the peer's real UUID, any previously persisted entry that shares the peer's display name but has a different id is forgotten (and its runtime slots in `connectionStates`, `outbound`, `wiredUpgradeAttempted` are scrubbed), after inheriting its pairing state onto the UUID entry. So an upgrade from 0.1.58 \u2192 0.1.59 collapses the pre-existing ghost rows on the first reconnect, without any user action \u2014 including collapsing a 'Trusted' ghost onto a freshly discovered row so trust is preserved."
   ]
 }
