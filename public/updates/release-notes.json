@@ -9,6 +9,17 @@
     ]
   },
   {
+    "version": "0.1.12",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: working file chooser and a compact Files page",
+    "highlights": [
+      "Linux: the Choose files button now opens the file chooser.",
+      "Linux: file rows are compact, with the name and status on one line and size, date and device on a smaller line.",
+      "Linux: refreshed Send a file card with a clearer drop zone."
+    ]
+  },
+  {
     "version": "0.1.11",
     "platform": "linux",
     "date": "2026-11-08",
