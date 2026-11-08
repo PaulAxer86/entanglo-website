@@ -1,4 +1,13 @@
 ﻿[  {
+    "version": "0.1.61",
+    "platform": "windows",
+    "date": "2026-11-08",
+    "title": "Windows: update no longer hangs at [preparing]",
+    "highlights": [
+      "Windows: installing an update no longer gets stuck at [preparing] for two minutes. Previously the app tried to push the Windows installer to Mac and Linux peers before installing it; since all platforms now fetch updates from entanglo.pages.dev, that push has been disabled."
+    ]
+  },
+  {
     "version": "0.1.60",
     "platform": "windows",
     "date": "2026-11-08",

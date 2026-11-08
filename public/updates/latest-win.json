@@ -1,13 +1,13 @@
 {
-  "version": "0.1.60",
+  "version": "0.1.61",
   "date": "2026-11-08",
-  "title": "Windows: file transfer to Mac now completes correctly",
+  "title": "Windows: update no longer hangs at [preparing]",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.60/Entanglo-Setup-0.1.60.exe",
-  "sha256": "2f364b320b3bc94f996b19313f6cca6fcbc5ff8b523b55abd2ac8be273232b99",
-  "size": 44952700,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-60",
+  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.61/Entanglo-Setup-0.1.61.exe",
+  "sha256": "cf7f4941e7fef7a72828677b33b13356ec6c7e1be24278246dc3dd486f0e6652",
+  "size": 44960184,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-61",
   "highlights": [
-    "Windows: file transfer from Windows to Mac no longer incorrectly shows 'Failed' before completing. The Mac sends a preliminary acknowledgment when it receives a file offer; Windows was treating this as a final rejection and marking the transfer red. The transfer still landed on the Mac correctly, but the Windows UI showed a confusing flash of failure. Fixed by ignoring early nacks while streaming is still in progress."
+    "Windows: installing an update no longer gets stuck at [preparing] for two minutes. Previously the app tried to push the Windows installer to Mac and Linux peers before installing it; since all platforms now fetch updates from entanglo.pages.dev, that push has been disabled."
   ]
 }
