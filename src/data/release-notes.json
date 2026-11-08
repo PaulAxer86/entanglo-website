@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.1.4",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: clearer Input Sharing, simpler pairing, richer file list",
+    "highlights": [
+      "Linux: Input Sharing is laid out in sections like the Mac app, with live status for reception, heartbeat, emergency stop and connected devices.",
+      "Linux: the Pairing tab is gone. Pairing requests are accepted or rejected directly on the device row in Devices.",
+      "Linux: each file transfer now shows its date and time, size and a direction icon."
+    ]
+  },
+  {
     "version": "0.1.3",
     "platform": "linux",
     "date": "2026-11-08",
