@@ -1,6 +1,19 @@
 [
   {
+    "version": "0.1.1",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: first public release — GTK4 receiver with verified in-app updates",
+    "highlights": [
+      "Linux: native GTK4/libadwaita receiver app for Debian 13 amd64. Mouse, keyboard and plain-text clipboard reception from trusted Entanglo peers on the same LAN. Streaming file reception into `Downloads/Entanglo` with progress, collision handling, partial-file cleanup and completion acknowledgements. One row per device in **Devices**, with capability icons and the same authorization states the Mac client uses.",
+      "Linux: stable device identity via a persisted UUID, port 55555, and Bonjour reconnect announcements when a controller does not return after an update. Receiving is the default; local input capture is opt-in via `ENTANGLO_ENABLE_CONTROLLER=1` and Linux-to-Linux control still needs separate validation. Wayland input reception, file sending and printing are not yet implemented — use an X11 desktop for Mac absolute pointer input.",
+      "Linux: hourly update checks against `https://entanglo.pages.dev/updates/latest-linux.json`. **News & Updates** downloads the `.deb`, verifies SHA-256 and size (hosts restricted to `entanglo.pages.dev/downloads/` and the signed GitHub release), and installs via the standard administrator authentication dialog for system installs; user installs stay in the user account.",
+      "Linux: install with `sudo apt install ./entanglo-linux_0.1.1_amd64.deb`, then `sudo usermod -aG input \"$USER\"`. Existing group membership is activated for the app without a desktop logout. The **Reconnect** Dashboard action refreshes Bonjour without changing device identity; closing the window stops input, withdraws the advertisement and quits."
+    ]
+  },
+  {
     "version": "0.1.59",
+    "platform": "mac",
     "date": "2026-11-08",
     "title": "Mac: stable device identity via Bonjour TXT — fixes duplicate rows in Devices",
     "highlights": [

@@ -8,15 +8,17 @@ const latest = notes[0] as { version: string; date: string; title: string; highl
 const macVersion = '0.1.59';
 const winRelease = 'v0.1.59';
 const winVersion = '0.1.59';
+const linuxVersion = '0.1.1';
 const androidVersion = '0.1.0';
 const dmgUrl = `/downloads/Entanglo-${macVersion}.dmg`;
 const windowsUrl = `https://github.com/PaulAxer86/entanglo-website/releases/download/${winRelease}/Entanglo-Setup-${winVersion}.exe`;
+const linuxDebUrl = `https://github.com/PaulAxer86/entanglo-linux/releases/download/v${linuxVersion}/entanglo-linux_${linuxVersion}_amd64.deb`;
 const androidRepoUrl = 'https://github.com/PaulAxer86/entanglo-android';
 ---
 
 <Base
   title={`Download Entanglo`}
-  description={`Get Entanglo for macOS, Windows and Android TV. Free, native, no account.`}
+  description={`Get Entanglo for macOS, Windows, Linux and Android TV. Free, native, no account.`}
 >
   <section class="container-narrow pt-24 pb-12 text-center">
     <div class="inline-flex items-center gap-2 rounded-full border border-ink-950/10 bg-white/60 px-3.5 py-1.5 text-xs text-ink-700 mb-7">
@@ -30,7 +32,7 @@ const androidRepoUrl = 'https://github.com/PaulAxer86/entanglo-android';
   </section>
 
   <section class="container-narrow py-8">
-    <div class="grid md:grid-cols-3 gap-5">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
       <div class="glass p-7 flex flex-col">
         <div class="text-xs uppercase tracking-widest text-accent mb-2">macOS</div>
         <div class="display text-2xl text-ink-950 mb-1">Entanglo {macVersion}</div>
@@ -44,15 +46,23 @@ const androidRepoUrl = 'https://github.com/PaulAxer86/entanglo-android';
         <div class="display text-2xl text-ink-950 mb-1">Entanglo {winVersion}</div>
         <div class="text-sm text-ink-600 mb-5">Windows 10 20H1 (build 19041) or newer · x64</div>
         <a href={windowsUrl} class="btn-primary self-start">Download Setup · v{winVersion}</a>
-        <a href="https://github.com/PaulAxer86/entanglo-windows" class="mt-3 text-xs text-ink-500 hover:text-ink-950">Handoff docs · github.com/PaulAxer86/entanglo-windows</a>
+        <a href="https://github.com/PaulAxer86/entanglo-windows" class="mt-3 text-xs text-ink-500 hover:text-ink-950">Source · github.com/PaulAxer86/entanglo-windows</a>
       </div>
 
       <div class="glass p-7 flex flex-col">
-        <div class="text-xs uppercase tracking-widest text-accent mb-2">Android TV · new</div>
+        <div class="text-xs uppercase tracking-widest text-accent mb-2">Linux · new</div>
+        <div class="display text-2xl text-ink-950 mb-1">Entanglo {linuxVersion}</div>
+        <div class="text-sm text-ink-600 mb-5">Debian 13 amd64 · X11 · receiver by default</div>
+        <a href={linuxDebUrl} class="btn-primary self-start">Download .deb · v{linuxVersion}</a>
+        <a href="https://github.com/PaulAxer86/entanglo-linux" class="mt-3 text-xs text-ink-500 hover:text-ink-950">Source · github.com/PaulAxer86/entanglo-linux</a>
+      </div>
+
+      <div class="glass p-7 flex flex-col">
+        <div class="text-xs uppercase tracking-widest text-accent mb-2">Android TV</div>
         <div class="display text-2xl text-ink-950 mb-1">Entanglo {androidVersion}</div>
         <div class="text-sm text-ink-600 mb-5">Sideloadable APK · Android TV, receiver-only in v0.1</div>
         <a href={androidRepoUrl} class="btn-primary self-start">Source &amp; build · GitHub</a>
-        <p class="mt-3 text-xs text-ink-500 leading-relaxed">Requires root on the box (for <code class="font-mono text-accent">/dev/uinput</code>). Built and installed via <code class="font-mono text-accent">./gradlew assembleDebug</code> + <code class="font-mono text-accent">pm install</code>.</p>
+        <a href="https://github.com/PaulAxer86/entanglo-android" class="mt-3 text-xs text-ink-500 hover:text-ink-950">Source · github.com/PaulAxer86/entanglo-android</a>
       </div>
     </div>
   </section>
@@ -72,7 +82,7 @@ const androidRepoUrl = 'https://github.com/PaulAxer86/entanglo-android';
   </section>
 
   <section class="container-narrow py-12">
-    <div class="grid md:grid-cols-3 gap-5">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
       <div class="glass p-7">
         <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">macOS install</div>
         <ol class="space-y-2 text-ink-800 text-sm list-decimal pl-5">
@@ -92,6 +102,16 @@ const androidRepoUrl = 'https://github.com/PaulAxer86/entanglo-android';
         </ol>
       </div>
       <div class="glass p-7">
+        <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">Linux install</div>
+        <ol class="space-y-2 text-ink-800 text-sm list-decimal pl-5">
+          <li>Download the <code class="font-mono text-accent">.deb</code> for Debian 13 amd64.</li>
+          <li><code class="font-mono text-accent">sudo apt install ./entanglo-linux_{linuxVersion}_amd64.deb</code></li>
+          <li><code class="font-mono text-accent">sudo usermod -aG input &quot;$USER&quot;</code>, then open <strong>Entanglo</strong> from the app menu.</li>
+          <li>In <strong>Devices</strong>, trust your Entanglo controller. Use an X11 desktop for Mac absolute pointer input.</li>
+        </ol>
+        <p class="mt-3 text-xs text-ink-500 leading-relaxed">Receiver by default. Wayland input reception, file sending and printing are not yet implemented.</p>
+      </div>
+      <div class="glass p-7">
         <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">Android TV install</div>
         <ol class="space-y-2 text-ink-800 text-sm list-decimal pl-5">
           <li>Clone <a class="text-accent hover:underline" href={androidRepoUrl}>entanglo-android</a>.</li>
@@ -99,6 +119,7 @@ const androidRepoUrl = 'https://github.com/PaulAxer86/entanglo-android';
           <li>Sideload the APK: <code class="font-mono text-accent">adb install -r app-debug.apk</code>.</li>
           <li>Approve the Magisk root grant on first launch. Pair from the Mac.</li>
         </ol>
+        <p class="mt-3 text-xs text-ink-500 leading-relaxed">Requires root on the box (for <code class="font-mono text-accent">/dev/uinput</code>).</p>
       </div>
     </div>
   </section>
