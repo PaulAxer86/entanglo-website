@@ -8,7 +8,7 @@ const latest = notes[0] as { version: string; date: string; title: string; highl
 const macVersion = '0.1.60';
 const winRelease = 'v0.1.61';
 const winVersion = '0.1.61';
-const linuxVersion = '0.1.7';
+const linuxVersion = '0.1.8';
 const androidVersion = '0.1.0';
 const dmgUrl = `/downloads/Entanglo-${macVersion}.dmg`;
 const windowsUrl = `https://github.com/PaulAxer86/entanglo-website/releases/download/${winRelease}/Entanglo-Setup-${winVersion}.exe`;
@@ -52,7 +52,7 @@ const androidRepoUrl = 'https://github.com/PaulAxer86/entanglo-android';
       <div class="glass p-7 flex flex-col">
         <div class="text-xs uppercase tracking-widest text-accent mb-2">Linux · new</div>
         <div class="display text-2xl text-ink-950 mb-1">Entanglo {linuxVersion}</div>
-        <div class="text-sm text-ink-600 mb-5">Debian 13 amd64 · X11 · receiver by default</div>
+        <div class="text-sm text-ink-600 mb-5">Debian 12 or 13 amd64 · X11 · receiver by default</div>
         <a href={linuxDebUrl} class="btn-primary self-start">Download .deb · v{linuxVersion}</a>
         <a href="https://github.com/PaulAxer86/entanglo-linux" class="mt-3 text-xs text-ink-500 hover:text-ink-950">Source · github.com/PaulAxer86/entanglo-linux</a>
       </div>
@@ -104,7 +104,7 @@ const androidRepoUrl = 'https://github.com/PaulAxer86/entanglo-android';
       <div class="glass p-7">
         <div class="text-xs uppercase tracking-widest text-ink-500 mb-3">Linux install</div>
         <ol class="space-y-2 text-ink-800 text-sm list-decimal pl-5">
-          <li>Download the <code class="font-mono text-accent">.deb</code> for Debian 13 amd64.</li>
+          <li>Download the <code class="font-mono text-accent">.deb</code> for Debian 12 or 13 amd64.</li>
           <li><code class="font-mono text-accent">sudo apt install ./entanglo-linux_{linuxVersion}_amd64.deb</code></li>
           <li><code class="font-mono text-accent">sudo usermod -aG input &quot;$USER&quot;</code>, then open <strong>Entanglo</strong> from the app menu.</li>
           <li>In <strong>Devices</strong>, trust your Entanglo controller. Use an X11 desktop for Mac absolute pointer input.</li>

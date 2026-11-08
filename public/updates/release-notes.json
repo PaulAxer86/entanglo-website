@@ -9,6 +9,16 @@
     ]
   },
   {
+    "version": "0.1.8",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: Debian 12 support and digit key fix",
+    "highlights": [
+      "Linux: one package now installs on Debian 12 and Debian 13.",
+      "Linux: the 5, 6 and 7 keys no longer arrive swapped between devices."
+    ]
+  },
+  {
     "version": "0.1.7",
     "platform": "linux",
     "date": "2026-11-08",
