@@ -4,12 +4,16 @@ import AdSlot from '@/components/AdSlot.astro';
 
 const faqs = [
   {
-    q: 'Entanglo doesn\'t find my other Mac',
-    a: 'Both Macs need to be on the same Wi-Fi (or the same Ethernet subnet) with Local Network permission granted. macOS 13+ on both ends. If the other Mac is on a guest network or behind client isolation, Bonjour can\'t reach it.',
+    q: 'Entanglo doesn\'t find my other device',
+    a: 'All peers need to be on the same Wi-Fi (or Ethernet subnet) with Local Network permission granted. macOS 13+, Windows 10 20H1+, Debian 13 or Android TV with the matching build installed. If a device is on a guest network or behind client isolation, Bonjour can\'t reach it.',
   },
   {
     q: 'The mouse moves but doesn\'t click on the remote Mac',
     a: 'That\'s the classic Sequoia "orphan Accessibility grant" trap. Open System Settings → Privacy & Security → Accessibility, remove Entanglo, re-add it, restart the app. The grant gets stuck to the previous build\'s code-signing identity.',
+  },
+  {
+    q: 'The mouse moves but doesn\'t click on the Linux receiver',
+    a: 'Check that your user is in the `input` group (`sudo usermod -aG input "$USER"`) and that you\'re on an X11 desktop — Wayland input reception is not yet implemented in the 0.1 line.',
   },
   {
     q: 'Latency shows nothing in Network Quality',
@@ -25,19 +29,19 @@ const faqs = [
   },
   {
     q: 'Can I use Entanglo with an iPad or iPhone?',
-    a: 'Not today. Entanglo is macOS-only because the input injection layer uses CGEvent, which exists only on macOS. iPadOS support would need a different transport.',
+    a: 'Not today. The 0.1 line ships for macOS, Windows, Linux (Debian 13 amd64) and Android TV. iPadOS/iOS would need a different input transport since UIKit does not expose a CGEvent-equivalent injection layer.',
   },
 ];
 ---
 
-<Base title="Support — Entanglo" description="Help, FAQ, and contact for Entanglo on macOS.">
+<Base title="Support — Entanglo" description="Help, FAQ, and contact for Entanglo on macOS, Windows, Linux and Android TV.">
   <section class="container-narrow pt-20 pb-10 text-center">
     <div class="text-xs uppercase tracking-widest text-accent mb-3">Support</div>
     <h1 class="display text-5xl md:text-6xl gradient-text leading-tight">
       We're here. Just write.
     </h1>
     <p class="mt-5 text-ink-700 text-lg max-w-xl mx-auto">
-      Entanglo is built and maintained by one person, on real hardware. You get a real reply.
+      Entanglo is built and maintained by one person, on real hardware across every supported OS. You get a real reply.
     </p>
     <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
       <a href="mailto:support@entanglo.app?subject=Entanglo%20support" class="btn-primary">
@@ -68,7 +72,7 @@ const faqs = [
     <div class="glass p-8 md:p-12 text-center">
       <h2 class="display text-3xl text-ink-950 mb-3">Still stuck?</h2>
       <p class="text-ink-700 max-w-xl mx-auto">
-        Send the app version (Help → About), your macOS version, and what you tried.
+        Send the app version (Help → About or the Dashboard footer), your OS version, and what you tried.
         Replies usually within 24 hours.
       </p>
       <a href="mailto:support@entanglo.app?subject=Entanglo%20issue" class="btn-primary mt-7">

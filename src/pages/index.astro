@@ -10,28 +10,28 @@ const version = (notes[0]?.version as string) ?? '0.1.0';
 const features = [
   {
     title: 'Input sharing',
-    description: 'One mouse, one keyboard, every Mac. Move past the edge of your screen and you\'re on the next machine — clicks, drags, double-clicks, modifiers, all native via CGEvent.',
+    description: 'One mouse, one keyboard, every machine. Move past the edge of your screen and you\'re on the next device — clicks, drags, double-clicks, modifiers, delivered natively per OS.',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h6m6 0h6M12 3v6m0 6v6"/></svg>`,
     highlight: true,
   },
   {
     title: 'Universal clipboard',
-    description: 'Copy on one Mac, paste on another. Text, rich text, images — synced over your LAN in milliseconds.',
+    description: 'Copy on one machine, paste on another. Text, rich text, images — synced over your LAN in milliseconds.',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M16 5h2a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h2"/></svg>`,
   },
   {
     title: 'File drop',
-    description: 'Drop a file in the link — it lands in the Downloads folder of the target Mac, chunked and verified.',
+    description: 'Drop a file in the link — it lands in the Downloads folder of the target device, chunked and verified.',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5h5M5 21V3h9l5 5v13H5z"/></svg>`,
   },
   {
     title: 'Printer Bridge',
-    description: 'Print from any Mac to the printer wired to just one of them. The bridge swaps Wi-Fi, sends the PDF, prints, and switches back — fully transparent.',
+    description: 'Print from any device to the printer wired to just one of them. The bridge swaps Wi-Fi, sends the PDF, prints, and switches back — fully transparent.',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v7H6z"/></svg>`,
   },
   {
     title: 'Quick Actions',
-    description: 'Push a URL to another Mac and it opens there. Grab a live screenshot of any peer. Emergency stop in one click — always in the toolbar.',
+    description: 'Push a URL to another machine and it opens there. Grab a live screenshot of any peer. Emergency stop in one click — always in the toolbar.',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>`,
   },
   {
@@ -44,7 +44,7 @@ const features = [
 const principles = [
   {
     title: 'Native',
-    body: 'Pure Swift / SwiftUI. No Electron, no web view. The app runs at AppKit speed and feels like a part of macOS because it is.',
+    body: 'A real app on each OS — Swift on macOS, WinUI 3 on Windows, GTK4 on Linux, Kotlin on Android TV. No Electron, no web view. It runs at native speed because it is native.',
   },
   {
     title: 'Private',
@@ -52,7 +52,7 @@ const principles = [
   },
   {
     title: 'Yours',
-    body: 'Trusted pairing is explicit. You approve every peer once. Revoke any time. Source-of-truth for your machines lives in your keychain, not ours.',
+    body: 'Trusted pairing is explicit. You approve every peer once. Revoke any time. Source-of-truth for your devices lives on your machine, not ours.',
   },
 ];
 ---
@@ -82,7 +82,7 @@ const principles = [
         Six features. One link. Zero friction.
       </h2>
       <p class="mt-4 text-ink-700 text-lg">
-        Built for the way you actually use multiple Macs — at a desk, on the same Wi-Fi, jumping between machines all day.
+        Built for the way you actually use multiple machines — at a desk, on the same Wi-Fi, jumping between devices all day.
       </p>
     </div>
 
@@ -135,7 +135,7 @@ const principles = [
           Install. Pair. Done.
         </h2>
         <p class="mt-5 text-ink-700 text-lg leading-relaxed">
-          Open Entanglo on every Mac you own. They discover each other automatically over Bonjour.
+          Open Entanglo on every device you own. They discover each other automatically over Bonjour.
           Approve the pairing once and the link is live — secure TCP, encrypted handshake,
           opens a single port on your private network.
         </p>
@@ -143,10 +143,10 @@ const principles = [
       </div>
       <ol class="space-y-5">
         {[
-          { n: '01', t: 'Install on every Mac', d: 'Drag Entanglo.app to /Applications on each machine. macOS 13+ required.' },
-          { n: '02', t: 'Grant Accessibility', d: 'Entanglo posts mouse and keyboard events via CGEvent — macOS asks once.' },
-          { n: '03', t: 'Pair on the LAN', d: 'Bonjour finds your other Macs automatically. Confirm the pairing on both ends.' },
-          { n: '04', t: 'Move your cursor', d: 'Push past the edge of your display — you\'re on the next Mac. That\'s the link.' },
+          { n: '01', t: 'Install on every device', d: 'Grab the macOS, Windows, Linux or Android TV build and install it on each machine.' },
+          { n: '02', t: 'Grant input permission', d: 'The OS asks once — Accessibility on macOS, UAC on Windows, the input group on Linux, root on Android TV.' },
+          { n: '03', t: 'Pair on the LAN', d: 'Bonjour finds your other devices automatically. Confirm the pairing on both ends.' },
+          { n: '04', t: 'Move your cursor', d: 'Push past the edge of your display — you\'re on the next machine. That\'s the link.' },
         ].map(s => (
           <li class="glass p-5 flex gap-5 items-start">
             <div class="text-2xl font-mono text-accent w-10 shrink-0">{s.n}</div>
@@ -163,10 +163,10 @@ const principles = [
   <!-- CTA -->
   <section class="container-narrow py-24 md:py-32 text-center">
     <h2 class="display text-5xl md:text-6xl gradient-text leading-tight">
-      Make your Macs feel like one.
+      Make your devices feel like one.
     </h2>
     <p class="mt-6 text-ink-700 text-lg max-w-xl mx-auto">
-      Free. Native. Private. The link your Macs were always missing.
+      Free. Native. Private. The link your machines were always missing.
     </p>
     <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
       <a href="/download" class="btn-primary">Download {version}</a>

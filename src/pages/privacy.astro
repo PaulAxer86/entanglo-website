@@ -7,7 +7,7 @@ const updated = '2026-06-28';
   <section class="container-tight pt-20 pb-12">
     <div class="text-xs uppercase tracking-widest text-accent mb-3">Privacy</div>
     <h1 class="display text-5xl md:text-6xl gradient-text leading-tight">
-      Your Macs talk to each other. Nobody else.
+      Your devices talk to each other. Nobody else.
     </h1>
     <p class="mt-5 text-ink-700 text-lg">Last updated {updated}</p>
   </section>
@@ -17,7 +17,7 @@ const updated = '2026-06-28';
       <h2 class="display text-2xl text-ink-950 mb-3">What stays on your LAN</h2>
       <p class="text-ink-800 leading-relaxed">
         Every byte Entanglo moves — mouse events, clipboard text, files, screenshots, print jobs —
-        travels directly between your own Macs over your home Wi-Fi or Ethernet. There is no
+        travels directly between your own devices over your home Wi-Fi or Ethernet. There is no
         Entanglo server in the middle. We never see your data, because there is no "we" in the path.
       </p>
     </div>
@@ -33,17 +33,18 @@ const updated = '2026-06-28';
     <div>
       <h2 class="display text-2xl text-ink-950 mb-3">Permissions Entanglo asks for</h2>
       <ul class="space-y-3 text-ink-800">
-        <li><strong class="text-ink-950">Accessibility</strong> — required to inject mouse and keyboard events on the target Mac (CGEvent).</li>
+        <li><strong class="text-ink-950">Input injection</strong> — Accessibility on macOS (CGEvent), UAC elevation on Windows, membership in the <code class="font-mono text-accent">input</code> group on Linux (<code class="font-mono text-accent">/dev/uinput</code>), root on Android TV. Required to type and move the cursor on the target device.</li>
         <li><strong class="text-ink-950">Local Network</strong> — required for Bonjour peer discovery and the TCP link.</li>
-        <li><strong class="text-ink-950">Screen Recording</strong> — only if you use the "screenshot peer" Quick Action.</li>
-        <li><strong class="text-ink-950">Apple Events</strong> — only when you explicitly use AppleScript-driven features.</li>
+        <li><strong class="text-ink-950">Screen Recording</strong> — only if you use the "screenshot peer" Quick Action (macOS target).</li>
+        <li><strong class="text-ink-950">Apple Events</strong> — only when you explicitly use AppleScript-driven features on macOS.</li>
       </ul>
     </div>
 
     <div>
       <h2 class="display text-2xl text-ink-950 mb-3">Pairing & trust</h2>
       <p class="text-ink-800 leading-relaxed">
-        Trusted peers are stored in your macOS Keychain. Revoke a peer any time from the Pairing tab.
+        Trusted peers are stored locally on each device — macOS Keychain, Windows Credential Manager,
+        the user config directory on Linux and Android TV. Revoke a peer any time from the Pairing tab.
         Nothing about your trusted devices leaves your machine.
       </p>
     </div>
