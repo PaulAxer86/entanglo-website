@@ -1,13 +1,13 @@
 {
-  "version": "0.1.4",
+  "version": "0.1.5",
   "date": "2026-11-08",
   "title": "Linux input and file receiver with automatic reconnect and verified updates",
-  "url": "https://github.com/PaulAxer86/entanglo-linux/releases/download/v0.1.4/entanglo-linux_0.1.4_amd64.deb",
-  "sha256": "164034c58db97344aae52c9de1600f6e2490b66fc978c0abf94759d5ae67a226",
-  "size": 2082608,
+  "url": "https://github.com/PaulAxer86/entanglo-linux/releases/download/v0.1.5/entanglo-linux_0.1.5_amd64.deb",
+  "sha256": "d708ffe49c066a2d25bfcbbf6258495a3e2b59b531ef5554edc90588ee602831",
+  "size": 2092128,
   "minimumSystemVersion": "Debian 13",
   "architecture": "amd64",
-  "sourceCommit": "1dcf04587fdab46250569a8bb55b2d6d7e117c53",
+  "sourceCommit": "7ad49a0a2b3f00e0abab85d9530f0d89aeffa4f8",
   "highlights": [
     "Automatic reconnect with stable device identity and port 55555.",
     "Mouse, keyboard and streaming file reception from trusted Entanglo peers.",

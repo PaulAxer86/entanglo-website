@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.1.5",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: opt-in controller mode",
+    "highlights": [
+      "Linux: enable Share my keyboard & mouse in Input Sharing to control other trusted devices. The local keyboard and pointer are held while a remote device is being controlled.",
+      "Linux: Edge Switching assigns devices to the left and right screen edges, and the choice now survives reconnects and restarts. Requires an X11 session.",
+      "Linux: trusted devices reconnect automatically in controller mode after a dropped link."
+    ]
+  },
+  {
     "version": "0.1.4",
     "platform": "linux",
     "date": "2026-11-08",
