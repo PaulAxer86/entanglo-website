@@ -9,6 +9,17 @@
     ]
   },
   {
+    "version": "0.1.11",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: send files to trusted devices",
+    "highlights": [
+      "Linux: the Files page can now send files to trusted devices, by file picker or drag and drop, with a device selector and progress.",
+      "Linux: sent and received files have their own icons and sounds, and sent files name the recipient.",
+      "Linux: slow disk writes no longer drop the connection while receiving a file."
+    ]
+  },
+  {
     "version": "0.1.10",
     "platform": "linux",
     "date": "2026-11-08",
