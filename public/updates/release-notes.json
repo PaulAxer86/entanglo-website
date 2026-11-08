@@ -9,6 +9,16 @@
     ]
   },
   {
+    "version": "0.1.9",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: numeric keypad support",
+    "highlights": [
+      "Linux: the numeric keypad, including its Enter key, now works between devices.",
+      "Linux: received keypad digits always type digits, whatever the NumLock state."
+    ]
+  },
+  {
     "version": "0.1.8",
     "platform": "linux",
     "date": "2026-11-08",
