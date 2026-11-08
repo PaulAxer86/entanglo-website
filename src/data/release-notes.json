@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.1.3",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: notification sounds and visible version",
+    "highlights": [
+      "Linux: notification sounds when a trusted device connects or disconnects, when a file fails or is interrupted, and when a file is received.",
+      "Linux: the installed version is now shown at the bottom of the sidebar."
+    ]
+  },
+  {
     "version": "0.1.2",
     "platform": "linux",
     "date": "2026-11-08",
