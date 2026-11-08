@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.1.6",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: edge switching on all four sides",
+    "highlights": [
+      "Linux: Edge Switching now covers the top and bottom screen edges as well as left and right.",
+      "Linux: the clipboard sync setting is now saved across restarts and updates."
+    ]
+  },
+  {
     "version": "0.1.5",
     "platform": "linux",
     "date": "2026-11-08",

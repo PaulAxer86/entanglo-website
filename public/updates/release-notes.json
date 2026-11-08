@@ -1,4 +1,4 @@
-﻿[  {
+[  {
     "version": "0.1.61",
     "platform": "windows",
     "date": "2026-11-08",
@@ -14,6 +14,16 @@
     "title": "Windows: file transfer to Mac now completes correctly",
     "highlights": [
       "Windows: file transfer from Windows to Mac no longer incorrectly shows 'Failed' before completing. The Mac sends a preliminary acknowledgment when it receives a file offer; Windows was treating this as a final rejection and marking the transfer red. The transfer still landed on the Mac correctly, but the Windows UI showed a confusing flash of failure. Fixed by ignoring early nacks while streaming is still in progress."
+    ]
+  },
+  {
+    "version": "0.1.6",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: edge switching on all four sides",
+    "highlights": [
+      "Linux: Edge Switching now covers the top and bottom screen edges as well as left and right.",
+      "Linux: the clipboard sync setting is now saved across restarts and updates."
     ]
   },
   {
