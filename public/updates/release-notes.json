@@ -9,6 +9,15 @@
     ]
   },
   {
+    "version": "0.1.13",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: delivered files no longer show as failed",
+    "highlights": [
+      "Linux: a file fully sent to a device that does not confirm it now shows as Sent instead of Failed, with a note that receipt was not confirmed."
+    ]
+  },
+  {
     "version": "0.1.12",
     "platform": "linux",
     "date": "2026-11-08",
