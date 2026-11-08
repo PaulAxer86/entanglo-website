@@ -1,19 +1,11 @@
-[  {
-    "version": "0.1.61",
-    "platform": "windows",
-    "date": "2026-11-08",
-    "title": "Windows: update no longer hangs at [preparing]",
-    "highlights": [
-      "Windows: installing an update no longer gets stuck at [preparing] for two minutes. Previously the app tried to push the Windows installer to Mac and Linux peers before installing it; since all platforms now fetch updates from entanglo.pages.dev, that push has been disabled."
-    ]
-  },
+[
   {
     "version": "0.1.60",
-    "platform": "windows",
+    "platform": "mac",
     "date": "2026-11-08",
-    "title": "Windows: file transfer to Mac now completes correctly",
+    "title": "Mac: advertise main-display size in Hello — lets Linux 0.1.5+ controllers seed and clamp the cursor on the Mac canvas",
     "highlights": [
-      "Windows: file transfer from Windows to Mac no longer incorrectly shows 'Failed' before completing. The Mac sends a preliminary acknowledgment when it receives a file offer; Windows was treating this as a final rejection and marking the transfer red. The transfer still landed on the Mac correctly, but the Windows UI showed a confusing flash of failure. Fixed by ignoring early nacks while streaming is still in progress."
+      "Mac: `HelloPayload` now carries optional `screenWidth` and `screenHeight` integers (logical points of `NSScreen.main`), populated by `ConnectionCoordinator.sendLocalHello` at every connect. Satisfies PROTOCOL.md §5.1, which marks the fields optional and tells controllers to fall back to a legacy heuristic when absent. Concrete payoff: Linux 0.1.5 full-controller builds (the `Make Linux a full controller` release that scales edge coordinates to the receiver's canvas) will now seed the cursor at the correct position on the Mac receiver and clamp absolute moves to the real Mac display bounds instead of the controller's own screen. Windows and Android peers ignore the new fields today; nothing regresses for them."
     ]
   },
   {
@@ -94,22 +86,10 @@
     "version": "0.1.59",
     "platform": "mac",
     "date": "2026-11-08",
-    "title": "Mac: stable device identity via Bonjour TXT • Windows: Open Downloads button + UI corner radius polish",
+    "title": "Mac: stable device identity via Bonjour TXT — fixes duplicate rows in Devices",
     "highlights": [
       "Mac: `DiscoveryService` now publishes the local stable UUID (`localDeviceId`) in the Bonjour TXT record under the key `id`, and the browser keys each `Device` by the peer's advertised UUID instead of its Bonjour service name. Root cause of the long-standing 'same Mac appears twice in Devices' complaint: `Device.id` was documented as a stable UUID but the discovery path assigned it the Bonjour service name, while the Hello handshake later assigned the real UUID — same peer, two ids, no dedupe in `DevicesView.combinedDevices`. Users who had already trusted a peer on the name-keyed row kept seeing the UUID-keyed row re-trust on every handshake, producing one 'Disconnected · Trusted' ghost per renamed or Bonjour-collided peer. The TXT-first lookup keys the Device correctly from the first browse callback. Legacy peers (Mac <0.1.59, Windows 0.1.55, Android) still fall back to the Bonjour name until their first Hello.",
-      "Mac: `ConnectionCoordinator` Hello handler now performs one-shot deduplication. When a Hello arrives under the peer's real UUID, any previously persisted entry that shares the peer's display name but has a different id is forgotten (and its runtime slots in `connectionStates`, `outbound`, `wiredUpgradeAttempted` are scrubbed), after inheriting its pairing state onto the UUID entry. So an upgrade from 0.1.58 → 0.1.59 collapses the pre-existing ghost rows on the first reconnect, without any user action — including collapsing a 'Trusted' ghost onto a freshly discovered row so trust is preserved.",
-      "Windows: Files page now shows an 'Open Downloads' button in the Transfers card whenever the %LocalAppData%\\Entanglo\\Downloads\\ folder contains at least one received file. Click it to open the folder directly in Explorer — no more hunting for where received files land.",
-      "Windows: UI corner radius reduced from large pill/circle values (12–999 px) to a consistent 6 px across all cards, pills, buttons and icon badges. The app no longer uses oval or circular shapes — every surface has a clean squared-off look that feels more native on Windows 11."
-    ]
-  },
-  {
-    "version": "0.1.59",
-    "platform": "windows",
-    "date": "2026-11-08",
-    "title": "Windows: Open Downloads button + UI corner radius polish",
-    "highlights": [
-      "Windows: Files page now shows an 'Open Downloads' button in the Transfers card whenever the %LocalAppData%\\Entanglo\\Downloads\\ folder contains at least one received file. Click it to open the folder directly in Explorer — no more hunting for where received files land.",
-      "Windows: UI corner radius reduced from large pill/circle values (12–999 px) to a consistent 6 px across all cards, pills, buttons and icon badges. The app no longer uses oval or circular shapes — every surface has a clean squared-off look that feels more native on Windows 11."
+      "Mac: `ConnectionCoordinator` Hello handler now performs one-shot deduplication. When a Hello arrives under the peer's real UUID, any previously persisted entry that shares the peer's display name but has a different id is forgotten (and its runtime slots in `connectionStates`, `outbound`, `wiredUpgradeAttempted` are scrubbed), after inheriting its pairing state onto the UUID entry. So an upgrade from 0.1.58 → 0.1.59 collapses the pre-existing ghost rows on the first reconnect, without any user action — including collapsing a 'Trusted' ghost onto a freshly discovered row so trust is preserved."
     ]
   },
   {

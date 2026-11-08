@@ -1,14 +1,13 @@
 {
-  "version": "0.1.59",
+  "version": "0.1.60",
   "date": "2026-11-08",
-  "title": "Mac: stable device identity via Bonjour TXT — fixes duplicate rows in Devices",
+  "title": "Mac: advertise main-display size in Hello \u2014 lets Linux 0.1.5+ controllers seed and clamp the cursor on the Mac canvas",
   "minimumSystemVersion": "13.0",
-  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.59.dmg",
-  "sha256": "48bc24ec2ed83cf9101b7a107a5f57a096b67b613083a87eac41ff1f3f2e6055",
-  "size": 2298671,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-59",
+  "url": "https://entanglo.pages.dev/downloads/Entanglo-0.1.60.dmg",
+  "sha256": "08bfe0483975789ba18c13d4d13d26d3bcda4d8c5b6272da34223181721eedfd",
+  "size": 2301637,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-60",
   "highlights": [
-    "Mac: `DiscoveryService` now publishes the local stable UUID (`localDeviceId`) in the Bonjour TXT record under the key `id`, and the browser keys each `Device` by the peer's advertised UUID instead of its Bonjour service name. Root cause of the long-standing 'same Mac appears twice in Devices' complaint: `Device.id` was documented as a stable UUID but the discovery path assigned it the Bonjour service name, while the Hello handshake later assigned the real UUID \u2014 same peer, two ids, no dedupe in `DevicesView.combinedDevices`. Users who had already trusted a peer on the name-keyed row kept seeing the UUID-keyed row re-trust on every handshake, producing one 'Disconnected \u00b7 Trusted' ghost per renamed or Bonjour-collided peer. The TXT-first lookup keys the Device correctly from the first browse callback. Legacy peers (Mac <0.1.59, Windows 0.1.55, Android) still fall back to the Bonjour name until their first Hello.",
-    "Mac: `ConnectionCoordinator` Hello handler now performs one-shot deduplication. When a Hello arrives under the peer's real UUID, any previously persisted entry that shares the peer's display name but has a different id is forgotten (and its runtime slots in `connectionStates`, `outbound`, `wiredUpgradeAttempted` are scrubbed), after inheriting its pairing state onto the UUID entry. So an upgrade from 0.1.58 \u2192 0.1.59 collapses the pre-existing ghost rows on the first reconnect, without any user action \u2014 including collapsing a 'Trusted' ghost onto a freshly discovered row so trust is preserved."
+    "Mac: `HelloPayload` now carries optional `screenWidth` and `screenHeight` integers (logical points of `NSScreen.main`), populated by `ConnectionCoordinator.sendLocalHello` at every connect. Satisfies PROTOCOL.md \u00a75.1, which marks the fields optional and tells controllers to fall back to a legacy heuristic when absent. Concrete payoff: Linux 0.1.5 full-controller builds (the `Make Linux a full controller` release that scales edge coordinates to the receiver's canvas) will now seed the cursor at the correct position on the Mac receiver and clamp absolute moves to the real Mac display bounds instead of the controller's own screen. Windows and Android peers ignore the new fields today; nothing regresses for them."
   ]
 }
