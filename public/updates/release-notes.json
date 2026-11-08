@@ -17,6 +17,16 @@
     ]
   },
   {
+    "version": "0.1.7",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: system tray and start at login",
+    "highlights": [
+      "Linux: a system tray icon opens the window or quits Entanglo. Where a tray is available, closing the window keeps Entanglo running there.",
+      "Linux: Settings can start Entanglo at login, directly in the tray."
+    ]
+  },
+  {
     "version": "0.1.6",
     "platform": "linux",
     "date": "2026-11-08",
