@@ -9,6 +9,15 @@
     ]
   },
   {
+    "version": "0.1.10",
+    "platform": "linux",
+    "date": "2026-11-08",
+    "title": "Linux: keypad Enter fix",
+    "highlights": [
+      "Linux: the keypad Enter key now works as Enter when received from another device, including on Mac keyboard layouts."
+    ]
+  },
+  {
     "version": "0.1.9",
     "platform": "linux",
     "date": "2026-11-08",
