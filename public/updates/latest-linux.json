@@ -1,16 +1,19 @@
 {
-  "version": "0.1.13",
-  "date": "2026-11-08",
-  "title": "Linux input and file receiver with automatic reconnect and verified updates",
-  "url": "https://github.com/PaulAxer86/entanglo-linux/releases/download/v0.1.13/entanglo-linux_0.1.13_amd64.deb",
-  "sha256": "6f8d02e8840691d64f190dad38c56117c8bd7af3e71a6c2f1d8e2af6aac445f2",
-  "size": 2745420,
+  "version": "0.1.14",
+  "date": "2026-11-09",
+  "title": "Linux: direct Ethernet, media keys and improved pointer control",
+  "url": "https://github.com/PaulAxer86/entanglo-linux/releases/download/v0.1.14/entanglo-linux_0.1.14_amd64.deb",
+  "sha256": "18f36b59ece3511168a53a7ef2252a5791dda1427df7d6c5e242005296707a0e",
+  "size": 2744256,
   "minimumSystemVersion": "Debian 12",
   "architecture": "amd64",
-  "sourceCommit": "72a51a7632dc62f542f0e5ec0f21ea7e5d54231f",
+  "sourceCommit": "96e9a9f0dfbdef41695795970da98bf627eda251",
   "highlights": [
-    "Automatic reconnect with stable device identity and port 55555.",
-    "Mouse, keyboard and streaming file reception from trusted Entanglo peers.",
-    "Live Dashboard, original rabbit icon and verified in-app updates."
+    "Automatically prefer a reachable Ethernet path for trusted peers, with Wi-Fi fallback.",
+    "Keep each Bonjour interface and address, including scoped link-local IPv6.",
+    "Use the selected connection for input, files and clipboard; show its actual interface.",
+    "Forward volume, brightness and playback keys; return the pointer at the adjoining edge.",
+    "Adjust remote pointer speed independently on each controller.",
+    "Clean up failed TCP sessions so automatic reconnect can recover."
   ]
 }

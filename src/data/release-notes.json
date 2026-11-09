@@ -1,5 +1,20 @@
 [
   {
+    "version": "0.1.14",
+    "platform": "linux",
+    "date": "2026-11-09",
+    "title": "Direct Ethernet, media keys and improved pointer control",
+    "highlights": [
+      "Trusted devices automatically gain a direct Ethernet connection when one becomes available. New keyboard, mouse, clipboard and file traffic use the preferred path; Wi-Fi remains available if the cable fails.",
+      "Bonjour keeps separate interface and address records, including scoped link-local IPv6. Removing a Wi-Fi announcement no longer hides the Ethernet path.",
+      "Dashboard and Devices show the selected connection’s actual interface, including addresses assigned after startup.",
+      "Failed TCP reads now release the session so automatic reconnection can recover.",
+      "Volume, mute, brightness and playback keys are forwarded to the controlled computer, including held-key repeats. Brightness requires support from the receiving display and desktop.",
+      "The cursor returns at the adjoining screen edge instead of jumping to its hidden local position.",
+      "Input Sharing adds Remote pointer speed, saved separately on each controller, so a slow mouse can be adjusted without changing local movement or scrolling."
+    ]
+  },
+  {
     "version": "0.1.61",
     "date": "2026-11-08",
     "title": "Mac: one row per device in Devices, and file-receive acks that actually route back to Linux senders",

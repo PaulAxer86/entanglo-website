@@ -5,7 +5,8 @@ import FeatureCard from '@/components/FeatureCard.astro';
 import AdSlot from '@/components/AdSlot.astro';
 import notes from '@/data/release-notes.json';
 
-const version = (notes[0]?.version as string) ?? '0.1.0';
+const latest = notes[0] as { version: string; platform?: string };
+const version = `${latest?.platform ? `${latest.platform === 'linux' ? 'Linux' : latest.platform} ` : ''}${latest?.version ?? '0.1.0'}`;
 
 const features = [
   {
@@ -169,7 +170,7 @@ const principles = [
       Free. Native. Private. The link your machines were always missing.
     </p>
     <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
-      <a href="/download" class="btn-primary">Download {version}</a>
+      <a href="/download" class="btn-primary">Download Entanglo</a>
       <a href="/changelog" class="btn-ghost">See what's new</a>
     </div>
   </section>
