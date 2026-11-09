@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.1.15",
+    "platform": "linux",
+    "date": "2026-11-09",
+    "title": "Linux 0.1.15 update: direct Ethernet and improved remote input",
+    "highlights": [
+      "A new versioned update for existing 0.1.14 installations, available through News & Updates.",
+      "Includes automatic Ethernet preference and Wi-Fi fallback, volume and brightness key forwarding, adjoining-edge cursor return and per-controller remote pointer speed.",
+      "Retains the fixes tested with 116 workspace tests and the live Ethernet-to-Wi-Fi-to-Ethernet recovery check. No additional behavior changes are introduced in this version bump."
+    ]
+  },
+  {
     "version": "0.1.14",
     "platform": "linux",
     "date": "2026-11-09",
