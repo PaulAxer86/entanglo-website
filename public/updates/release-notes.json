@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.1.16",
+    "platform": "linux",
+    "date": "2026-11-09",
+    "title": "Keep the local pointer still while controlling another screen",
+    "highlights": [
+      "The local cursor is hidden and confined while raw mouse movement controls the other computer. It no longer follows the remote pointer across the local desktop.",
+      "Input is forwarded only after X11 confirms both pointer and keyboard capture. A rejected grab is retried instead of being reported as successful.",
+      "Natural return, emergency stop and application exit release confinement. The cursor returns to the adjoining edge or its saved local position.",
+      "An isolated X11 regression test verifies capture denial, retry, confinement and safe release, and now runs in the Debian 12 release pipeline."
+    ]
+  },
+  {
     "version": "0.1.15",
     "platform": "linux",
     "date": "2026-11-09",
