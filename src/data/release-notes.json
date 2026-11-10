@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.1.62",
+    "platform": "windows",
+    "date": "2026-11-10",
+    "title": "Windows: sync with Linux 0.1.16 — stable identity, relative mouse, media keys, controller mode",
+    "highlights": [
+      "Windows: stable device identity via Bonjour TXT `id`. The Windows peer now advertises its stable UUID in the mDNS TXT record and reads the UUID from peers' TXT records. Devices that previously appeared twice (once discovered by name, once by UUID after Hello) now show a single row from the first browse callback. Trust entries keyed by name are silently migrated to UUID the first time an upgraded peer says Hello — existing paired devices keep their trust state without any user action.",
+      "Windows: relative mouse injection with sub-pixel accumulation. When a Mac or Linux controller sends `deltaX`/`deltaY` mouse moves, the receiver accumulates fractional pixels and injects the integer part each frame, so sub-pixel nudges are never silently dropped. The old code sent absolute coordinates and lost precision on every frame.",
+      "Windows: fixed absolute coordinate mapping. The VIRTUALDESK flag was removed from absolute SendInput calls; coordinates now use `(v × 65535) / (screenW − 1)` with clamping, so the last pixel on the right/bottom edge maps to exactly 65535 and the cursor never overshoots on FullHD, 1440p or 4K screens.",
+      "Windows: media keys forwarded from Mac/Linux controllers. Volume up/down/mute, play/pause, next track, previous track, and stop are now injected via `VK_VOLUME_*` / `VK_MEDIA_*` virtual keys. Brightness and eject are logged once and silently ignored (no Win32 VK equivalent).",
+      "Windows: controller mode — virtual cursor, ClipCursor confinement, Raw Input, media key capture. When Windows controls a Mac or Linux peer, the local cursor is confined to a 1×1 rect and hidden; raw mouse deltas are read via a hidden HWND_MESSAGE window registered with RIDEV_INPUTSINK; a virtual cursor tracks the peer's screen in pixel space and returns control when it re-crosses the entry edge. Media keys pressed locally are forwarded as `mediaKey` events over the wire.",
+      "Windows: file transfer reliability. `fileAck` is now sent on the same TCP connection that delivered the chunks, not looked up by senderDeviceId. The outgoing side waits up to 15 seconds for the acknowledgement before marking the transfer as 'Sent (receipt not confirmed)'; previously it would flash 'Failed' the moment the stream finished."
+    ]
+  },
+  {
     "version": "0.1.16",
     "platform": "linux",
     "date": "2026-11-09",

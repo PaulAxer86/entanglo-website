@@ -1,13 +1,18 @@
 {
-  "version": "0.1.61",
-  "date": "2026-11-08",
-  "title": "Windows: update no longer hangs at [preparing]",
+  "version": "0.1.62",
+  "date": "2026-11-10",
+  "title": "Windows: sync with Linux 0.1.16 — stable identity, relative mouse, media keys, controller mode",
   "minimumSystemVersion": "10.0.19041",
-  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.61/Entanglo-Setup-0.1.61.exe",
-  "sha256": "cf7f4941e7fef7a72828677b33b13356ec6c7e1be24278246dc3dd486f0e6652",
-  "size": 44960184,
-  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-61",
+  "url": "https://github.com/PaulAxer86/entanglo-website/releases/download/v0.1.62/Entanglo-Setup-0.1.62.exe",
+  "sha256": "a481cf7be74df695684fdb564fcc9290775886d29475232f40ba528f8524800c",
+  "size": 44950151,
+  "notesUrl": "https://entanglo.pages.dev/changelog#0-1-62",
   "highlights": [
-    "Windows: installing an update no longer gets stuck at [preparing] for two minutes. Previously the app tried to push the Windows installer to Mac and Linux peers before installing it; since all platforms now fetch updates from entanglo.pages.dev, that push has been disabled."
+    "Stable device identity via Bonjour TXT id — no more duplicate rows in Devices after reinstall or rename.",
+    "Relative mouse injection with sub-pixel accumulation for smooth pointer movement.",
+    "Fixed absolute coordinate mapping (removed VIRTUALDESK flag) — cursor lands precisely on 1080p, 1440p and 4K screens.",
+    "Media keys (volume, mute, play/pause, next, previous, stop) forwarded from Mac and Linux controllers.",
+    "Controller mode: virtual cursor, ClipCursor confinement, Raw Input, media key capture.",
+    "File transfers: ack routed on delivering connection; 15-second timeout with graceful fallback."
   ]
 }
