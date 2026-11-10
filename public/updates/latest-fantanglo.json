@@ -1,0 +1,15 @@
+{
+  "version": "0.1.1",
+  "date": "2026-11-10",
+  "title": "Fantanglo 0.1.1: Entanglo-style sidebar and automatic update checks",
+  "url": "https://entanglo.pages.dev/downloads/fantanglo_0.1.1_amd64.deb",
+  "sha256": "897e0dd2558311c6ff1c8f568c754f18fc2291e70a7e5ef2847bc09c8b58a11b",
+  "size": 1922552,
+  "minimumSystemVersion": "Debian 13",
+  "architecture": "amd64",
+  "highlights": [
+    "Sidebar layout matching Entanglo, with Dashboard, Rules, Profiles, Schedule, Settings, Updates and Logs.",
+    "Checks entanglo.pages.dev at launch and every hour; installs verified updates with administrator approval.",
+    "Tray menu and desktop notification when a new version is available."
+  ]
+}

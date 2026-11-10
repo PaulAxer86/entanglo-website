@@ -1,0 +1,94 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const fantangloVersion = '0.1.1';
+const fantangloDeb = `/downloads/fantanglo_${fantangloVersion}_amd64.deb`;
+
+const features = [
+  {
+    title: 'Rules with hysteresis',
+    body: 'GPU at 80 °C? Every fan to full speed until it has cooled to 65 °C. You choose the sensor, the thresholds, the speed and the fans.',
+  },
+  {
+    title: 'Profiles and curves',
+    body: 'Each fan runs on Apple automatic control, at a fixed speed, or on a temperature curve. Auto, Balanced, Render and Full blast are ready to use.',
+  },
+  {
+    title: 'Schedule',
+    body: 'Switch profile at set times, such as quiet at night and render-ready during the day. Windows can cross midnight.',
+  },
+  {
+    title: 'Full blast from the tray',
+    body: 'Live temperatures and fan speeds in the system tray, profile switching, and maximum cooling for 15 minutes, 30 minutes or an hour.',
+  },
+  {
+    title: 'Sees the GPU Apple cannot',
+    body: 'Upgraded graphics cards often leave the SMC blind (it reads −127 °C). Fantanglo reads the GPU from its driver, so GPU heat finally drives the fans.',
+  },
+  {
+    title: 'Safe by design',
+    body: 'A critical temperature or an unreadable sensor sends every fan to maximum. If the service stops or crashes, Apple\'s own control takes over again.',
+  },
+];
+---
+
+<Base
+  title="More apps — Entanglo"
+  description="Fantanglo: fan and temperature control for Intel iMacs on Linux, from the maker of Entanglo."
+>
+  <section class="container-narrow pt-20 pb-10 text-center">
+    <div class="text-xs uppercase tracking-widest text-accent mb-3">More apps</div>
+    <h1 class="display text-5xl md:text-6xl gradient-text leading-tight">Entanglo's siblings</h1>
+    <p class="mt-6 text-ink-700 text-xl max-w-2xl mx-auto">
+      Small native tools from the same workshop. Free, no account, no cloud.
+    </p>
+  </section>
+
+  <section id="fantanglo" class="container-narrow py-8">
+    <div class="glass p-8 md:p-10">
+      <div class="flex flex-col md:flex-row gap-8 md:items-center">
+        <img
+          src="/img/apps/fantanglo.png"
+          alt="Fantanglo icon: a fan above a geometric eagle"
+          width="128"
+          height="128"
+          class="w-28 h-28 md:w-32 md:h-32 shrink-0 rounded-[22%] shadow-lg"
+        />
+        <div class="flex-1">
+          <div class="text-xs uppercase tracking-widest text-accent mb-2">Linux · new</div>
+          <h2 class="display text-4xl text-ink-950 mb-2">Fantanglo {fantangloVersion}</h2>
+          <p class="text-ink-700 text-lg leading-relaxed max-w-2xl">
+            Fan and temperature control for Intel iMacs running Debian. Keep the iMac quiet when it is idle, and
+            let it cool hard when you render.
+          </p>
+          <div class="text-sm text-ink-600 mt-3">
+            Intel iMac with Apple SMC fans · Debian 13 amd64 · tested on the iMac12,2 (27-inch, 2011)
+          </div>
+          <div class="mt-6 flex flex-wrap items-center gap-4">
+            <a href={fantangloDeb} class="btn-primary">Download .deb · v{fantangloVersion}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+        {features.map(feature => (
+          <div class="rounded-2xl border border-ink-950/[0.08] bg-white/50 p-5">
+            <div class="font-medium text-ink-950 mb-1.5">{feature.title}</div>
+            <p class="text-sm text-ink-700 leading-relaxed">{feature.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 max-w-3xl">
+        <div class="text-xs uppercase tracking-widest text-accent mb-3">Install</div>
+        <pre class="rounded-xl bg-ink-950 text-cream-50 text-sm p-4 overflow-x-auto"><code>sudo apt install ./fantanglo_{fantangloVersion}_amd64.deb</code></pre>
+        <p class="text-sm text-ink-600 mt-3 leading-relaxed">
+          This installs and starts the <code>fantangld</code> fan service. Open Fantanglo from the application menu; under
+          Settings, Start at login keeps it in the tray. Members of the <code>sudo</code> group can change settings.
+          Removing the package hands the fans back to Apple's automatic control. iMac fans never stop completely:
+          each one has a hardware minimum.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
