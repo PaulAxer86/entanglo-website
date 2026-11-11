@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.1.18",
+    "platform": "linux",
+    "date": "2026-11-11",
+    "title": "A tray icon that matches your panel",
+    "highlights": [
+      "The tray shows the rabbit as a monochrome symbol instead of the white app badge, like the desktop's own status icons.",
+      "It follows the KDE color scheme: light on dark panels such as Breeze Dark, dark on light ones.",
+      "Includes 0.1.17: Bluetooth mice and keyboards are picked up again after reconnecting, and Left Shift+Escape or Escape three times takes control back."
+    ]
+  },
+  {
     "version": "0.1.17",
     "platform": "linux",
     "date": "2026-11-11",

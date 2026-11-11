@@ -1,15 +1,15 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "date": "2026-11-11",
-  "title": "Fan curves can follow your disk's own temperature",
-  "url": "https://entanglo.pages.dev/downloads/fantanglo_0.1.2_amd64.deb",
-  "sha256": "52bc47e0a02e39eb6f319544e6745a5b5b290a1e56d34e8fa2784cf1500e59f7",
-  "size": 1920768,
+  "title": "A tray icon that matches your panel",
+  "url": "https://entanglo.pages.dev/downloads/fantanglo_0.1.3_amd64.deb",
+  "sha256": "52673b5c2826f3d2a3d3eac3e35cd8088e8914907aadb7c0a0d9da8868cc6e8b",
+  "size": 1930780,
   "minimumSystemVersion": "Debian 13",
   "architecture": "amd64",
   "highlights": [
-    "SATA drives report their temperature through the kernel's drivetemp module, which Fantanglo now loads.",
-    "A fan curve can follow any disk, so an iMac whose drive bay sensor is missing no longer runs its HDD fan at full speed.",
-    "If a curve's sensor cannot be read, that fan still goes to maximum."
+    "The tray shows a monochrome fan symbol instead of the white app badge, like the desktop's own status icons.",
+    "It follows the KDE color scheme: light on dark panels such as Breeze Dark, dark on light ones.",
+    "Includes 0.1.2: fan curves can follow a SATA disk's own temperature."
   ]
 }
