@@ -1,7 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
 
-const fantangloVersion = '0.1.1';
+const fantangloVersion = '0.1.2';
 const fantangloDeb = `/downloads/fantanglo_${fantangloVersion}_amd64.deb`;
 
 const features = [
@@ -22,8 +22,8 @@ const features = [
     body: 'Live temperatures and fan speeds in the system tray, profile switching, and maximum cooling for 15 minutes, 30 minutes or an hour.',
   },
   {
-    title: 'Sees the GPU Apple cannot',
-    body: 'Upgraded graphics cards often leave the SMC blind (it reads −127 °C). Fantanglo reads the GPU from its driver, so GPU heat finally drives the fans.',
+    title: 'Sees what Apple cannot',
+    body: 'Upgraded GPUs and SSD swaps leave the SMC blind, so fans ignore GPU heat or run flat out. Fantanglo reads the GPU from its driver and each SATA disk from the disk itself.',
   },
   {
     title: 'Safe by design',

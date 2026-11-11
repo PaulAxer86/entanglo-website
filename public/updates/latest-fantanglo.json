@@ -1,15 +1,15 @@
 {
-  "version": "0.1.1",
-  "date": "2026-11-10",
-  "title": "Fantanglo 0.1.1: Entanglo-style sidebar and automatic update checks",
-  "url": "https://entanglo.pages.dev/downloads/fantanglo_0.1.1_amd64.deb",
-  "sha256": "897e0dd2558311c6ff1c8f568c754f18fc2291e70a7e5ef2847bc09c8b58a11b",
-  "size": 1922552,
+  "version": "0.1.2",
+  "date": "2026-11-11",
+  "title": "Fan curves can follow your disk's own temperature",
+  "url": "https://entanglo.pages.dev/downloads/fantanglo_0.1.2_amd64.deb",
+  "sha256": "52bc47e0a02e39eb6f319544e6745a5b5b290a1e56d34e8fa2784cf1500e59f7",
+  "size": 1920768,
   "minimumSystemVersion": "Debian 13",
   "architecture": "amd64",
   "highlights": [
-    "Sidebar layout matching Entanglo, with Dashboard, Rules, Profiles, Schedule, Settings, Updates and Logs.",
-    "Checks entanglo.pages.dev at launch and every hour; installs verified updates with administrator approval.",
-    "Tray menu and desktop notification when a new version is available."
+    "SATA drives report their temperature through the kernel's drivetemp module, which Fantanglo now loads.",
+    "A fan curve can follow any disk, so an iMac whose drive bay sensor is missing no longer runs its HDD fan at full speed.",
+    "If a curve's sensor cannot be read, that fan still goes to maximum."
   ]
 }
