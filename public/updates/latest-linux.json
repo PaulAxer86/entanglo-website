@@ -1,22 +1,18 @@
 {
-  "version": "0.1.16",
-  "date": "2026-11-09",
-  "title": "Linux 0.1.16: keep the local pointer still during remote control",
-  "url": "https://github.com/PaulAxer86/entanglo-linux/releases/download/v0.1.16/entanglo-linux_0.1.16_amd64.deb",
-  "sha256": "caba4434790376dea2515f4162d2f3d98ec9d386261812fad30d12dc2071aba5",
-  "size": 2753876,
+  "version": "0.1.17",
+  "date": "2026-11-11",
+  "title": "Linux 0.1.17: Bluetooth mice and keyboards keep working, with new keys to take control back",
+  "url": "https://github.com/PaulAxer86/entanglo-linux/releases/download/v0.1.17/entanglo-linux_0.1.17_amd64.deb",
+  "sha256": "99ea2f816931d1a4a2ee9d33941ecadbee65f6c4d22ee5e07aacd877a34d326e",
+  "size": 2771968,
   "minimumSystemVersion": "Debian 12",
   "architecture": "amd64",
-  "sourceCommit": "221e922d5bb640909e60acebb82378bacce6685f",
+  "sourceCommit": "07247af5229728ed1b0ea2ddd10a8dca390e14ee",
   "highlights": [
-    "Confine and hide the local cursor while controlling another screen.",
-    "Forward physical input only after X11 confirms pointer and keyboard capture.",
-    "Release confinement on return, emergency stop and application exit.",
-    "Automatically prefer a reachable Ethernet path for trusted peers, with Wi-Fi fallback.",
-    "Keep each Bonjour interface and address, including scoped link-local IPv6.",
-    "Use the selected connection for input, files and clipboard; show its actual interface.",
-    "Forward volume, brightness and playback keys; return the pointer at the adjoining edge.",
-    "Adjust remote pointer speed independently on each controller.",
-    "Clean up failed TCP sessions so automatic reconnect can recover."
+    "Pick up a Bluetooth mouse or keyboard again within a second after it sleeps and reconnects.",
+    "Left Shift+Escape or Escape three times brings the mouse and keyboard back while controlling another computer.",
+    "Ctrl+Shift+Escape remains the emergency stop when no other computer is being controlled.",
+    "Escape keys also work through the X11 grab when capture has lost the keyboard.",
+    "Release the local mouse automatically when a click or key press is not being captured."
   ]
 }

@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.1.17",
+    "platform": "linux",
+    "date": "2026-11-11",
+    "title": "Bluetooth mice and keyboards keep working, with new keys to take control back",
+    "highlights": [
+      "A Bluetooth mouse or keyboard that sleeps and reconnects is picked up again within a second. Before, the cursor could stop at the screen edge with nothing moving on the other computer until Entanglo was closed.",
+      "While controlling another computer, Left Shift+Escape or Escape three times brings the mouse and keyboard back. Ctrl+Shift+Escape remains the emergency stop.",
+      "These keys still work when Entanglo has lost the keyboard, and if a click or key press is not being captured the local mouse is released automatically."
+    ]
+  },
+  {
     "version": "0.1.62",
     "platform": "windows",
     "date": "2026-11-10",
